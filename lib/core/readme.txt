@@ -1,1 +1,1 @@
-Lưu request API, response API
+Lưu domain, method API, request API, response API
