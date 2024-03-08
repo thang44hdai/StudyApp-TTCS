@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:study/common/constant.dart';
 import 'package:study/features/home/HomeScreen.dart';
 
 void main() {
@@ -10,13 +11,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Constants.screenHeight = MediaQuery.of(context).size.height;
+    Constants.screenWidth = MediaQuery.of(context).size.width;
     return MaterialApp(
-      title: 'Study',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: Home()
-    );
+        debugShowCheckedModeBanner: false,
+        title: 'Study',
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          useMaterial3: true,
+        ),
+        home: Home());
   }
 }
