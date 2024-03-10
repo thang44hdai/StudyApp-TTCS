@@ -17,9 +17,11 @@ class _HomeState extends State<Home> {
       body: Container(
         height: Constants.screenHeight,
         child: Stack(
+          alignment: Alignment.center,
           children: [
             Header(),
             Body(),
+            Fab(),
           ],
         ),
       ),
@@ -37,46 +39,84 @@ Widget Header() {
       color: Colors.red,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              IconButton(
-                onPressed: () {},
-                icon: Icon(Icons.expand),
-              ),
-              IconButton(
-                onPressed: () {},
-                icon: Icon(Icons.person),
-              ),
-            ],
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Hello Friend",
-                style: TextStyle(color: Colors.white),
-              ),
-              Text(
-                "Let's test your knowledge",
-                style: TextStyle(color: Colors.white),
-              ),
-            ],
-          ),
-          TextField(
-            controller: searchController,
-            decoration: InputDecoration(
-              enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(
+          Padding(
+            padding: EdgeInsets.only(top: 15),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                IconButton(
+                  onPressed: () {},
+                  icon: Icon(Icons.expand),
                   color: Colors.white,
+                ),
+                IconButton(
+                  onPressed: () {},
+                  icon: Icon(Icons.account_circle),
+                  color: Colors.white,
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(left: 15),
+            child: Text(
+              "Hello Friend",
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(
+              left: 15,
+              bottom: 5,
+            ),
+            child: Text(
+              "Let's test your knowledge",
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(
+              bottom: Constants.screenHeight / 10,
+              left: 10,
+              right: 10,
+            ),
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Colors.white,
+                  width: 2,
                 ),
                 borderRadius: BorderRadius.circular(20),
               ),
-              labelText: "Search",
-              labelStyle: TextStyle(
-                color: Colors.white,
+              child: Row(
+                children: [
+                  IconButton(
+                    onPressed: () {},
+                    icon: Icon(Icons.search),
+                    color: Colors.white,
+                  ),
+                  Expanded(
+                    child: TextField(
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                      controller: searchController,
+                      decoration: const InputDecoration(
+                        labelText: "Search",
+                        labelStyle: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           )
@@ -96,8 +136,36 @@ Widget Body() {
       decoration: const BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.only(
-          topRight: Radius.circular(30),
-          topLeft: Radius.circular(30),
+          topRight: Radius.circular(35),
+          topLeft: Radius.circular(35),
+        ),
+      ),
+      child: ListView.builder(
+        itemCount: 50,
+        itemBuilder: (context, indext) {
+          return Text("data $indext");
+        },
+      ),
+    ),
+  );
+}
+
+Widget Fab() {
+  return Positioned(
+    bottom: 10,
+    child: ElevatedButton(
+      onPressed: () {},
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all(Colors.red),
+      ),
+      child: const Padding(
+        padding: EdgeInsets.only(
+          left: 80,
+          right: 80,
+        ),
+        child: Text(
+          "Start Quiz",
+          style: TextStyle(color: Colors.white),
         ),
       ),
     ),
