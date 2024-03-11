@@ -38,7 +38,6 @@ class _TutorialScreenState extends State<TutorialScreen> {
       body: Container(
         height: Constants.screenHeight,
         child: Stack(
-          alignment: Alignment.center,
           children: [
             Container(
               color: Colors.red,
@@ -168,22 +167,28 @@ Widget Body() {
 
 Widget Fab() {
   return Positioned(
+    width: Constants.screenWidth,
     bottom: 10,
-    child: ElevatedButton(
-      onPressed: () {},
-      style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all(Colors.red),
-      ),
-      child: const Padding(
-        padding: EdgeInsets.only(
-          left: 80,
-          right: 80,
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        ElevatedButton(
+          onPressed: () {},
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(Colors.red),
+          ),
+          child: const Padding(
+            padding: EdgeInsets.only(
+              left: 80,
+              right: 80,
+            ),
+            child: Text(
+              "Start Quiz",
+              style: TextStyle(color: Colors.white),
+            ),
+          ),
         ),
-        child: Text(
-          "Start Quiz",
-          style: TextStyle(color: Colors.white),
-        ),
-      ),
+      ],
     ),
   );
 }
