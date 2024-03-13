@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:study/common/constant.dart';
 
-import '../../core/model/Question.dart';
-
 class QuizScreen extends StatefulWidget {
   const QuizScreen({super.key});
 
@@ -80,11 +78,10 @@ Widget Body() {
           ),
           Expanded(
             child: Container(
-              color: Colors.black,
+              color: Colors.blue,
               height: 50,
             ),
           ),
-
         ],
       ),
     ),

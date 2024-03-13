@@ -5,9 +5,9 @@ class Option {
   final String text;
   final bool isCorrect;
 
-  const Option(
-    this.text,
-    this.code,
-    this.isCorrect,
-  );
+  const Option({
+    required this.text,
+    required this.code,
+    required this.isCorrect,
+  });
 }

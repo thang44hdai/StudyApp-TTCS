@@ -4,14 +4,12 @@ class Question {
   final String text;
   final List<Option> options;
   final String solution;
-  bool isLocked = false;
-  Option selectedOption;
+  bool isLocked;
 
-  Question(
-    this.text,
-    this.options,
-    this.solution,
-    this.isLocked,
-    this.selectedOption,
-  );
+  Question({
+    required this.text,
+    required this.options,
+    required this.solution,
+    this.isLocked = false,
+  });
 }
