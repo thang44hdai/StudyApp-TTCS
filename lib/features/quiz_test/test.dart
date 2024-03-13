@@ -28,7 +28,6 @@ class _test extends State<test> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Trắc nghiệm'),
         actions: [
           for (var i = 0; i < questions.length; i++)
             IconButton(
