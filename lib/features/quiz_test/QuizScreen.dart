@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:study/common/constant.dart';
+import 'package:study/features/quiz_test/test.dart';
 
 class QuizScreen extends StatefulWidget {
   const QuizScreen({super.key});
@@ -76,12 +77,7 @@ Widget Body() {
               color: Colors.red,
             ),
           ),
-          Expanded(
-            child: Container(
-              color: Colors.blue,
-              height: 50,
-            ),
-          ),
+          Expanded(child: test()),
         ],
       ),
     ),

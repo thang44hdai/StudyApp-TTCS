@@ -22,6 +22,7 @@ class _test extends State<test> {
   ];
 
   int selectedQuestionIndex = -1;
+  int selectedAnswerIndex = -1;
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +36,8 @@ class _test extends State<test> {
               onPressed: () {
                 setState(() {
                   selectedQuestionIndex = i;
+                  selectedAnswerIndex =
+                      -1; // Reset selected answer when changing question
                 });
               },
             )
@@ -42,36 +45,47 @@ class _test extends State<test> {
       ),
       body: selectedQuestionIndex != -1
           ? Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              questions[selectedQuestionIndex].question,
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 20),
-            ...questions[selectedQuestionIndex].options.map((option) {
-              return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: TextButton(
-                  onPressed: () {
-                    // Xử lý khi người dùng chọn đáp án
-                    print(option); // In ra đáp án được chọn
-                  },
-                  child: Text(
-                    option,
-                    style: TextStyle(fontSize: 16),
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    questions[selectedQuestionIndex].question,
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
-                ),
-              );
-            }).toList(),
-          ],
-        ),
-      )
+                  SizedBox(height: 20),
+                  ...List.generate(
+                      questions[selectedQuestionIndex].options.length, (index) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: TextButton(
+                        onPressed: () {
+                          setState(() {
+                            selectedAnswerIndex = index;
+                          });
+                        },
+                        style: ButtonStyle(
+                          backgroundColor: selectedAnswerIndex == index
+                              ? MaterialStateProperty.all(Colors.blue)
+                              : null,
+                        ),
+                        child: Text(
+                          questions[selectedQuestionIndex].options[index],
+                          style: TextStyle(
+                              fontSize: 16,
+                              color: selectedAnswerIndex == index
+                                  ? Colors.white
+                                  : Colors.black),
+                        ),
+                      ),
+                    );
+                  }),
+                ],
+              ),
+            )
           : Center(
-        child: Text('Chọn một câu hỏi để xem.'),
-      ),
+              child: Text('Chọn một câu hỏi để xem.'),
+            ),
     );
   }
 }

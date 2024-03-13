@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:study/common/constant.dart';
 import 'package:study/features/home/HomeScreen.dart';
 import 'package:study/features/quiz_test/QuizScreen.dart';
+import 'package:study/features/quiz_test/test.dart';
 import 'package:study/features/tutorial/TutorialScreen.dart';
 
 void main() {
