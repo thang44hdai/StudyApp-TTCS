@@ -97,7 +97,8 @@ class _QuizScreenState extends State<QuizScreen> {
             child: Container(
               color: Colors.red,
               child: IconButton(
-                onPressed: () {},
+                onPressed: () {
+                },
                 icon: Icon(
                   Icons.arrow_back_ios_new,
                   color: Colors.white,

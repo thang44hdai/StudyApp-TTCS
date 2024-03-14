@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../core/model/Question.dart';
 
 class TestScreen extends StatefulWidget {
   @override
@@ -55,7 +56,6 @@ class _TestScreen extends State<TestScreen> {
       question: "Câu hỏi 3",
       options: ["Đáp án 3A", "Đáp án 3B", "Đáp án 3C", "Đáp án 3D"],
     ),
-
   ];
 
   int selectedQuestionIndex = 0;
@@ -65,7 +65,7 @@ class _TestScreen extends State<TestScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20),
+        padding: EdgeInsets.only(left: 20, right: 10),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -80,48 +80,71 @@ class _TestScreen extends State<TestScreen> {
                   ),
                   SizedBox(height: 20),
                   ...List.generate(
-                      questions[selectedQuestionIndex].options.length, (index) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8.0),
-                      child: TextButton(
-                        onPressed: () {
-                          setState(() {
-                            selectedAnswerIndex = index;
-                          });
-                        },
-                        style: ButtonStyle(
-                          backgroundColor: selectedAnswerIndex == index
-                              ? MaterialStateProperty.all(Colors.blue)
-                              : null,
+                    questions[selectedQuestionIndex].options.length,
+                    (index) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        child: TextButton(
+                          onPressed: () {
+                            setState(() {
+                              questions[selectedQuestionIndex].selected_index =
+                                  index;
+                              questions[selectedQuestionIndex].is_ticked = true;
+                            });
+                          },
+                          style: ButtonStyle(
+                            backgroundColor: questions[selectedQuestionIndex]
+                                        .selected_index ==
+                                    index
+                                ? MaterialStateProperty.all(Colors.blue)
+                                : null,
+                          ),
+                          child: Text(
+                            questions[selectedQuestionIndex].options[index],
+                            style: TextStyle(
+                                fontSize: 16,
+                                color: questions[selectedQuestionIndex]
+                                            .selected_index ==
+                                        index
+                                    ? Colors.white
+                                    : Colors.black),
+                          ),
                         ),
-                        child: Text(
-                          questions[selectedQuestionIndex].options[index],
-                          style: TextStyle(
-                              fontSize: 16,
-                              color: selectedAnswerIndex == index
-                                  ? Colors.white
-                                  : Colors.black),
-                        ),
-                      ),
-                    );
-                  }),
+                      );
+                    },
+                  ),
                 ],
               ),
             ),
             Container(
-              width: 50,
+              width: 140,
               child: GridView.builder(
                 itemCount: questions.length,
                 itemBuilder: (context, index) {
-                  return IconButton(
-                    icon: Icon(Icons.question_answer),
-                    onPressed: () {
-                      setState(() {
-                        selectedQuestionIndex = index;
-                        selectedAnswerIndex =
-                            -1; // Reset selected answer when changing question
-                      });
-                    },
+                  return Padding(
+                    padding: EdgeInsets.all(4),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        setState(
+                          () {
+                            selectedQuestionIndex = index;
+                          },
+                        );
+                      },
+                      style: ButtonStyle(
+                        alignment: Alignment.center,
+                        backgroundColor: MaterialStateProperty.all(
+                            questions[index].is_ticked ? Colors.blue : null),
+                      ),
+                      child: Text(
+                        "${index + 1}",
+                        style: TextStyle(
+                            fontSize: 12,
+                            color: questions[index].is_ticked
+                                ? Colors.white
+                                : null),
+                      ),
+                    ),
                   );
                 },
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -133,11 +156,4 @@ class _TestScreen extends State<TestScreen> {
       ),
     );
   }
-}
-
-class Question {
-  final String question;
-  final List<String> options;
-
-  Question({required this.question, required this.options});
 }
