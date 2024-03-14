@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:study/common/constant.dart';
-import 'package:study/features/quiz_test/test.dart';
+import 'package:study/features/quiz_test/TestList.dart';
 
 class QuizScreen extends StatefulWidget {
   const QuizScreen({super.key});
@@ -71,14 +71,14 @@ class _QuizScreenState extends State<QuizScreen> {
         child: Column(
           children: [
             Padding(
-              padding: EdgeInsets.only(top: 10, bottom: 40),
+              padding: EdgeInsets.only(top: 10, bottom: 20),
               child: Container(
                 height: 3,
                 width: Constants.screenWidth / 6,
                 color: Colors.red,
               ),
             ),
-            Expanded(child: test()),
+            Expanded(child: TestScreen()),
           ],
         ),
       ),
@@ -112,7 +112,7 @@ class _QuizScreenState extends State<QuizScreen> {
             ),
             child: ElevatedButton(
               onPressed: () {
-                _showQuestion("Nộp bài nhéee");
+                DialogBase("Nộp bài nhéee");
               },
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(Colors.red),
@@ -149,7 +149,7 @@ class _QuizScreenState extends State<QuizScreen> {
     );
   }
 
-  void _showQuestion(String question) {
+  void DialogBase(String question) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
