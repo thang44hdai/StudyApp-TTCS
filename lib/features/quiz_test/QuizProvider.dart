@@ -62,13 +62,20 @@ class QuestionProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void selectQuestion(int index) {
+  void updateSelectQuestion(int index) {
     selectedQuestionIndex = index;
+    notifyListeners();
   }
 
-  void selectAnswer(int questionIndex, int answerIndex) {
+  void updateSelectAnswerToQuestion(int questionIndex, int answerIndex) {
     questions[questionIndex].selected_index = answerIndex;
     questions[questionIndex].is_ticked = true;
     notifyListeners();
+  }
+
+  void resetData() {
+    questions = [];
+    selectedQuestionIndex = 0;
+    selectedAnswerIndex = -1;
   }
 }

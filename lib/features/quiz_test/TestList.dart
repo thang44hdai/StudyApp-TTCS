@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../core/model/Question.dart';
+import 'QuizProvider.dart';
 
 class TestScreen extends StatefulWidget {
   @override
@@ -7,62 +9,11 @@ class TestScreen extends StatefulWidget {
 }
 
 class _TestScreen extends State<TestScreen> {
-  List<Question> questions = [
-    Question(
-      question: "Câu hỏi 1",
-      options: ["Đáp án 1A", "Đáp án 1B", "Đáp án 1C", "Đáp án 1D"],
-    ),
-    Question(
-      question: "Câu hỏi 2",
-      options: ["Đáp án 2A", "Đáp án 2B", "Đáp án 2C", "Đáp án 2D"],
-    ),
-    Question(
-      question: "Câu hỏi 3",
-      options: ["Đáp án 3A", "Đáp án 3B", "Đáp án 3C", "Đáp án 3D"],
-    ),
-    Question(
-      question: "Câu hỏi 3",
-      options: ["Đáp án 3A", "Đáp án 3B", "Đáp án 3C", "Đáp án 3D"],
-    ),
-    Question(
-      question: "Câu hỏi 3",
-      options: ["Đáp án 3A", "Đáp án 3B", "Đáp án 3C", "Đáp án 3D"],
-    ),
-    Question(
-      question: "Câu hỏi 3",
-      options: ["Đáp án 3A", "Đáp án 3B", "Đáp án 3C", "Đáp án 3D"],
-    ),
-    Question(
-      question: "Câu hỏi 3",
-      options: ["Đáp án 3A", "Đáp án 3B", "Đáp án 3C", "Đáp án 3D"],
-    ),
-    Question(
-      question: "Câu hỏi 3",
-      options: ["Đáp án 3A", "Đáp án 3B", "Đáp án 3C", "Đáp án 3D"],
-    ),
-    Question(
-      question: "Câu hỏi 3",
-      options: ["Đáp án 3A", "Đáp án 3B", "Đáp án 3C", "Đáp án 3D"],
-    ),
-    Question(
-      question: "Câu hỏi 3",
-      options: ["Đáp án 3A", "Đáp án 3B", "Đáp án 3C", "Đáp án 3D"],
-    ),
-    Question(
-      question: "Câu hỏi 3",
-      options: ["Đáp án 3A", "Đáp án 3B", "Đáp án 3C", "Đáp án 3D"],
-    ),
-    Question(
-      question: "Câu hỏi 3",
-      options: ["Đáp án 3A", "Đáp án 3B", "Đáp án 3C", "Đáp án 3D"],
-    ),
-  ];
-
-  int selectedQuestionIndex = 0;
-  int selectedAnswerIndex = -1;
-
   @override
   Widget build(BuildContext context) {
+    final viewmodel = Provider.of<QuestionProvider>(context);
+    List<Question> questions = viewmodel.questions;
+    int selectedQuestionIndex = viewmodel.selectedQuestionIndex;
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.only(left: 20, right: 10),
@@ -86,11 +37,14 @@ class _TestScreen extends State<TestScreen> {
                         padding: const EdgeInsets.symmetric(vertical: 8.0),
                         child: TextButton(
                           onPressed: () {
-                            setState(() {
-                              questions[selectedQuestionIndex].selected_index =
-                                  index;
-                              questions[selectedQuestionIndex].is_ticked = true;
-                            });
+                            questions[selectedQuestionIndex].selected_index =
+                                index;
+                            questions[selectedQuestionIndex].is_ticked = true;
+                            viewmodel.updateQuestion(questions);
+                            viewmodel.updateSelectAnswerToQuestion(
+                                selectedQuestionIndex, index);
+                            viewmodel
+                                .updateSelectQuestion(selectedQuestionIndex);
                           },
                           style: ButtonStyle(
                             backgroundColor: questions[selectedQuestionIndex]
@@ -125,11 +79,7 @@ class _TestScreen extends State<TestScreen> {
                     padding: EdgeInsets.all(4),
                     child: ElevatedButton(
                       onPressed: () {
-                        setState(
-                          () {
-                            selectedQuestionIndex = index;
-                          },
-                        );
+                        viewmodel.updateSelectQuestion(index);
                       },
                       style: ButtonStyle(
                         alignment: Alignment.center,
