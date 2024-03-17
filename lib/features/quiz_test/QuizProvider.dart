@@ -5,8 +5,8 @@ import '../../core/model/Question.dart';
 class QuestionProvider extends ChangeNotifier {
   List<Question> questions = [
     Question(
-      question: "Câu hỏi 1",
-      options: ["Đáp án 1A", "Đáp án 1B", "Đáp án 1C", "Đáp án 1D"],
+      question: "Câu hỏi 11111111111111",
+      options: ["Đáp án 1Aqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq", "Đáp án 1B", "Đáp án 1C", "Đáp án 1D"],
     ),
     Question(
       question: "Câu hỏi 2",

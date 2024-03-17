@@ -1,21 +1,29 @@
 import 'package:flutter/material.dart';
 
 class Utils {
-  static List<Widget> heightBetween(
-      List<Widget> children, {
-        required double height,
-      }) {
-    if (children.isEmpty) return <Widget>[];
-    if (children.length == 1) return children;
-
-    final list = [children.first, SizedBox(height: height)];
-    for (int i = 1; i < children.length - 1; i++) {
-      final child = children[i];
-      list.add(child);
-      list.add(SizedBox(height: height));
-    }
-    list.add(children.last);
-
-    return list;
+  static void DialogBase(String title, BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Are You Sure"),
+          content: Text(title),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Submit'),
+            ),
+          ],
+        );
+      },
+    );
   }
 }

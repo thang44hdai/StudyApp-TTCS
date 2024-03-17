@@ -1,8 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:study/common/constant.dart';
+import 'package:study/features/quiz_test/CountdownTimber.dart';
 import 'package:study/features/quiz_test/TestList.dart';
 
+import '../../utils.dart';
 import 'QuizProvider.dart';
 
 class QuizScreen extends StatefulWidget {
@@ -13,6 +17,7 @@ class QuizScreen extends StatefulWidget {
 }
 
 class _QuizScreenState extends State<QuizScreen> {
+
   @override
   Widget build(BuildContext context) {
     final viewmodel = Provider.of<QuestionProvider>(context);
@@ -36,13 +41,18 @@ class _QuizScreenState extends State<QuizScreen> {
           style: TextStyle(color: Colors.white),
         ),
         actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Icon(
-              Icons.timer_outlined,
-              color: Colors.white,
-            ),
-          )
+          Row(
+            children: [
+              IconButton(
+                onPressed: () {},
+                icon: Icon(
+                  Icons.timer_outlined,
+                  color: Colors.white,
+                ),
+              ),
+              CountdownTimer(),
+            ],
+          ),
         ],
       ),
       body: Container(
@@ -84,7 +94,7 @@ class _QuizScreenState extends State<QuizScreen> {
                     ),
                     child: ElevatedButton(
                       onPressed: () {
-                        DialogBase("Nộp bài nhéee");
+                        Utils.DialogBase("Nộp bài nhéee", context);
                       },
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(Colors.red),
@@ -160,29 +170,29 @@ class _QuizScreenState extends State<QuizScreen> {
     );
   }
 
-  void DialogBase(String question) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text("Are You Sure"),
-          content: Text(question),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text('Cancel'),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text('Submit'),
-            ),
-          ],
-        );
-      },
-    );
-  }
+// void DialogBase(String question) {
+//   showDialog(
+//     context: context,
+//     builder: (BuildContext context) {
+//       return AlertDialog(
+//         title: Text("Are You Sure"),
+//         content: Text(question),
+//         actions: <Widget>[
+//           TextButton(
+//             onPressed: () {
+//               Navigator.of(context).pop();
+//             },
+//             child: Text('Cancel'),
+//           ),
+//           TextButton(
+//             onPressed: () {
+//               Navigator.of(context).pop();
+//             },
+//             child: Text('Submit'),
+//           ),
+//         ],
+//       );
+//     },
+//   );
+// }
 }

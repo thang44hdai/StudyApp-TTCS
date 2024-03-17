@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../core/model/Question.dart';
@@ -20,56 +21,95 @@ class _TestScreen extends State<TestScreen> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    questions[selectedQuestionIndex].question,
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: 20),
-                  ...List.generate(
-                    questions[selectedQuestionIndex].options.length,
-                    (index) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8.0),
-                        child: TextButton(
-                          onPressed: () {
-                            questions[selectedQuestionIndex].selected_index =
-                                index;
-                            questions[selectedQuestionIndex].is_ticked = true;
-                            viewmodel.updateQuestion(questions);
-                            viewmodel.updateSelectAnswerToQuestion(
-                                selectedQuestionIndex, index);
-                            viewmodel
-                                .updateSelectQuestion(selectedQuestionIndex);
-                          },
-                          style: ButtonStyle(
-                            backgroundColor: questions[selectedQuestionIndex]
-                                        .selected_index ==
-                                    index
-                                ? MaterialStateProperty.all(Colors.blue)
+            Container(
+              child: Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          IconButton(
+                            onPressed: () {
+                              setState(() {
+                                viewmodel.questions[selectedQuestionIndex]
+                                        .is_flag =
+                                    !viewmodel.questions[selectedQuestionIndex]
+                                        .is_flag;
+                              });
+                            },
+                            icon: Icon(Icons.flag),
+                            color: (questions[selectedQuestionIndex].is_flag ==
+                                    true)
+                                ? Colors.red
                                 : null,
                           ),
-                          child: Text(
-                            questions[selectedQuestionIndex].options[index],
-                            style: TextStyle(
-                                fontSize: 16,
-                                color: questions[selectedQuestionIndex]
-                                            .selected_index ==
-                                        index
-                                    ? Colors.white
-                                    : Colors.black),
+                          Expanded(
+                            child: Text(
+                              questions[selectedQuestionIndex].question,
+                              style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              softWrap: true,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
-                        ),
-                      );
-                    },
+                        ],
+                      ),
+                      Container(
+                        child: (questions[selectedQuestionIndex].is_image)
+                            ? Image.asset("assets/question.png")
+                            : null,
+                      ),
+                      SizedBox(height: 20),
+                      ...List.generate(
+                        questions[selectedQuestionIndex].options.length,
+                        (index) {
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8.0),
+                            child: TextButton(
+                              onPressed: () {
+                                questions[selectedQuestionIndex]
+                                    .selected_index = index;
+                                questions[selectedQuestionIndex].is_ticked =
+                                    true;
+                                viewmodel.updateQuestion(questions);
+                                viewmodel.updateSelectAnswerToQuestion(
+                                    selectedQuestionIndex, index);
+                                viewmodel.updateSelectQuestion(
+                                    selectedQuestionIndex);
+                              },
+                              style: ButtonStyle(
+                                backgroundColor:
+                                    questions[selectedQuestionIndex]
+                                                .selected_index ==
+                                            index
+                                        ? MaterialStateProperty.all(Colors.blue)
+                                        : null,
+                              ),
+                              child: Text(
+                                questions[selectedQuestionIndex].options[index],
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    color: questions[selectedQuestionIndex]
+                                                .selected_index ==
+                                            index
+                                        ? Colors.white
+                                        : Colors.black),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
             ),
+            // Icon Question
             Container(
               width: 140,
               child: GridView.builder(
@@ -84,13 +124,15 @@ class _TestScreen extends State<TestScreen> {
                       style: ButtonStyle(
                         alignment: Alignment.center,
                         backgroundColor: MaterialStateProperty.all(
-                            questions[index].is_ticked ? Colors.blue : null),
+                          setColorQuestion(questions[index]),
+                        ),
                       ),
                       child: Text(
                         "${index + 1}",
                         style: TextStyle(
                             fontSize: 12,
-                            color: questions[index].is_ticked
+                            color: questions[index].is_ticked ||
+                                    questions[index].is_flag
                                 ? Colors.white
                                 : null),
                       ),
@@ -105,5 +147,11 @@ class _TestScreen extends State<TestScreen> {
         ),
       ),
     );
+  }
+
+  Color setColorQuestion(Question a) {
+    if (a.is_flag == true) return Colors.red;
+    if (a.is_ticked == true) return Colors.blue;
+    return Colors.white54;
   }
 }
