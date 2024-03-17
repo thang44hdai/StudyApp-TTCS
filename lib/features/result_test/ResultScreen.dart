@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:study/common/constant.dart';
+import 'package:study/features/profile/ProfileScreen.dart';
 import 'package:study/features/quiz_test/QuizScreen.dart';
+
+import '../home/HomeScreen.dart';
 
 class ResultScreen extends StatefulWidget {
   const ResultScreen({super.key});
@@ -30,7 +33,14 @@ class _ResultScreen extends State<ResultScreen> {
         ),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ProfileScreen(),
+                ),
+              );
+            },
             icon: Icon(
               Icons.account_circle,
               color: Colors.white,
@@ -94,7 +104,13 @@ class _ResultScreen extends State<ResultScreen> {
         children: [
           ElevatedButton(
             onPressed: () {
-              Navigator.pop(context);
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                  builder: (BuildContext context) => HomeScreen(),
+                ),
+                (route) => false,
+              );
             },
             style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all(Colors.red),

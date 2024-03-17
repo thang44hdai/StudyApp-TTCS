@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:study/common/constant.dart';
+import 'package:study/features/profile/ProfileScreen.dart';
 import 'package:study/features/quiz_test/QuizScreen.dart';
 
 class TutorialScreen extends StatefulWidget {
@@ -28,7 +29,14 @@ class _TutorialScreenState extends State<TutorialScreen> {
         ),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ProfileScreen(),
+                ),
+              );
+            },
             icon: Icon(
               Icons.account_circle,
               color: Colors.white,

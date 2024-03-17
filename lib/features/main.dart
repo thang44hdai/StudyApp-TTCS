@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:study/common/constant.dart';
 import 'package:study/features/quiz_test/QuizProvider.dart';
-import 'package:study/features/tutorial/TutorialScreen.dart';
+import 'package:study/features/quiz_test/QuizScreen.dart';
+import 'package:study/features/result_test/ResultScreen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -29,7 +30,7 @@ class _MyAppState extends State<MyApp> {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: TutorialScreen(),
+        home: QuizScreen(),
       ),
     );
   }

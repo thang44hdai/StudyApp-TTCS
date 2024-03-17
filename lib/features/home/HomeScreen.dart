@@ -3,14 +3,14 @@ import 'package:study/common/constant.dart';
 
 TextEditingController searchController = TextEditingController();
 
-class Home extends StatefulWidget {
-  const Home({super.key});
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
 
   @override
-  State<Home> createState() => _HomeState();
+  State<HomeScreen> createState() => _HomeScreen();
 }
 
-class _HomeState extends State<Home> {
+class _HomeScreen extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

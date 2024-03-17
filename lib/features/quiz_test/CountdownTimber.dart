@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
+import 'package:study/features/result_test/ResultScreen.dart';
 
 import '../../utils.dart';
 
@@ -24,7 +25,12 @@ class _CountdownTimerState extends State<CountdownTimer> {
         });
       } else {
         _timer.cancel(); // Dừng đồng hồ khi hết thời gian
-        Utils.DialogBase("Overtime", context);
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ResultScreen(),
+          ),
+        );
       }
     });
   }

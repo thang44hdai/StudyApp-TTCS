@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:study/common/constant.dart';
 import 'package:study/features/quiz_test/CountdownTimber.dart';
 import 'package:study/features/quiz_test/TestList.dart';
+import 'package:study/features/result_test/ResultScreen.dart';
 
 import '../../utils.dart';
 import 'QuizProvider.dart';
@@ -17,7 +18,6 @@ class QuizScreen extends StatefulWidget {
 }
 
 class _QuizScreenState extends State<QuizScreen> {
-
   @override
   Widget build(BuildContext context) {
     final viewmodel = Provider.of<QuestionProvider>(context);
@@ -94,7 +94,7 @@ class _QuizScreenState extends State<QuizScreen> {
                     ),
                     child: ElevatedButton(
                       onPressed: () {
-                        Utils.DialogBase("Nộp bài nhéee", context);
+                        DialogBase("Nộp bài nhéee");
                       },
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(Colors.red),
@@ -170,29 +170,35 @@ class _QuizScreenState extends State<QuizScreen> {
     );
   }
 
-// void DialogBase(String question) {
-//   showDialog(
-//     context: context,
-//     builder: (BuildContext context) {
-//       return AlertDialog(
-//         title: Text("Are You Sure"),
-//         content: Text(question),
-//         actions: <Widget>[
-//           TextButton(
-//             onPressed: () {
-//               Navigator.of(context).pop();
-//             },
-//             child: Text('Cancel'),
-//           ),
-//           TextButton(
-//             onPressed: () {
-//               Navigator.of(context).pop();
-//             },
-//             child: Text('Submit'),
-//           ),
-//         ],
-//       );
-//     },
-//   );
-// }
+  void DialogBase(String question) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Are You Sure"),
+          content: Text(question),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ResultScreen(),
+                  ),
+                );
+              },
+              child: Text('Submit'),
+            ),
+          ],
+        );
+      },
+    );
+  }
 }
