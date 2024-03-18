@@ -17,7 +17,9 @@ class _TutorialScreenState extends State<TutorialScreen> {
       appBar: AppBar(
         backgroundColor: Colors.red,
         leading: IconButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pop(context);
+          },
           icon: Icon(
             Icons.arrow_back,
             color: Colors.white,

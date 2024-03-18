@@ -10,6 +10,8 @@ import 'package:study/features/result_test/ResultScreen.dart';
 import '../../utils.dart';
 import 'QuizProvider.dart';
 
+int active_clock = 1;
+
 class QuizScreen extends StatefulWidget {
   const QuizScreen({super.key});
 
@@ -50,7 +52,12 @@ class _QuizScreenState extends State<QuizScreen> {
                   color: Colors.white,
                 ),
               ),
-              CountdownTimer(timeLimit: 100),
+              active_clock == 1
+                  ? CountdownTimer(timeLimit: 100)
+                  : Text(
+                      "Submitted",
+                      style: TextStyle(color: Colors.white, fontSize: 16),
+                    ),
             ],
           ),
         ],
@@ -193,6 +200,9 @@ class _QuizScreenState extends State<QuizScreen> {
                     builder: (context) => ResultScreen(),
                   ),
                 );
+                setState(() {
+                  active_clock = 0;
+                });
               },
               child: Text('Submit'),
             ),
