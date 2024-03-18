@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:study/common/constant.dart';
 import 'package:study/features/profile/ProfileScreen.dart';
 import 'package:study/features/quiz_test/QuizScreen.dart';
+import 'package:study/features/result_test/ListResult.dart';
 
 import '../home/HomeScreen.dart';
+import '../quiz_test/QuizProvider.dart';
+import '../quiz_test/TestList.dart';
 
 class ResultScreen extends StatefulWidget {
   const ResultScreen({super.key});
@@ -16,57 +20,34 @@ class _ResultScreen extends State<ResultScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.red,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: Icon(
-            Icons.arrow_back,
-            color: Colors.white,
-          ),
-        ),
-        title: const Text(
-          "Result",
-          style: TextStyle(color: Colors.white),
-        ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ProfileScreen(),
-                ),
-              );
-            },
-            icon: Icon(
-              Icons.account_circle,
-              color: Colors.white,
-            ),
-          )
-        ],
-      ),
       body: Container(
         height: Constants.screenHeight,
         child: Stack(
           children: [
+            Header(),
             Container(
               color: Colors.red,
               height: 60,
             ),
             Body(),
             Fab(),
+            Profile(),
           ],
         ),
       ),
     );
   }
 
+  Widget Header() {
+    return Container(
+      decoration: BoxDecoration(color: Colors.red),
+      height: Constants.screenHeight / 2,
+    );
+  }
+
   Widget Body() {
     return Positioned(
-      top: 10,
+      top: Constants.screenHeight / 3,
       bottom: 0,
       right: 0,
       left: 0,
@@ -79,16 +60,16 @@ class _ResultScreen extends State<ResultScreen> {
           ),
         ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Padding(
-              padding: EdgeInsets.only(top: 10),
+              padding: EdgeInsets.only(top: 10, bottom: 20),
               child: Container(
                 height: 3,
                 width: Constants.screenWidth / 6,
                 color: Colors.red,
               ),
             ),
+            Expanded(child: ListResult()),
           ],
         ),
       ),
@@ -127,6 +108,27 @@ class _ResultScreen extends State<ResultScreen> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget Profile() {
+    return Positioned(
+      top: 20,
+      right: 5,
+      child: IconButton(
+        icon: Icon(
+          Icons.account_circle,
+          color: Colors.white,
+        ),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ProfileScreen(),
+            ),
+          );
+        },
       ),
     );
   }

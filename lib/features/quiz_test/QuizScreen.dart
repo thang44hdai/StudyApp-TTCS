@@ -50,7 +50,7 @@ class _QuizScreenState extends State<QuizScreen> {
                   color: Colors.white,
                 ),
               ),
-              CountdownTimer(),
+              CountdownTimer(timeLimit: 100),
             ],
           ),
         ],

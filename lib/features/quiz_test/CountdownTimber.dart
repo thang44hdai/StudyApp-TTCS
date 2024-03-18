@@ -7,17 +7,23 @@ import 'package:study/features/result_test/ResultScreen.dart';
 import '../../utils.dart';
 
 class CountdownTimer extends StatefulWidget {
+  final int timeLimit;
+
+  const CountdownTimer({required this.timeLimit, super.key});
+
   @override
   _CountdownTimerState createState() => _CountdownTimerState();
 }
 
 class _CountdownTimerState extends State<CountdownTimer> {
-  int _secondsRemaining = 180;
+
+  int _secondsRemaining = 0;
   late Timer _timer;
 
   @override
   void initState() {
     super.initState();
+    _secondsRemaining = widget.timeLimit;
     _timer = Timer.periodic(Duration(seconds: 1), (timer) {
       if (_secondsRemaining > 0) {
         setState(() {
