@@ -6,6 +6,6 @@ class Question {
   int selected_index = -1;
   bool is_ticked = false;
   bool is_flag = false;
-  bool is_image = false;
+  bool is_image = true;
   Question({required this.question, required this.options});
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:photo_view/photo_view.dart';
 import 'package:provider/provider.dart';
+import '../../common/constant.dart';
 import '../../core/model/Question.dart';
 import 'QuizProvider.dart';
 
@@ -17,101 +19,122 @@ class _TestScreen extends State<TestScreen> {
     int selectedQuestionIndex = viewmodel.selectedQuestionIndex;
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.only(left: 20, right: 10),
+        padding: EdgeInsets.only(left: 10, right: 10),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
-              child: Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          IconButton(
-                            onPressed: () {
-                              setState(() {
-                                viewmodel.questions[selectedQuestionIndex]
-                                        .is_flag =
-                                    !viewmodel.questions[selectedQuestionIndex]
-                                        .is_flag;
-                              });
-                            },
-                            icon: Icon(Icons.flag),
-                            color: (questions[selectedQuestionIndex].is_flag ==
-                                    true)
-                                ? Colors.red
-                                : null,
-                          ),
-                          Expanded(
-                            child: Text(
-                              questions[selectedQuestionIndex].question,
-                              style: const TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              softWrap: true,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Container(
-                        child: (questions[selectedQuestionIndex].is_image)
-                            ? Image.asset("assets/question.png")
-                            : null,
-                      ),
-                      SizedBox(height: 20),
-                      ...List.generate(
-                        questions[selectedQuestionIndex].options.length,
-                        (index) {
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 8.0),
-                            child: TextButton(
+              width: Constants.screenWidth - 100,
+              height: double.infinity,
+              child: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 16.0, bottom: 80),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            IconButton(
                               onPressed: () {
-                                questions[selectedQuestionIndex]
-                                    .selected_index = index;
-                                questions[selectedQuestionIndex].is_ticked =
-                                    true;
-                                viewmodel.updateQuestion(questions);
-                                viewmodel.updateSelectAnswerToQuestion(
-                                    selectedQuestionIndex, index);
-                                viewmodel.updateSelectQuestion(
-                                    selectedQuestionIndex);
+                                setState(() {
+                                  viewmodel.questions[selectedQuestionIndex]
+                                      .is_flag =
+                                  !viewmodel.questions[selectedQuestionIndex]
+                                      .is_flag;
+                                });
                               },
-                              style: ButtonStyle(
-                                backgroundColor:
-                                    questions[selectedQuestionIndex]
-                                                .selected_index ==
-                                            index
-                                        ? MaterialStateProperty.all(Colors.blue)
-                                        : null,
-                              ),
+                              icon: Icon(Icons.flag),
+                              color: (questions[selectedQuestionIndex].is_flag ==
+                                  true)
+                                  ? Colors.red
+                                  : null,
+                            ),
+                            Expanded(
                               child: Text(
-                                questions[selectedQuestionIndex].options[index],
-                                style: TextStyle(
-                                    fontSize: 16,
-                                    color: questions[selectedQuestionIndex]
-                                                .selected_index ==
-                                            index
-                                        ? Colors.white
-                                        : Colors.black),
+                                questions[selectedQuestionIndex].question,
+                                style: const TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                softWrap: true,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
                               ),
                             ),
-                          );
-                        },
-                      ),
-                    ],
+                          ],
+                        ),
+                        Container(
+                          child: (questions[selectedQuestionIndex].is_image)
+                              ? GestureDetector(
+                            onTap: () {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return ZoomableImagePopup(
+                                      imageUrl:
+                                      "https://upload.wikimedia.org/wikipedia/en/b/bd/Doraemon_character.png");
+                                },
+                              );
+                            },
+                            child: Image.network(
+                              'https://upload.wikimedia.org/wikipedia/en/b/bd/Doraemon_character.png',
+                              // Replace the URL with your actual image URL
+                              fit: BoxFit.cover,
+                            ),
+                          )
+                              : null,
+                        ),
+                        SizedBox(height: 20),
+                        ...List.generate(
+                          questions[selectedQuestionIndex].options.length,
+                              (index) {
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 8.0),
+                              child: TextButton(
+                                onPressed: () {
+                                  questions[selectedQuestionIndex]
+                                      .selected_index = index;
+                                  questions[selectedQuestionIndex].is_ticked =
+                                  true;
+                                  viewmodel.updateQuestion(questions);
+                                  viewmodel.updateSelectAnswerToQuestion(
+                                      selectedQuestionIndex, index);
+                                  viewmodel.updateSelectQuestion(
+                                      selectedQuestionIndex);
+                                },
+                                style: ButtonStyle(
+                                  backgroundColor:
+                                  questions[selectedQuestionIndex]
+                                      .selected_index ==
+                                      index
+                                      ? MaterialStateProperty.all(Colors.blue)
+                                      : null,
+                                ),
+                                child: Text(
+                                  questions[selectedQuestionIndex].options[index],
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      color: questions[selectedQuestionIndex]
+                                          .selected_index ==
+                                          index
+                                          ? Colors.white
+                                          : Colors.black),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
             ),
             // Icon Question
             Container(
-              width: 140,
+              width: 70,
               child: GridView.builder(
                 itemCount: questions.length,
                 itemBuilder: (context, index) {
@@ -140,7 +163,8 @@ class _TestScreen extends State<TestScreen> {
                   );
                 },
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2),
+                  crossAxisCount: 1,
+                ),
               ),
             ),
           ],
@@ -153,5 +177,31 @@ class _TestScreen extends State<TestScreen> {
     if (a.is_flag == true) return Colors.red;
     if (a.is_ticked == true) return Colors.blue;
     return Colors.white54;
+  }
+}
+
+class ZoomableImagePopup extends StatelessWidget {
+  final String imageUrl;
+
+  ZoomableImagePopup({required this.imageUrl});
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      child: GestureDetector(
+        onTap: () {
+          Navigator.of(context).pop();
+        },
+        child: Container(
+          child: PhotoView(
+            imageProvider: NetworkImage(imageUrl),
+            backgroundDecoration: BoxDecoration(color: Colors.transparent),
+            minScale: PhotoViewComputedScale.contained * 0.8,
+            maxScale: PhotoViewComputedScale.covered * 2,
+            enableRotation: true, // Cho phép xoay ảnh
+          ),
+        ),
+      ),
+    );
   }
 }
