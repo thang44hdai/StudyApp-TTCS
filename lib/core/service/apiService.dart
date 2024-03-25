@@ -5,10 +5,10 @@ import 'package:http/http.dart' as http;
 class ApiService {
   Future<List<QuestionIntro>> getQuestionIntro() async {
     final response = await http
-        .get(Uri.parse("http://localhost/backend_php/api_list_qusetion.php"));
+        .get(Uri.parse("http://192.168.58.1/backend_php/api_list_question.php"));
     if (response.statusCode == 200) {
       final List<dynamic> decodeData =
-          json.decode(response.body)['list_question'];
+      json.decode(response.body)['list_question'];
       return decodeData
           .map((list_question) => QuestionIntro.fromJson(list_question))
           .toList();

@@ -67,10 +67,12 @@ class ItemQuiz extends StatelessWidget {
                     color: Colors.white,
                   ),
                   SizedBox(width: 10),
-                  Text(
-                    "${item.title}",
-                    style: TextStyle(color: Colors.white),
-                  ),
+                  Expanded(
+                    child: Text(
+                      "${item.title}",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  )
                 ],
               ),
               Row(
@@ -80,9 +82,11 @@ class ItemQuiz extends StatelessWidget {
                     color: Colors.white,
                   ),
                   SizedBox(width: 10),
-                  Text(
-                    "${item.time}",
-                    style: TextStyle(color: Colors.white),
+                  Expanded(
+                    child: Text(
+                      "${item.time}",
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ),
                 ],
               ),
@@ -93,9 +97,11 @@ class ItemQuiz extends StatelessWidget {
                     color: Colors.white,
                   ),
                   SizedBox(width: 10),
-                  Text(
-                    "${item.description}",
-                    style: TextStyle(color: Colors.white),
+                  Expanded(
+                    child: Text(
+                      "${item.description}",
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ),
                 ],
               ),

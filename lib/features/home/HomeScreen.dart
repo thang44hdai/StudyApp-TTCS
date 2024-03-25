@@ -170,15 +170,16 @@ class _HomeScreen extends State<HomeScreen> {
               List<QuestionIntro> ListQuestionIntro = snapshot.data;
               return GridView.builder(
                 itemCount: ListQuestionIntro.length,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2),
                 itemBuilder: (context1, index) {
+                  var item = ListQuestionIntro[index];
                   return ItemQuiz(
                     item: QuestionIntro(
-                      id: 1,
-                      time: 100,
-                      title: 'Math',
-                      description: '!',
+                      id: item.id,
+                      time: item.time,
+                      title: item.title,
+                      description: item.description,
                     ),
                   );
                 },
@@ -223,31 +224,5 @@ class _HomeScreen extends State<HomeScreen> {
         ),
       ),
     );
-  }
-
-  Future<Widget> fetchData() async {
-    final Dio dio = Dio();
-    try {
-      var response = await dio.get("http://localhost/backend_php/api_list_qusetion.php");
-
-      List<QuestionIntro> ListQuestionIntro = response.data;
-      return GridView.builder(
-        itemCount: ListQuestionIntro.length,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2),
-        itemBuilder: (context1, index) {
-          return ItemQuiz(
-            item: QuestionIntro(
-              id: 1,
-              time: 100,
-              title: 'Math',
-              description: '!',
-            ),
-          );
-        },
-      );
-    } on DioException catch (e) {
-      return Text("${e.error}");
-    }
   }
 }
