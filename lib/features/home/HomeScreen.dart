@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:study/common/constant.dart';
+import 'package:study/core/model/QuestionIntro.dart';
 import 'package:study/features/profile/ProfileScreen.dart';
 import 'package:study/features/tutorial/TutorialScreen.dart';
+
+import 'QuizItem.dart';
 
 TextEditingController searchController = TextEditingController();
 
@@ -148,10 +151,19 @@ class _HomeScreen extends State<HomeScreen> {
             topLeft: Radius.circular(35),
           ),
         ),
-        child: ListView.builder(
-          itemCount: 50,
-          itemBuilder: (context, indext) {
-            return Text("data $indext");
+        child: GridView.builder(
+          itemCount: 10,
+          gridDelegate:
+              SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+          itemBuilder: (context, index) {
+            return ItemQuiz(
+              item: QuestionIntro(
+                id: 1,
+                time: 100,
+                title: 'Math',
+                description: '!',
+              ),
+            );
           },
         ),
       ),
