@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:study/common/constant.dart';
 import 'package:study/core/response/QuestionIntro.dart';
+import 'package:study/core/service/apiService.dart';
 import 'package:study/features/profile/ProfileScreen.dart';
 import 'package:study/features/tutorial/TutorialScreen.dart';
 
@@ -16,6 +17,14 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreen extends State<HomeScreen> {
+  late Future<List<QuestionIntro>> ListQuestionIntroFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    ListQuestionIntroFuture = ApiService().getQuestionIntro();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -151,19 +160,35 @@ class _HomeScreen extends State<HomeScreen> {
             topLeft: Radius.circular(35),
           ),
         ),
-        child: GridView.builder(
-          itemCount: 10,
-          gridDelegate:
-              SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-          itemBuilder: (context, index) {
-            return ItemQuiz(
-              item: QuestionIntro(
-                id: 1,
-                time: 100,
-                title: 'Math',
-                description: '!',
-              ),
-            );
+        child: FutureBuilder(
+          future: ListQuestionIntroFuture,
+          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+            if (snapshot.hasError) {
+              return Text("No Internet");
+            } else if (snapshot.hasData) {
+              List<QuestionIntro> ListQuestionIntro = snapshot.data;
+              return GridView.builder(
+                itemCount: ListQuestionIntro.length,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2),
+                itemBuilder: (context1, index) {
+                  return ItemQuiz(
+                    item: QuestionIntro(
+                      id: 1,
+                      time: 100,
+                      title: 'Math',
+                      description: '!',
+                    ),
+                  );
+                },
+              );
+            } else {
+              return Center(
+                child: Container(
+                  color: Colors.amber,
+                ),
+              );
+            }
           },
         ),
       ),

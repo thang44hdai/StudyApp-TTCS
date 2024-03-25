@@ -1,35 +1,19 @@
-// import '../../common/constant.dart';
-//
-// class Api {
-//   String url = "${Constants.apiUrl};
-//
-//   Future<List<Movie>> getTrendingMovies() async {
-//     final response = await http.get(Uri.parse(trendingUrl));
-//     if (response.statusCode == 200) {
-//       final List<dynamic> decodeData = json.decode(response.body)['results'];
-//       return decodeData.map((movie) => Movie.fromJson(movie)).toList();
-//     } else {
-//       throw Exception("Something happend");
-//     }
-//   }
-//
-//   Future<List<Movie>> getIsPlayingMovies() async {
-//     final response = await http.get(Uri.parse(isPlayingUrl));
-//     if (response.statusCode == 200) {
-//       final List<dynamic> decodeData = json.decode(response.body)['results'];
-//       return decodeData.map((e) => Movie.fromJson(e)).toList();
-//     } else {
-//       throw Exception("Error");
-//     }
-//   }
-//
-//   Future<List<Movie>> getUpComingMovies() async {
-//     final respone = await http.get(Uri.parse(upComingUrl));
-//     if (respone.statusCode == 200) {
-//       final List<dynamic> decodeData = json.decode(respone.body)['results'];
-//       return decodeData.map((e) => Movie.fromJson(e)).toList();
-//     } else {
-//       throw Exception("Error");
-//     }
-//   }
-// }
+import 'dart:convert';
+import '../response/QuestionIntro.dart';
+import 'package:http/http.dart' as http;
+
+class ApiService {
+  Future<List<QuestionIntro>> getQuestionIntro() async {
+    final response = await http
+        .get(Uri.parse("http://localhost/backend_php/api_list_qusetion.php"));
+    if (response.statusCode == 200) {
+      final List<dynamic> decodeData =
+          json.decode(response.body)['list_question'];
+      return decodeData
+          .map((list_question) => QuestionIntro.fromJson(list_question))
+          .toList();
+    } else {
+      throw Exception("Something happend");
+    }
+  }
+}
