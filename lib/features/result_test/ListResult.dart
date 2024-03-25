@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:provider/provider.dart';
 import '../../common/constant.dart';
-import '../../core/model/Question.dart';
+import '../../core/response/QuestionTotal.dart';
 import '../quiz_test/QuizProvider.dart';
 
 class ListResult extends StatefulWidget {
@@ -15,7 +15,7 @@ class _ListResult extends State<ListResult> {
   @override
   Widget build(BuildContext context) {
     final viewmodel = Provider.of<QuestionProvider>(context);
-    List<Question> questions = viewmodel.questions;
+    List<QuestionTotal> questions = viewmodel.questions;
     int selectedQuestionIndex = viewmodel.selectedQuestionIndex;
 
     return Scaffold(
@@ -140,12 +140,12 @@ class _ListResult extends State<ListResult> {
     );
   }
 
-  Color setColorQuestion(Question a) {
+  Color setColorQuestion(QuestionTotal a) {
     if (a.selected_index == a.true_answer) return Colors.green;
     return Colors.red;
   }
 
-  Color setBackgroundAnswer(int option, Question a) {
+  Color setBackgroundAnswer(int option, QuestionTotal a) {
     if (a.true_answer == option) return Colors.green;
     if (a.true_answer != option) {
       if (option == a.selected_index) return Colors.red;

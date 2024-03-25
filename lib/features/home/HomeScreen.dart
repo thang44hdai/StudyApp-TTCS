@@ -180,6 +180,7 @@ class _HomeScreen extends State<HomeScreen> {
                       time: item.time,
                       title: item.title,
                       description: item.description,
+                      question: item.question
                     ),
                   );
                 },

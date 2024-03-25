@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:provider/provider.dart';
 import '../../common/constant.dart';
-import '../../core/model/Question.dart';
+import '../../core/response/QuestionTotal.dart';
 import 'QuizProvider.dart';
 
 class TestScreen extends StatefulWidget {
@@ -15,7 +15,7 @@ class _TestScreen extends State<TestScreen> {
   @override
   Widget build(BuildContext context) {
     final viewmodel = Provider.of<QuestionProvider>(context);
-    List<Question> questions = viewmodel.questions;
+    List<QuestionTotal> questions = viewmodel.questions;
     int selectedQuestionIndex = viewmodel.selectedQuestionIndex;
     return Scaffold(
       body: Padding(
@@ -173,7 +173,7 @@ class _TestScreen extends State<TestScreen> {
     );
   }
 
-  Color setColorQuestion(Question a) {
+  Color setColorQuestion(QuestionTotal a) {
     if (a.is_flag == true) return Colors.red;
     if (a.is_ticked == true) return Colors.blue;
     return Colors.white54;

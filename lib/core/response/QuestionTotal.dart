@@ -1,6 +1,6 @@
-import 'Option.dart';
+import '../model/Option.dart';
 
-class Question {
+class QuestionTotal {
   final String question;
   final List<String> options;
   int selected_index = -1;
@@ -9,5 +9,5 @@ class Question {
   bool is_image = false;
   int true_answer;
 
-  Question({required this.question, required this.options, required this.true_answer});
+  QuestionTotal({required this.question, required this.options, required this.true_answer});
 }
