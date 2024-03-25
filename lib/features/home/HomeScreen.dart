@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:study/common/constant.dart';
-import 'package:study/core/model/QuestionIntro.dart';
+import 'package:study/core/response/QuestionIntro.dart';
 import 'package:study/features/profile/ProfileScreen.dart';
 import 'package:study/features/tutorial/TutorialScreen.dart';
 
