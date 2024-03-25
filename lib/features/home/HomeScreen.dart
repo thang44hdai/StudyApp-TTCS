@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:study/common/constant.dart';
 import 'package:study/core/response/QuestionIntro.dart';
@@ -164,7 +165,7 @@ class _HomeScreen extends State<HomeScreen> {
           future: ListQuestionIntroFuture,
           builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
             if (snapshot.hasError) {
-              return Text("No Internet");
+              return Text("${snapshot.error}");
             } else if (snapshot.hasData) {
               List<QuestionIntro> ListQuestionIntro = snapshot.data;
               return GridView.builder(
@@ -222,5 +223,31 @@ class _HomeScreen extends State<HomeScreen> {
         ),
       ),
     );
+  }
+
+  Future<Widget> fetchData() async {
+    final Dio dio = Dio();
+    try {
+      var response = await dio.get("http://localhost/backend_php/api_list_qusetion.php");
+
+      List<QuestionIntro> ListQuestionIntro = response.data;
+      return GridView.builder(
+        itemCount: ListQuestionIntro.length,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2),
+        itemBuilder: (context1, index) {
+          return ItemQuiz(
+            item: QuestionIntro(
+              id: 1,
+              time: 100,
+              title: 'Math',
+              description: '!',
+            ),
+          );
+        },
+      );
+    } on DioException catch (e) {
+      return Text("${e.error}");
+    }
   }
 }
