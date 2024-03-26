@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:study/common/constant.dart';
 import 'package:study/features/home/HomeScreen.dart';
-import 'package:study/features/quiz_test/QuizProvider.dart';
+import 'package:study/features/quiz_test/provider/QuizProvider.dart';
 import 'package:study/features/quiz_test/QuizScreen.dart';
+import 'package:study/features/quiz_test/provider/TimberProvider.dart';
 import 'package:study/features/result_test/ResultScreen.dart';
 
 void main() {
@@ -22,8 +23,11 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     Constants.screenHeight = MediaQuery.of(context).size.height;
     Constants.screenWidth = MediaQuery.of(context).size.width;
-    return ChangeNotifierProvider(
-      create: (context) => QuestionProvider(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => QuestionProvider()),
+        ChangeNotifierProvider(create: (context) => TimberProvider()),
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Study',

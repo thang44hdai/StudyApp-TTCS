@@ -4,7 +4,7 @@ import 'package:photo_view/photo_view.dart';
 import 'package:provider/provider.dart';
 import '../../common/constant.dart';
 import '../../core/response/QuestionTotal.dart';
-import '../quiz_test/QuizProvider.dart';
+import '../quiz_test/provider/QuizProvider.dart';
 
 class ListResult extends StatefulWidget {
   @override
@@ -12,11 +12,17 @@ class ListResult extends StatefulWidget {
 }
 
 class _ListResult extends State<ListResult> {
+  late int selectedQuestionIndex;
+  @override
+  void initState() {
+    super.initState();
+    selectedQuestionIndex = 0;
+  }
   @override
   Widget build(BuildContext context) {
     final viewmodel = Provider.of<QuestionProvider>(context);
     List<QuestionTotal> questions = viewmodel.questions;
-    int selectedQuestionIndex = viewmodel.selectedQuestionIndex;
+    selectedQuestionIndex = viewmodel.selectedQuestionIndex;
 
     return Scaffold(
       body: Padding(
@@ -46,7 +52,10 @@ class _ListResult extends State<ListResult> {
                           overflow: TextOverflow.ellipsis,
                         ),
                         Container(
-                          child: (questions[selectedQuestionIndex].question.is_image!=null)
+                          child: (questions[selectedQuestionIndex]
+                                      .question
+                                      .is_image !=
+                                  "")
                               ? GestureDetector(
                                   onTap: () {
                                     showDialog(
@@ -54,12 +63,16 @@ class _ListResult extends State<ListResult> {
                                       builder: (BuildContext context) {
                                         return ZoomableImagePopup(
                                             imageUrl:
-                                                "https://upload.wikimedia.org/wikipedia/en/b/bd/Doraemon_character.png");
+                                                questions[selectedQuestionIndex]
+                                                    .question
+                                                    .is_image);
                                       },
                                     );
                                   },
                                   child: Image.network(
-                                    'https://upload.wikimedia.org/wikipedia/en/b/bd/Doraemon_character.png',
+                                    questions[selectedQuestionIndex]
+                                        .question
+                                        .is_image,
                                     // Replace the URL with your actual image URL
                                     fit: BoxFit.cover,
                                   ),
@@ -81,13 +94,17 @@ class _ListResult extends State<ListResult> {
                                           questions[selectedQuestionIndex])),
                                 ),
                                 child: Text(
-                                  questions[selectedQuestionIndex].question.option[index],
+                                  questions[selectedQuestionIndex]
+                                      .question
+                                      .option[index],
                                   style: TextStyle(
                                       fontSize: 16,
                                       color: questions[selectedQuestionIndex]
                                                       .selected_index ==
                                                   index ||
-                                              questions[selectedQuestionIndex].question.true_answer ==
+                                              questions[selectedQuestionIndex]
+                                                      .question
+                                                      .true_answer ==
                                                   index
                                           ? Colors.white
                                           : Colors.black),

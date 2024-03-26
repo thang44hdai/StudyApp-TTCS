@@ -4,7 +4,8 @@ import 'package:study/core/response/QuestionIntro.dart';
 import 'package:study/features/tutorial/TutorialScreen.dart';
 
 import '../../common/constant.dart';
-import '../quiz_test/QuizProvider.dart';
+import '../quiz_test/provider/QuizProvider.dart';
+import '../quiz_test/provider/TimberProvider.dart';
 
 class ItemQuiz extends StatelessWidget {
   final QuestionIntro item;
@@ -14,7 +15,7 @@ class ItemQuiz extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final viewmodel = Provider.of<QuestionProvider>(context);
-
+    final time_viewmodel = Provider.of<TimberProvider>(context);
     void DialogBase() {
       showDialog(
         context: context,
@@ -31,6 +32,7 @@ class ItemQuiz extends StatelessWidget {
               ),
               TextButton(
                 onPressed: () {
+                  time_viewmodel.setTime(item.time);
                   viewmodel.setQuiz(item.question);
                   Navigator.of(context).pop();
                   Navigator.push(

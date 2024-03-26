@@ -4,7 +4,7 @@ import 'package:photo_view/photo_view.dart';
 import 'package:provider/provider.dart';
 import '../../common/constant.dart';
 import '../../core/response/QuestionTotal.dart';
-import 'QuizProvider.dart';
+import 'provider/QuizProvider.dart';
 
 class TestScreen extends StatefulWidget {
   @override
@@ -62,9 +62,6 @@ class _TestScreen extends State<TestScreen> {
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
                                 ),
-                                softWrap: true,
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
                               ),
                             ),
                           ],
@@ -73,7 +70,7 @@ class _TestScreen extends State<TestScreen> {
                           child: (questions[selectedQuestionIndex]
                                       .question
                                       .is_image !=
-                                  null)
+                                  "")
                               ? GestureDetector(
                                   onTap: () {
                                     showDialog(
@@ -81,12 +78,16 @@ class _TestScreen extends State<TestScreen> {
                                       builder: (BuildContext context) {
                                         return ZoomableImagePopup(
                                             imageUrl:
-                                                "https://upload.wikimedia.org/wikipedia/en/b/bd/Doraemon_character.png");
+                                                questions[selectedQuestionIndex]
+                                                    .question
+                                                    .is_image);
                                       },
                                     );
                                   },
                                   child: Image.network(
-                                    'https://upload.wikimedia.org/wikipedia/en/b/bd/Doraemon_character.png',
+                                    questions[selectedQuestionIndex]
+                                        .question
+                                        .is_image,
                                     // Replace the URL with your actual image URL
                                     fit: BoxFit.cover,
                                   ),

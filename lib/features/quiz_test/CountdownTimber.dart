@@ -2,28 +2,30 @@ import 'dart:async';
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:study/features/quiz_test/provider/TimberProvider.dart';
 import 'package:study/features/result_test/ResultScreen.dart';
 
 import '../../utils.dart';
 
 class CountdownTimer extends StatefulWidget {
-  final int timeLimit;
-
-  const CountdownTimer({required this.timeLimit, super.key});
+  const CountdownTimer({super.key});
 
   @override
   _CountdownTimerState createState() => _CountdownTimerState();
 }
 
 class _CountdownTimerState extends State<CountdownTimer> {
-
   int _secondsRemaining = 0;
   late Timer _timer;
+  late TimberProvider viewmodel;
 
   @override
   void initState() {
     super.initState();
-    _secondsRemaining = widget.timeLimit;
+
+    viewmodel = Provider.of<TimberProvider>(context, listen: false);
+    _secondsRemaining = viewmodel.time;
     _timer = Timer.periodic(Duration(seconds: 1), (timer) {
       if (_secondsRemaining > 0) {
         setState(() {
@@ -61,13 +63,19 @@ class _CountdownTimerState extends State<CountdownTimer> {
       _secondsRemaining %= 60;
       time = "${h}h ${m}m ${_secondsRemaining}s";
     }
-
-    return Padding(
-      padding: EdgeInsets.only(right: 10),
-      child: Text(
-        "$time",
+    if (_secondsRemaining == 0) {
+      return Text(
+        "Submitted",
         style: TextStyle(color: Colors.white, fontSize: 16),
-      ),
-    );
+      );
+    } else {
+      return Padding(
+        padding: EdgeInsets.only(right: 10),
+        child: Text(
+          "$time",
+          style: TextStyle(color: Colors.white, fontSize: 16),
+        ),
+      );
+    }
   }
 }

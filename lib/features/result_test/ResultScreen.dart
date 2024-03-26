@@ -6,7 +6,7 @@ import 'package:study/features/quiz_test/QuizScreen.dart';
 import 'package:study/features/result_test/ListResult.dart';
 
 import '../home/HomeScreen.dart';
-import '../quiz_test/QuizProvider.dart';
+import '../quiz_test/provider/QuizProvider.dart';
 import '../quiz_test/TestList.dart';
 
 class ResultScreen extends StatefulWidget {

@@ -5,10 +5,11 @@ import 'package:provider/provider.dart';
 import 'package:study/common/constant.dart';
 import 'package:study/features/quiz_test/CountdownTimber.dart';
 import 'package:study/features/quiz_test/TestList.dart';
+import 'package:study/features/quiz_test/provider/TimberProvider.dart';
 import 'package:study/features/result_test/ResultScreen.dart';
 
 import '../../utils.dart';
-import 'QuizProvider.dart';
+import 'provider/QuizProvider.dart';
 
 int active_clock = 1;
 
@@ -23,8 +24,11 @@ class _QuizScreenState extends State<QuizScreen> {
   @override
   Widget build(BuildContext context) {
     final viewmodel = Provider.of<QuestionProvider>(context);
+    final time_viewmodel = Provider.of<TimberProvider>(context);
     int selectedQuestionIndex = viewmodel.selectedQuestionIndex;
     int len = viewmodel.questions.length;
+
+    if (active_clock == 0) time_viewmodel.setTime(0);
 
     return Scaffold(
       appBar: AppBar(
@@ -52,12 +56,7 @@ class _QuizScreenState extends State<QuizScreen> {
                   color: Colors.white,
                 ),
               ),
-              active_clock == 1
-                  ? CountdownTimer(timeLimit: 100)
-                  : Text(
-                      "Submitted",
-                      style: TextStyle(color: Colors.white, fontSize: 16),
-                    ),
+              CountdownTimer()
             ],
           ),
         ],
