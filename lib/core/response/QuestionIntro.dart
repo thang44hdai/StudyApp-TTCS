@@ -21,6 +21,6 @@ class QuestionIntro {
         title: json['title'],
         time: json['time'],
         description: json['description'],
-        question: json['question']);
+        question: json['option']);
   }
 }
