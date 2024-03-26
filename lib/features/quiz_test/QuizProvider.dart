@@ -8,6 +8,11 @@ class QuestionProvider extends ChangeNotifier {
   int selectedQuestionIndex = 0;
   int selectedAnswerIndex = -1;
 
+  void setQuiz(List<QuestionTotal> a) {
+    questions = a;
+    notifyListeners();
+  }
+
   void updateQuestion(List<QuestionTotal> a) {
     questions = a;
     notifyListeners();

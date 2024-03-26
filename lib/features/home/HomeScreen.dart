@@ -1,11 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:study/common/constant.dart';
 import 'package:study/core/response/QuestionIntro.dart';
 import 'package:study/core/service/apiService.dart';
 import 'package:study/features/profile/ProfileScreen.dart';
 import 'package:study/features/tutorial/TutorialScreen.dart';
 
+import '../quiz_test/QuizProvider.dart';
 import 'QuizItem.dart';
 
 TextEditingController searchController = TextEditingController();
@@ -28,6 +30,7 @@ class _HomeScreen extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       body: Container(
         height: Constants.screenHeight,
