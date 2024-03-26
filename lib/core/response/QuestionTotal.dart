@@ -1,13 +1,10 @@
-import '../model/Option.dart';
+import 'package:study/core/response/Question.dart';
 
 class QuestionTotal {
-  String question;
-  List<String> options;
+  Question question;
   int selected_index = -1;
   bool is_ticked = false; // check the question is selected the answer
   bool is_flag = false; // check the question is ticked by the flag
-  bool is_image = false;
-  int true_answer;
 
-  QuestionTotal({required this.question, required this.options, required this.true_answer});
+  QuestionTotal({required this.question});
 }

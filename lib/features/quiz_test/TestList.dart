@@ -40,20 +40,24 @@ class _TestScreen extends State<TestScreen> {
                               onPressed: () {
                                 setState(() {
                                   viewmodel.questions[selectedQuestionIndex]
-                                      .is_flag =
-                                  !viewmodel.questions[selectedQuestionIndex]
-                                      .is_flag;
+                                          .is_flag =
+                                      !viewmodel
+                                          .questions[selectedQuestionIndex]
+                                          .is_flag;
                                 });
                               },
                               icon: Icon(Icons.flag),
-                              color: (questions[selectedQuestionIndex].is_flag ==
-                                  true)
-                                  ? Colors.red
-                                  : null,
+                              color:
+                                  (questions[selectedQuestionIndex].is_flag ==
+                                          true)
+                                      ? Colors.red
+                                      : null,
                             ),
                             Expanded(
                               child: Text(
-                                questions[selectedQuestionIndex].question,
+                                questions[selectedQuestionIndex]
+                                    .question
+                                    .question,
                                 style: const TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
@@ -66,38 +70,42 @@ class _TestScreen extends State<TestScreen> {
                           ],
                         ),
                         Container(
-                          child: (questions[selectedQuestionIndex].is_image)
+                          child: (questions[selectedQuestionIndex]
+                                      .question
+                                      .is_image !=
+                                  null)
                               ? GestureDetector(
-                            onTap: () {
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return ZoomableImagePopup(
-                                      imageUrl:
-                                      "https://upload.wikimedia.org/wikipedia/en/b/bd/Doraemon_character.png");
-                                },
-                              );
-                            },
-                            child: Image.network(
-                              'https://upload.wikimedia.org/wikipedia/en/b/bd/Doraemon_character.png',
-                              // Replace the URL with your actual image URL
-                              fit: BoxFit.cover,
-                            ),
-                          )
+                                  onTap: () {
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return ZoomableImagePopup(
+                                            imageUrl:
+                                                "https://upload.wikimedia.org/wikipedia/en/b/bd/Doraemon_character.png");
+                                      },
+                                    );
+                                  },
+                                  child: Image.network(
+                                    'https://upload.wikimedia.org/wikipedia/en/b/bd/Doraemon_character.png',
+                                    // Replace the URL with your actual image URL
+                                    fit: BoxFit.cover,
+                                  ),
+                                )
                               : null,
                         ),
                         SizedBox(height: 20),
                         ...List.generate(
-                          questions[selectedQuestionIndex].options.length,
-                              (index) {
+                          4,
+                          (index) {
                             return Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 8.0),
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 8.0),
                               child: TextButton(
                                 onPressed: () {
                                   questions[selectedQuestionIndex]
                                       .selected_index = index;
                                   questions[selectedQuestionIndex].is_ticked =
-                                  true;
+                                      true;
                                   viewmodel.updateQuestion(questions);
                                   viewmodel.updateSelectAnswerToQuestion(
                                       selectedQuestionIndex, index);
@@ -105,20 +113,22 @@ class _TestScreen extends State<TestScreen> {
                                       selectedQuestionIndex);
                                 },
                                 style: ButtonStyle(
-                                  backgroundColor:
-                                  questions[selectedQuestionIndex]
-                                      .selected_index ==
-                                      index
+                                  backgroundColor: questions[
+                                                  selectedQuestionIndex]
+                                              .selected_index ==
+                                          index
                                       ? MaterialStateProperty.all(Colors.blue)
                                       : null,
                                 ),
                                 child: Text(
-                                  questions[selectedQuestionIndex].options[index],
+                                  questions[selectedQuestionIndex]
+                                      .question
+                                      .option[index],
                                   style: TextStyle(
                                       fontSize: 16,
                                       color: questions[selectedQuestionIndex]
-                                          .selected_index ==
-                                          index
+                                                  .selected_index ==
+                                              index
                                           ? Colors.white
                                           : Colors.black),
                                 ),

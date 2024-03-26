@@ -36,7 +36,7 @@ class _ListResult extends State<ListResult> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          questions[selectedQuestionIndex].question,
+                          questions[selectedQuestionIndex].question.question,
                           style: const TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
@@ -46,7 +46,7 @@ class _ListResult extends State<ListResult> {
                           overflow: TextOverflow.ellipsis,
                         ),
                         Container(
-                          child: (questions[selectedQuestionIndex].is_image)
+                          child: (questions[selectedQuestionIndex].question.is_image!=null)
                               ? GestureDetector(
                                   onTap: () {
                                     showDialog(
@@ -68,7 +68,7 @@ class _ListResult extends State<ListResult> {
                         ),
                         SizedBox(height: 20),
                         ...List.generate(
-                          questions[selectedQuestionIndex].options.length,
+                          4,
                           (index) {
                             return Padding(
                               padding:
@@ -81,15 +81,13 @@ class _ListResult extends State<ListResult> {
                                           questions[selectedQuestionIndex])),
                                 ),
                                 child: Text(
-                                  questions[selectedQuestionIndex]
-                                      .options[index],
+                                  questions[selectedQuestionIndex].question.option[index],
                                   style: TextStyle(
                                       fontSize: 16,
                                       color: questions[selectedQuestionIndex]
                                                       .selected_index ==
                                                   index ||
-                                              questions[selectedQuestionIndex]
-                                                      .true_answer ==
+                                              questions[selectedQuestionIndex].question.true_answer ==
                                                   index
                                           ? Colors.white
                                           : Colors.black),
@@ -141,13 +139,13 @@ class _ListResult extends State<ListResult> {
   }
 
   Color setColorQuestion(QuestionTotal a) {
-    if (a.selected_index == a.true_answer) return Colors.green;
+    if (a.selected_index == a.question.true_answer) return Colors.green;
     return Colors.red;
   }
 
   Color setBackgroundAnswer(int option, QuestionTotal a) {
-    if (a.true_answer == option) return Colors.green;
-    if (a.true_answer != option) {
+    if (a.question.true_answer == option) return Colors.green;
+    if (a.question.true_answer != option) {
       if (option == a.selected_index) return Colors.red;
     }
     return Colors.white54;
