@@ -21,14 +21,14 @@ class QuizScreen extends StatefulWidget {
 }
 
 class _QuizScreenState extends State<QuizScreen> {
+  late QuestionProvider viewmodel;
+
   @override
   Widget build(BuildContext context) {
-    final viewmodel = Provider.of<QuestionProvider>(context);
+    viewmodel = Provider.of<QuestionProvider>(context);
     final time_viewmodel = Provider.of<TimberProvider>(context);
     int selectedQuestionIndex = viewmodel.selectedQuestionIndex;
     int len = viewmodel.questions.length;
-
-    if (active_clock == 0) time_viewmodel.setTime(0);
 
     return Scaffold(
       appBar: AppBar(
@@ -56,7 +56,7 @@ class _QuizScreenState extends State<QuizScreen> {
                   color: Colors.white,
                 ),
               ),
-              CountdownTimer()
+              CountdownTimer(timber: time_viewmodel.time)
             ],
           ),
         ],
@@ -193,11 +193,12 @@ class _QuizScreenState extends State<QuizScreen> {
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
-                Navigator.push(
+                Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(
                     builder: (context) => ResultScreen(),
                   ),
+                  (route) => false,
                 );
                 setState(() {
                   active_clock = 0;

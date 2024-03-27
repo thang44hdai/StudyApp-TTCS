@@ -13,14 +13,17 @@ class ListResult extends StatefulWidget {
 
 class _ListResult extends State<ListResult> {
   late int selectedQuestionIndex;
+  late QuestionProvider viewmodel;
   @override
   void initState() {
     super.initState();
     selectedQuestionIndex = 0;
+    viewmodel = Provider.of<QuestionProvider>(context, listen: false);
+    viewmodel.selectedQuestionIndex = 0;
   }
   @override
   Widget build(BuildContext context) {
-    final viewmodel = Provider.of<QuestionProvider>(context);
+    viewmodel = Provider.of<QuestionProvider>(context);
     List<QuestionTotal> questions = viewmodel.questions;
     selectedQuestionIndex = viewmodel.selectedQuestionIndex;
 
@@ -47,9 +50,6 @@ class _ListResult extends State<ListResult> {
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
                           ),
-                          softWrap: true,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
                         ),
                         Container(
                           child: (questions[selectedQuestionIndex]

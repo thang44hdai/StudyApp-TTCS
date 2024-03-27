@@ -9,7 +9,9 @@ import 'package:study/features/result_test/ResultScreen.dart';
 import '../../utils.dart';
 
 class CountdownTimer extends StatefulWidget {
-  const CountdownTimer({super.key});
+  final int timber;
+
+  const CountdownTimer({required this.timber, super.key});
 
   @override
   _CountdownTimerState createState() => _CountdownTimerState();
@@ -24,8 +26,7 @@ class _CountdownTimerState extends State<CountdownTimer> {
   void initState() {
     super.initState();
 
-    viewmodel = Provider.of<TimberProvider>(context, listen: false);
-    _secondsRemaining = viewmodel.time;
+    _secondsRemaining = widget.timber;
     _timer = Timer.periodic(Duration(seconds: 1), (timer) {
       if (_secondsRemaining > 0) {
         setState(() {
@@ -33,11 +34,12 @@ class _CountdownTimerState extends State<CountdownTimer> {
         });
       } else {
         _timer.cancel(); // Dừng đồng hồ khi hết thời gian
-        Navigator.push(
+        Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
             builder: (context) => ResultScreen(),
           ),
+          (route) => false,
         );
       }
     });
@@ -64,7 +66,7 @@ class _CountdownTimerState extends State<CountdownTimer> {
       time = "${h}h ${m}m ${_secondsRemaining}s";
     }
     if (_secondsRemaining == 0) {
-      return Text(
+      return const Text(
         "Submitted",
         style: TextStyle(color: Colors.white, fontSize: 16),
       );

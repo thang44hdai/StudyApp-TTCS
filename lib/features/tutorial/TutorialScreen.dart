@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:study/common/constant.dart';
 import 'package:study/features/profile/ProfileScreen.dart';
 import 'package:study/features/quiz_test/QuizScreen.dart';
+import 'package:study/features/quiz_test/provider/QuizProvider.dart';
 
 class TutorialScreen extends StatefulWidget {
   const TutorialScreen({super.key});
@@ -11,8 +13,10 @@ class TutorialScreen extends StatefulWidget {
 }
 
 class _TutorialScreenState extends State<TutorialScreen> {
+  late QuestionProvider viewmodel;
   @override
   Widget build(BuildContext context) {
+    viewmodel = Provider.of<QuestionProvider>(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.red,
@@ -184,6 +188,7 @@ class _TutorialScreenState extends State<TutorialScreen> {
         children: [
           ElevatedButton(
             onPressed: () {
+              viewmodel.selectedQuestionIndex = 0;
               Navigator.push(
                 context,
                 MaterialPageRoute(
