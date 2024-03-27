@@ -73,7 +73,7 @@ class _HomeScreen extends State<HomeScreen> {
                         ),
                       );
                     },
-                    icon: Icon(Icons.account_circle),
+                    icon: Icon(Icons.notifications_active),
                     color: Colors.white,
                   ),
                 ],
