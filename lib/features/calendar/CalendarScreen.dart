@@ -69,13 +69,28 @@ class CalendarBody extends StatefulWidget {
 }
 
 class _CalendarBodyState extends State<CalendarBody> {
-  DateTime today = DateTime.now();
+  DateTime _forcusedDay = DateTime.now();
+  DateTime? _selectedDay;
   Map<DateTime, List<Event>> events = {};
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedDay = _forcusedDay;
+    _selectedEvents = ValueNotifier(_getEventsForDay(_selectedDay!));
+  }
 
   void _onDaySelected(DateTime day, DateTime focusedDay) {
     setState(() {
-      today = day;
+      _forcusedDay = day;
+      _selectedEvents = ValueNotifier(_getEventsForDay(_selectedDay!));
     });
+  }
+
+  late final ValueNotifier<List<Event>> _selectedEvents;
+
+  List<Event> _getEventsForDay(DateTime day) {
+    return events[day] ?? [];
   }
 
   @override
@@ -91,11 +106,12 @@ class _CalendarBodyState extends State<CalendarBody> {
               titleCentered: true,
             ),
             availableGestures: AvailableGestures.all,
-            focusedDay: today,
+            focusedDay: _forcusedDay,
             firstDay: DateTime.utc(2024),
             lastDay: DateTime.utc(2025),
             onDaySelected: _onDaySelected,
-            selectedDayPredicate: (day) => isSameDay(day, today),
+            eventLoader: _getEventsForDay,
+            selectedDayPredicate: (day) => isSameDay(day, _forcusedDay),
             calendarStyle: CalendarStyle(
               todayDecoration: BoxDecoration(
                 color: Colors.red[200],
@@ -113,6 +129,28 @@ class _CalendarBodyState extends State<CalendarBody> {
           height: 0.5,
           color: Colors.grey,
         ),
+        SizedBox(height: 10),
+        ValueListenableBuilder(
+          valueListenable: _selectedEvents,
+          builder: (context, value, _) {
+            return ListView.builder(itemBuilder: (context, index) {
+              return Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: ListTile(
+                  onTap: () {
+                    events.addAll({
+                      _selectedDay!: [Event(title: event_controller.text)]
+                    });
+                    Navigator.pop(context);
+                    _selectedEvents.value = _getEventsForDay(_selectedDay!);
+                  },
+                ),
+              );
+            });
+          },
+        )
       ],
     );
   }
