@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:study/common/constant.dart';
+import 'package:study/features/calendar/CalendarScreen.dart';
 import 'package:study/features/home/HomeScreen.dart';
 import 'package:study/features/profile/ProfileScreen.dart';
 import 'package:study/features/quiz_test/provider/QuizProvider.dart';
@@ -63,8 +64,8 @@ class _MyAppState extends State<MyApp> {
                       label: "Home",
                     ),
                     BottomNavigationBarItem(
-                      icon: Icon(Icons.search),
-                      label: "Search",
+                      icon: Icon(Icons.calendar_today_sharp),
+                      label: "Calendar",
                     ),
                     BottomNavigationBarItem(
                       icon: Icon(Icons.add_to_drive_outlined),
@@ -89,7 +90,7 @@ class NavigationController extends GetxController {
   final Rx<int> selectedIndex = 0.obs;
   final Screen = [
     HomeScreen(),
-    Container(color: Colors.green),
+    CalendarScreen(),
     Container(color: Colors.red),
     ProfileScreen(),
   ];
