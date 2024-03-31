@@ -1,119 +1,157 @@
 import 'package:flutter/material.dart';
+import 'package:study/features/calendar/event.dart';
 import 'package:table_calendar/table_calendar.dart';
-
-import 'event.dart';
-
-var event_controller = TextEditingController();
 
 class CalendarScreen extends StatefulWidget {
   @override
   _CalendarScreenState createState() => _CalendarScreenState();
 }
 
-// Lưu lịch sử
-// Join đề
-// Quét QR phòng thi
-// Bảng xếp hạng
-// Tạo QR phòng thi
-
 class _CalendarScreenState extends State<CalendarScreen> {
+  late Map<DateTime, List<Event>> selectedEvents;
+  CalendarFormat format = CalendarFormat.month;
+  DateTime selectedDay = DateTime.now();
+  DateTime focusedDay = DateTime.now();
+
+  TextEditingController _eventController = TextEditingController();
+
+  @override
+  void initState() {
+    selectedEvents = {};
+    super.initState();
+  }
+
+  List<Event> _getEventsfromDay(DateTime date) {
+    return selectedEvents[date] ?? [];
+  }
+
+  @override
+  void dispose() {
+    _eventController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.red,
-        title: Text(
-          'Schedule',
-          style: TextStyle(
-            color: Colors.white,
-          ),
-        ),
+        title: Text("ESTech Calendar"),
+        centerTitle: true,
       ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.red,
-        onPressed: () {
-          showDialog(
-              context: context,
-              builder: (context) {
-                return AlertDialog(
-                  scrollable: true,
-                  title: Text("Event Name:"),
-                  content: Padding(
-                    padding: EdgeInsets.all(8),
-                    child: TextField(
-                      controller: event_controller,
-                    ),
-                  ),
-                  actions: [
-                    ElevatedButton(
-                      onPressed: () {},
-                      child: Text("Submit"),
-                    ),
-                  ],
-                );
+      body: Column(
+        children: [
+          TableCalendar(
+            focusedDay: selectedDay,
+            firstDay: DateTime(1990),
+            lastDay: DateTime(2050),
+            calendarFormat: format,
+            onFormatChanged: (CalendarFormat _format) {
+              setState(() {
+                format = _format;
               });
-        },
-        child: Icon(
-          Icons.add,
-          color: Colors.white,
-        ),
-      ),
-      body: CalendarBody(),
-    );
-  }
-}
+            },
+            startingDayOfWeek: StartingDayOfWeek.sunday,
+            daysOfWeekVisible: true,
 
-class CalendarBody extends StatefulWidget {
-  @override
-  State<CalendarBody> createState() => _CalendarBodyState();
-}
+            //Day Changed
+            onDaySelected: (DateTime selectDay, DateTime focusDay) {
+              setState(() {
+                selectedDay = selectDay;
+                focusedDay = focusDay;
+              });
+              print(focusedDay);
+            },
+            selectedDayPredicate: (DateTime date) {
+              return isSameDay(selectedDay, date);
+            },
 
-class _CalendarBodyState extends State<CalendarBody> {
-  DateTime today = DateTime.now();
-  Map<DateTime, List<Event>> events = {};
+            eventLoader: _getEventsfromDay,
 
-  void _onDaySelected(DateTime day, DateTime focusedDay) {
-    setState(() {
-      today = day;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          child: TableCalendar(
-            locale: "en_US",
-            rowHeight: 43,
-            headerStyle: HeaderStyle(
-              formatButtonVisible: false,
-              titleCentered: true,
-            ),
-            availableGestures: AvailableGestures.all,
-            focusedDay: today,
-            firstDay: DateTime.utc(2024),
-            lastDay: DateTime.utc(2025),
-            onDaySelected: _onDaySelected,
-            selectedDayPredicate: (day) => isSameDay(day, today),
+            //To style the Calendar
             calendarStyle: CalendarStyle(
-              todayDecoration: BoxDecoration(
-                color: Colors.red[200],
-                shape: BoxShape.circle,
-              ),
+              isTodayHighlighted: true,
               selectedDecoration: BoxDecoration(
-                color: Colors.red,
-                shape: BoxShape.circle,
+                color: Colors.blue,
+                shape: BoxShape.rectangle,
+                borderRadius: BorderRadius.circular(5.0),
+              ),
+              selectedTextStyle: TextStyle(color: Colors.white),
+              todayDecoration: BoxDecoration(
+                color: Colors.purpleAccent,
+                shape: BoxShape.rectangle,
+                borderRadius: BorderRadius.circular(5.0),
+              ),
+              defaultDecoration: BoxDecoration(
+                shape: BoxShape.rectangle,
+                borderRadius: BorderRadius.circular(5.0),
+              ),
+              weekendDecoration: BoxDecoration(
+                shape: BoxShape.rectangle,
+                borderRadius: BorderRadius.circular(5.0),
+              ),
+            ),
+            headerStyle: HeaderStyle(
+              formatButtonVisible: true,
+              titleCentered: true,
+              formatButtonShowsNext: false,
+              formatButtonDecoration: BoxDecoration(
+                color: Colors.blue,
+                borderRadius: BorderRadius.circular(5.0),
+              ),
+              formatButtonTextStyle: TextStyle(
+                color: Colors.white,
               ),
             ),
           ),
+          ..._getEventsfromDay(selectedDay).map(
+            (Event event) => ListTile(
+              title: Text(
+                event.title,
+              ),
+            ),
+          ),
+        ],
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () => showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text("Add Event"),
+            content: TextFormField(
+              controller: _eventController,
+            ),
+            actions: [
+              TextButton(
+                child: Text("Cancel"),
+                onPressed: () => Navigator.pop(context),
+              ),
+              TextButton(
+                child: Text("Ok"),
+                onPressed: () {
+                  if (_eventController.text.isEmpty) {
+                  } else {
+                    if (selectedEvents[selectedDay] != null) {
+                      selectedEvents[selectedDay]?.add(
+                        Event(title: _eventController.text),
+                      );
+                    } else {
+                      selectedEvents[selectedDay] = [
+                        Event(title: _eventController.text)
+                      ];
+                    }
+                  }
+                  Navigator.pop(context);
+                  _eventController.clear();
+                  setState(() {});
+                  return;
+                },
+              ),
+            ],
+          ),
         ),
-        SizedBox(height: 10),
-        Container(
-          height: 0.5,
-          color: Colors.grey,
-        ),
-      ],
+        label: Text("Add Event"),
+        icon: Icon(Icons.add),
+      ),
     );
   }
 }
