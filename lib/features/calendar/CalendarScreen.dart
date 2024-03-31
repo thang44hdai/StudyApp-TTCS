@@ -90,7 +90,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
               ),
               weekendTextStyle: TextStyle(color: Colors.green),
             ),
-            headerStyle: HeaderStyle(
+            headerStyle: const HeaderStyle(
                 formatButtonVisible: false,
                 titleCentered: true,
                 formatButtonShowsNext: true,

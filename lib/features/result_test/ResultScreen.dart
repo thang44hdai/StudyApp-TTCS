@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:study/common/constant.dart';
+import 'package:study/features/main.dart';
 import 'package:study/features/profile/ProfileScreen.dart';
 import 'package:study/features/quiz_test/QuizScreen.dart';
 import 'package:study/features/result_test/ListResult.dart';
@@ -88,7 +89,7 @@ class _ResultScreen extends State<ResultScreen> {
               Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(
-                  builder: (BuildContext context) => HomeScreen(),
+                  builder: (BuildContext context) => MyApp(),
                 ),
                 (route) => false,
               );
