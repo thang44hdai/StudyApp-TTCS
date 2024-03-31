@@ -49,8 +49,8 @@ class _MyAppState extends State<MyApp> {
             builder: (controller) {
               return ClipRRect(
                 borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20.0), // Điều chỉnh cong ở đây
-                  topRight: Radius.circular(20.0), // Điều chỉnh cong ở đây
+                  topLeft: Radius.circular(20.0),
+                  topRight: Radius.circular(20.0),
                 ),
                 child: BottomNavigationBar(
                   backgroundColor: Colors.red,
