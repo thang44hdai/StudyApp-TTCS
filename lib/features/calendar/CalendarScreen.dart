@@ -7,6 +7,12 @@ class CalendarScreen extends StatefulWidget {
   _CalendarScreenState createState() => _CalendarScreenState();
 }
 
+// Lưu lịch sử
+// Join đề
+// Quét QR phòng thi
+// Bảng xếp hạng
+// Tạo QR phòng thi
+
 class _CalendarScreenState extends State<CalendarScreen> {
   late Map<DateTime, List<Event>> selectedEvents;
   CalendarFormat format = CalendarFormat.month;
@@ -35,22 +41,22 @@ class _CalendarScreenState extends State<CalendarScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("ESTech Calendar"),
-        centerTitle: true,
+        title: Text("Calendar"),
+        backgroundColor: Colors.red,
       ),
       body: Column(
         children: [
           TableCalendar(
             focusedDay: selectedDay,
-            firstDay: DateTime(1990),
-            lastDay: DateTime(2050),
+            firstDay: DateTime(2023),
+            lastDay: DateTime(2025),
             calendarFormat: format,
             onFormatChanged: (CalendarFormat _format) {
               setState(() {
                 format = _format;
               });
             },
-            startingDayOfWeek: StartingDayOfWeek.sunday,
+            startingDayOfWeek: StartingDayOfWeek.monday,
             daysOfWeekVisible: true,
 
             //Day Changed
@@ -71,37 +77,31 @@ class _CalendarScreenState extends State<CalendarScreen> {
             calendarStyle: CalendarStyle(
               isTodayHighlighted: true,
               selectedDecoration: BoxDecoration(
-                color: Colors.blue,
-                shape: BoxShape.rectangle,
-                borderRadius: BorderRadius.circular(5.0),
+                color: Colors.red,
+                shape: BoxShape.circle,
               ),
               selectedTextStyle: TextStyle(color: Colors.white),
               todayDecoration: BoxDecoration(
-                color: Colors.purpleAccent,
-                shape: BoxShape.rectangle,
-                borderRadius: BorderRadius.circular(5.0),
+                color: Colors.red[200],
+                shape: BoxShape.circle,
               ),
               defaultDecoration: BoxDecoration(
-                shape: BoxShape.rectangle,
-                borderRadius: BorderRadius.circular(5.0),
+                shape: BoxShape.circle,
               ),
-              weekendDecoration: BoxDecoration(
-                shape: BoxShape.rectangle,
-                borderRadius: BorderRadius.circular(5.0),
-              ),
+              weekendTextStyle: TextStyle(color: Colors.green),
             ),
             headerStyle: HeaderStyle(
-              formatButtonVisible: true,
-              titleCentered: true,
-              formatButtonShowsNext: false,
-              formatButtonDecoration: BoxDecoration(
-                color: Colors.blue,
-                borderRadius: BorderRadius.circular(5.0),
-              ),
-              formatButtonTextStyle: TextStyle(
-                color: Colors.white,
-              ),
-            ),
+                formatButtonVisible: false,
+                titleCentered: true,
+                formatButtonShowsNext: true,
+                leftChevronIcon: Icon(
+                  Icons.navigate_before,
+                  color: Colors.red,
+                ),
+                rightChevronIcon: Icon(
+                  Icons.navigate_next,
+                  color: Colors.red,
+                )),
           ),
           ..._getEventsfromDay(selectedDay).map(
             (Event event) => ListTile(
