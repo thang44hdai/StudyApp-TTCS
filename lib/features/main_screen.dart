@@ -20,6 +20,8 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
+    Get.put(NavigationController());
+
     return Scaffold(
       body: GetX<NavigationController>(
         builder: (controller) {
