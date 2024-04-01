@@ -44,38 +44,38 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyDfuuZHcnWMaJt2GwHkFsQ10nyQvCCkWTk',
-    appId: '1:332831202170:web:55c02c85c859f9de1dd4c3',
-    messagingSenderId: '332831202170',
-    projectId: 'studyapp-2d1b2',
-    authDomain: 'studyapp-2d1b2.firebaseapp.com',
-    storageBucket: 'studyapp-2d1b2.appspot.com',
-    measurementId: 'G-90YR19C5S0',
+    apiKey: 'AIzaSyBKPaHWiTyaGJUu0XB2nGp6jRf1MIgHiYY',
+    appId: '1:463658762955:web:b3ec36476d399beefdd14e',
+    messagingSenderId: '463658762955',
+    projectId: 'studyapp-ee3fc',
+    authDomain: 'studyapp-ee3fc.firebaseapp.com',
+    storageBucket: 'studyapp-ee3fc.appspot.com',
+    measurementId: 'G-HKJGHW0683',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyB_m1qt1Hl52mw7ytXpHs2wT5cbAxMKuLI',
-    appId: '1:332831202170:android:7b09855b6c2b6d901dd4c3',
-    messagingSenderId: '332831202170',
-    projectId: 'studyapp-2d1b2',
-    storageBucket: 'studyapp-2d1b2.appspot.com',
+    apiKey: 'AIzaSyC-eJjzO5aBxw8LT5ver2TKIxYAc8la6Ck',
+    appId: '1:463658762955:android:9d5d20cf916c7faafdd14e',
+    messagingSenderId: '463658762955',
+    projectId: 'studyapp-ee3fc',
+    storageBucket: 'studyapp-ee3fc.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyC9WXgL48iftoJOZWxsvsVC1F5_5ZYDdnE',
-    appId: '1:332831202170:ios:a6c91b6f0add90cc1dd4c3',
-    messagingSenderId: '332831202170',
-    projectId: 'studyapp-2d1b2',
-    storageBucket: 'studyapp-2d1b2.appspot.com',
+    apiKey: 'AIzaSyBax5KhzHJ3X0ne5Zv1xkO4qBgw-XVc5T4',
+    appId: '1:463658762955:ios:369512cda9784a4bfdd14e',
+    messagingSenderId: '463658762955',
+    projectId: 'studyapp-ee3fc',
+    storageBucket: 'studyapp-ee3fc.appspot.com',
     iosBundleId: 'com.example.study',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyC9WXgL48iftoJOZWxsvsVC1F5_5ZYDdnE',
-    appId: '1:332831202170:ios:3595dde26bb560671dd4c3',
-    messagingSenderId: '332831202170',
-    projectId: 'studyapp-2d1b2',
-    storageBucket: 'studyapp-2d1b2.appspot.com',
+    apiKey: 'AIzaSyBax5KhzHJ3X0ne5Zv1xkO4qBgw-XVc5T4',
+    appId: '1:463658762955:ios:22696cefa5318263fdd14e',
+    messagingSenderId: '463658762955',
+    projectId: 'studyapp-ee3fc',
+    storageBucket: 'studyapp-ee3fc.appspot.com',
     iosBundleId: 'com.example.study.RunnerTests',
   );
 }

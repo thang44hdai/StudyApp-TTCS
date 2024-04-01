@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:study/common/constant.dart';
+import 'package:study/features/authentication/SignUpScreen.dart';
 import 'package:study/features/home/HomeScreen.dart';
 import 'package:study/features/main_screen.dart';
 
@@ -10,46 +12,38 @@ double widthScreen = 0;
 TextEditingController _tk_loginController = TextEditingController();
 TextEditingController _mk_loginController = TextEditingController();
 
-// void signIn(BuildContext context, String tk, String mk) async {
-//   try {
-//     final auth = FirebaseAuth.instance;
-//     UserCredential userCredential = await auth.signInWithEmailAndPassword(
-//       email: tk,
-//       password: mk,
-//     );
-//     //user a = user(name: "name", account: "account", password: "password", ticket: []);
-//     user a = await read_user(tk + mk);
-//     Constants.User = a;
-//     Constants.login_state = 1;
-//     // Đăng nhập thành công, chuyển hướng sang màn hình khác
-//     Navigator.of(context).pushReplacement(
-//       MaterialPageRoute(
-//         builder: (context) => homePage(
-//           User: a,
-//         ),
-//       ),
-//     );
-//   } catch (e) {
-//     Constants.login_state = 0;
-//     return showDialog(
-//       context: context,
-//       builder: (BuildContext context) {
-//         return AlertDialog(
-//           title: Text('Thông báo'),
-//           content: Text(e.toString()),
-//           actions: [
-//             TextButton(
-//               child: Text('OK'),
-//               onPressed: () {
-//                 Navigator.of(context).pop();
-//               },
-//             ),
-//           ],
-//         );
-//       },
-//     );
-//   }
-// }
+void signIn(BuildContext context, String tk, String mk) async {
+  try {
+    final auth = FirebaseAuth.instance;
+    UserCredential userCredential = await auth.signInWithEmailAndPassword(
+      email: tk,
+      password: mk,
+    );
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(
+        builder: (context) => MainScreen(),
+      ),
+    );
+  } catch (e) {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Thông báo'),
+          content: Text(e.toString()),
+          actions: [
+            TextButton(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
 
 // Future<user> read_user(String docs) async {
 //   DocumentSnapshot documentSnapshot =
@@ -175,14 +169,14 @@ class LoginScreen extends StatelessWidget {
                               ),
                               ElevatedButton(
                                 onPressed: () {
-                                  // signIn(context, _tk_loginController.text,
-                                  //     _mk_loginController.text);
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => MainScreen(),
-                                    ),
-                                  );
+                                  signIn(context, _tk_loginController.text,
+                                      _mk_loginController.text);
+                                  // Navigator.push(
+                                  //   context,
+                                  //   MaterialPageRoute(
+                                  //     builder: (context) => MainScreen(),
+                                  //   ),
+                                  // );
                                 },
                                 style: ElevatedButton.styleFrom(
                                   shape: StadiumBorder(),
@@ -208,10 +202,11 @@ class LoginScreen extends StatelessWidget {
                                   Text("Not a member?"),
                                   TextButton(
                                       onPressed: () {
-                                        // Navigator.push(
-                                        //     context,
-                                        //     MaterialPageRoute(
-                                        //         builder: (context) => signupPage()));
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    SignUpScreen()));
                                       },
                                       child: Text("Register")),
                                 ],

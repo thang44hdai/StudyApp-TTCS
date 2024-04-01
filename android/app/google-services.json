@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "332831202170",
-    "project_id": "studyapp-2d1b2",
-    "storage_bucket": "studyapp-2d1b2.appspot.com"
+    "project_number": "463658762955",
+    "project_id": "studyapp-ee3fc",
+    "storage_bucket": "studyapp-ee3fc.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:332831202170:android:7b09855b6c2b6d901dd4c3",
+        "mobilesdk_app_id": "1:463658762955:android:9d5d20cf916c7faafdd14e",
         "android_client_info": {
           "package_name": "com.example.study"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyB_m1qt1Hl52mw7ytXpHs2wT5cbAxMKuLI"
+          "current_key": "AIzaSyC-eJjzO5aBxw8LT5ver2TKIxYAc8la6Ck"
         }
       ],
       "services": {
