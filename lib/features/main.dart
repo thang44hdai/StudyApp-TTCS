@@ -7,6 +7,7 @@ import 'package:study/features/authentication/LoginScreen.dart';
 import 'package:study/features/calendar/CalendarScreen.dart';
 import 'package:study/features/calendar/CalendarProvider.dart';
 import 'package:study/features/home/HomeScreen.dart';
+import 'package:study/features/profile/ProfileProvider.dart';
 import 'package:study/features/profile/ProfileScreen.dart';
 import 'package:study/features/quiz_test/provider/QuizProvider.dart';
 import 'package:study/features/quiz_test/QuizScreen.dart';
@@ -36,6 +37,7 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(create: (context) => QuestionProvider()),
         ChangeNotifierProvider(create: (context) => TimberProvider()),
         ChangeNotifierProvider(create: (context) => CalendarProvider()),
+        ChangeNotifierProvider(create: (context) => ProfileProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
