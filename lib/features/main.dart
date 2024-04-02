@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:study/common/constant.dart';
 import 'package:study/features/authentication/LoginScreen.dart';
 import 'package:study/features/calendar/CalendarScreen.dart';
+import 'package:study/features/calendar/CalendarProvider.dart';
 import 'package:study/features/home/HomeScreen.dart';
 import 'package:study/features/profile/ProfileScreen.dart';
 import 'package:study/features/quiz_test/provider/QuizProvider.dart';
@@ -34,6 +35,7 @@ class _MyAppState extends State<MyApp> {
       providers: [
         ChangeNotifierProvider(create: (context) => QuestionProvider()),
         ChangeNotifierProvider(create: (context) => TimberProvider()),
+        ChangeNotifierProvider(create: (context) => CalendarProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
