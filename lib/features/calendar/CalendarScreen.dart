@@ -16,7 +16,7 @@ class CalendarScreen extends StatefulWidget {
 // Tạo QR phòng thi
 
 class _CalendarScreenState extends State<CalendarScreen> {
-  late Map<DateTime, List<Event>> selectedEvents;
+  late Map<String, List<Event>> selectedEvents;
   DateTime selectedDay = DateTime.now();
   DateTime focusedDay = DateTime.now();
 
@@ -26,11 +26,12 @@ class _CalendarScreenState extends State<CalendarScreen> {
   @override
   void initState() {
     selectedEvents = {};
+    getEvent();
     super.initState();
   }
 
   List<Event> _getEventsfromDay(DateTime date) {
-    return selectedEvents[date] ?? [];
+    return selectedEvents[convertDatetimeToDate(date)] ?? [];
   }
 
   @override
@@ -164,10 +165,10 @@ class _CalendarScreenState extends State<CalendarScreen> {
 
     if (_eventController.text.isEmpty) {
     } else {
-      if (selectedEvents[selectedDay] != null) {
-        selectedEvents[selectedDay]?.add(event1);
+      if (selectedEvents[event1.date] != null) {
+        selectedEvents[event1.date]?.add(event1);
       } else {
-        selectedEvents[selectedDay] = [event1];
+        selectedEvents[event1.date] = [event1];
       }
     }
     Navigator.pop(context);
@@ -183,13 +184,14 @@ class _CalendarScreenState extends State<CalendarScreen> {
         .doc(user.account + user.password)
         .get();
     final doc = documentSnapshot.get('doc') as List<dynamic>;
-    final _doc = doc.cast<Map<String, String>>().toList();
+    final _doc = doc.cast<Map<String, dynamic>>().toList();
     Map<String, String> event = {
       "title": event1.title,
       "date": event1.date,
       "time": event1.time,
     };
     _doc.add(event);
+
     await firestore
         .collection("events")
         .doc(user.account + user.password)
@@ -197,6 +199,33 @@ class _CalendarScreenState extends State<CalendarScreen> {
 
     _eventController.clear();
     _timeEventController.clear();
+  }
+
+  Future<void> getEvent() async {
+    var user = Constants.user;
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    DocumentSnapshot documentSnapshot = await firestore
+        .collection("events")
+        .doc(user.account + user.password)
+        .get();
+    List<dynamic> eventsData = documentSnapshot.get("doc");
+    List<Event> events = eventsData.map((eventData) {
+      return Event(
+        title: eventData['title'],
+        time: eventData['time'],
+        date: eventData['date'],
+      );
+    }).toList();
+
+    events.forEach((element) {
+      if (selectedEvents[element.date] != null) {
+        selectedEvents[element.date]?.add(element);
+      } else {
+        selectedEvents[element.date] = [element];
+      }
+    });
+
+
   }
 
   String convertDatetimeToDate(DateTime x) {
