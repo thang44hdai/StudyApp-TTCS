@@ -76,7 +76,6 @@ class _CalendarScreenState extends State<CalendarScreen> {
 
                   eventLoader: _getEventsfromDay,
 
-                  //To style the Calendar
                   calendarStyle: CalendarStyle(
                     isTodayHighlighted: true,
                     selectedDecoration: BoxDecoration(
@@ -106,21 +105,35 @@ class _CalendarScreenState extends State<CalendarScreen> {
                         color: Colors.red,
                       )),
                 ),
-                ..._getEventsfromDay(selectedDay).map(
-                  (Event event) => Padding(
-                    padding: EdgeInsets.only(bottom: 10),
-                    child: Container(
-                      color: Colors.red,
-                      child: ListTile(
-                        title: Text(
-                          event.title,
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        leading: event.time != ""
-                            ? Text(event.time,
-                                style: TextStyle(color: Colors.white))
-                            : null,
-                      ),
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 40),
+                    child: ListView.builder(
+                      itemCount: _getEventsfromDay(selectedDay).length,
+                      itemBuilder: (context, index) {
+                        Event event = _getEventsfromDay(selectedDay)[index];
+                        return Padding(
+                          padding: EdgeInsets.only(bottom: 10),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: Colors.red,
+                            ),
+                            child: ListTile(
+                              title: Text(
+                                event.title,
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              leading: event.time != ""
+                                  ? Text(
+                                      event.time,
+                                      style: TextStyle(color: Colors.white),
+                                    )
+                                  : null,
+                            ),
+                          ),
+                        );
+                      },
                     ),
                   ),
                 ),
