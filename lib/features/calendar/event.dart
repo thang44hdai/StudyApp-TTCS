@@ -1,8 +1,6 @@
-import 'package:flutter/foundation.dart';
-
 class Event {
   final String title;
-  Event({required this.title});
-
-  String toString() => this.title;
+  String time;
+  String date;
+  Event({required this.title, String time = "", required this.date}) : this.time = time;
 }

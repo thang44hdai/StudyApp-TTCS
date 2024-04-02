@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:study/common/constant.dart';
+import 'package:study/core/model/User.dart';
 import 'package:study/features/authentication/SignUpScreen.dart';
 import 'package:study/features/home/HomeScreen.dart';
 import 'package:study/features/main_screen.dart';
@@ -19,6 +20,7 @@ void signIn(BuildContext context, String tk, String mk) async {
       email: tk,
       password: mk,
     );
+    Constants.user = UserDoc(account: tk, password: mk);
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
         builder: (context) => MainScreen(),
@@ -171,12 +173,6 @@ class LoginScreen extends StatelessWidget {
                                 onPressed: () {
                                   signIn(context, _tk_loginController.text,
                                       _mk_loginController.text);
-                                  // Navigator.push(
-                                  //   context,
-                                  //   MaterialPageRoute(
-                                  //     builder: (context) => MainScreen(),
-                                  //   ),
-                                  // );
                                 },
                                 style: ElevatedButton.styleFrom(
                                   shape: StadiumBorder(),

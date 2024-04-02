@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:study/common/constant.dart';
 import 'package:study/features/calendar/event.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -15,11 +17,11 @@ class CalendarScreen extends StatefulWidget {
 
 class _CalendarScreenState extends State<CalendarScreen> {
   late Map<DateTime, List<Event>> selectedEvents;
-  CalendarFormat format = CalendarFormat.month;
   DateTime selectedDay = DateTime.now();
   DateTime focusedDay = DateTime.now();
 
   TextEditingController _eventController = TextEditingController();
+  TextEditingController _timeEventController = TextEditingController();
 
   @override
   void initState() {
@@ -41,7 +43,10 @@ class _CalendarScreenState extends State<CalendarScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Calendar"),
+        title: Text(
+          "Calendar",
+          style: TextStyle(color: Colors.white),
+        ),
         backgroundColor: Colors.red,
       ),
       body: Column(
@@ -50,12 +55,6 @@ class _CalendarScreenState extends State<CalendarScreen> {
             focusedDay: selectedDay,
             firstDay: DateTime(2023),
             lastDay: DateTime(2025),
-            calendarFormat: format,
-            onFormatChanged: (CalendarFormat _format) {
-              setState(() {
-                format = _format;
-              });
-            },
             startingDayOfWeek: StartingDayOfWeek.monday,
             daysOfWeekVisible: true,
 
@@ -65,7 +64,6 @@ class _CalendarScreenState extends State<CalendarScreen> {
                 selectedDay = selectDay;
                 focusedDay = focusDay;
               });
-              print(focusedDay);
             },
             selectedDayPredicate: (DateTime date) {
               return isSameDay(selectedDay, date);
@@ -104,9 +102,19 @@ class _CalendarScreenState extends State<CalendarScreen> {
                 )),
           ),
           ..._getEventsfromDay(selectedDay).map(
-            (Event event) => ListTile(
-              title: Text(
-                event.title,
+            (Event event) => Padding(
+              padding: EdgeInsets.only(bottom: 10),
+              child: Container(
+                color: Colors.red,
+                child: ListTile(
+                  title: Text(
+                    event.title,
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  leading: event.time != ""
+                      ? Text(event.time, style: TextStyle(color: Colors.white))
+                      : null,
+                ),
               ),
             ),
           ),
@@ -117,8 +125,15 @@ class _CalendarScreenState extends State<CalendarScreen> {
           context: context,
           builder: (context) => AlertDialog(
             title: Text("Add Event"),
-            content: TextFormField(
-              controller: _eventController,
+            content: Column(
+              children: [
+                TextFormField(
+                  controller: _eventController,
+                ),
+                TextFormField(
+                  controller: _timeEventController,
+                ),
+              ],
             ),
             actions: [
               TextButton(
@@ -128,21 +143,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
               TextButton(
                 child: Text("Ok"),
                 onPressed: () {
-                  if (_eventController.text.isEmpty) {
-                  } else {
-                    if (selectedEvents[selectedDay] != null) {
-                      selectedEvents[selectedDay]?.add(
-                        Event(title: _eventController.text),
-                      );
-                    } else {
-                      selectedEvents[selectedDay] = [
-                        Event(title: _eventController.text)
-                      ];
-                    }
-                  }
-                  Navigator.pop(context);
-                  _eventController.clear();
-                  setState(() {});
+                  addEvent();
                   return;
                 },
               ),
@@ -153,5 +154,44 @@ class _CalendarScreenState extends State<CalendarScreen> {
         icon: Icon(Icons.add),
       ),
     );
+  }
+
+  void addEvent() {
+    if (_eventController.text.isEmpty) {
+    } else {
+      if (selectedEvents[selectedDay] != null) {
+        selectedEvents[selectedDay]?.add(
+          Event(
+              title: _eventController.text,
+              time: _timeEventController.text,
+              date: convertDatetimeToDate(selectedDay)),
+        );
+      } else {
+        selectedEvents[selectedDay] = [
+          Event(
+              title: _eventController.text,
+              time: _timeEventController.text,
+              date: convertDatetimeToDate(selectedDay))
+        ];
+      }
+    }
+    Navigator.pop(context);
+    setState(() {});
+
+    // add firestore
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    final event = <String, dynamic>{
+      "time": _timeEventController.text,
+      "event": _eventController.text,
+      "date": convertDatetimeToDate(selectedDay),
+    };
+    var user = Constants.user;
+    firestore.collection("events").doc(user.account + user.password).set(event);
+    _eventController.clear();
+    _timeEventController.clear();
+  }
+
+  String convertDatetimeToDate(DateTime x) {
+    return x.toString().substring(0, 10);
   }
 }

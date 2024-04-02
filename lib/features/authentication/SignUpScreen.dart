@@ -1,23 +1,30 @@
 import 'dart:async';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:study/common/constant.dart';
+import 'package:study/features/calendar/event.dart';
+
 //
 TextEditingController _tk_registerController = TextEditingController();
 TextEditingController _mk_registerController = TextEditingController();
 TextEditingController _verifyPassWordController = TextEditingController();
 TextEditingController _nameUserController = TextEditingController();
 
-// void add_user(String acc, String name, String pw, List<String> ticket) {
-//   FirebaseFirestore firestore= FirebaseFirestore.instance;
-//   final user = <String, dynamic>{
-//     "account": acc,
-//     "name": name,
-//     "password": pw,
-//     "ticket": ticket,
-//   };
-//   firestore.collection("users").doc(acc + pw).set(user);
-// }
+void addUser(String acc, String name, String pw, List<String> history) {
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+  final user = <String, dynamic>{
+    "account": acc,
+    "name": name,
+    "password": pw,
+    "history": history,
+  };
+  final event = <String, List<Event>>{
+    "doc": [],
+  };
+  firestore.collection("users").doc(acc + pw).set(user);
+  firestore.collection("events").doc(acc + pw).set(event);
+}
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});
@@ -167,10 +174,10 @@ class SignUpScreen extends StatelessWidget {
                                       email: _tk_registerController.text,
                                       password: _mk_registerController.text);
                                   Navigator.pop(context);
-                                  // add_user(
-                                  //     _tk_registerController.text,
-                                  //     _nameUserController.text,
-                                  //     _mk_registerController.text, []);
+                                  addUser(
+                                      _tk_registerController.text,
+                                      _nameUserController.text,
+                                      _mk_registerController.text, []);
                                   _tk_registerController.text =
                                       _mk_registerController.text = "";
                                   // Hiển thị thông báo đăng kí thành công
