@@ -7,32 +7,35 @@ import 'package:study/features/calendar/event.dart';
 import '../../common/constant.dart';
 
 class CalendarProvider extends ChangeNotifier {
-
-  Stream<Map<String, List<Event>>> getEvent() async* {
+ // return firestore bởi vì streambuilder sẽ update theo data trả về nên neesu để data lấy về rồi set măcj định thì UI cũng khng được update
+  Stream<Map<String, List<Event>>> getEvent() {
     var user = Constants.user;
     FirebaseFirestore firestore = FirebaseFirestore.instance;
-    DocumentSnapshot documentSnapshot = await firestore
+
+    return firestore
         .collection("events")
         .doc(user.account + user.password)
-        .get();
-    List<dynamic> eventsData = documentSnapshot.get("doc");
-    List<Event> events = eventsData.map((eventData) {
-      return Event(
-        title: eventData['title'],
-        time: eventData['time'],
-        date: eventData['date'],
-      );
-    }).toList();
+        .snapshots()
+        .map((snapshot) {
+      List<dynamic> eventsData = snapshot.data()?['doc'] ?? [];
+      List<Event> events = eventsData.map((eventData) {
+        return Event(
+          title: eventData['title'],
+          time: eventData['time'],
+          date: eventData['date'],
+        );
+      }).toList();
 
-    Map<String, List<Event>> selectedEvents = {};
-    events.forEach((element) {
-      if (selectedEvents[element.date] != null) {
-        selectedEvents[element.date]?.add(element);
-      } else {
-        selectedEvents[element.date] = [element];
-      }
+      Map<String, List<Event>> selectedEvents = {};
+      events.forEach((element) {
+        if (selectedEvents[element.date] != null) {
+          selectedEvents[element.date]?.add(element);
+        } else {
+          selectedEvents[element.date] = [element];
+        }
+      });
+
+      return selectedEvents;
     });
-
-    yield selectedEvents;
   }
 }
