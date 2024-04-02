@@ -19,7 +19,7 @@ void addUser(String acc, String name, String pw, List<String> history) {
     "password": pw,
     "history": history,
   };
-  final event = <String, List<Event>>{
+  final event = <String, List<Map<String, String>>>{
     "doc": [],
   };
   firestore.collection("users").doc(acc + pw).set(user);

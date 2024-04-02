@@ -156,23 +156,18 @@ class _CalendarScreenState extends State<CalendarScreen> {
     );
   }
 
-  void addEvent() {
+  void addEvent() async {
+    Event event1 = Event(
+        title: _eventController.text,
+        time: _timeEventController.text,
+        date: convertDatetimeToDate(selectedDay));
+
     if (_eventController.text.isEmpty) {
     } else {
       if (selectedEvents[selectedDay] != null) {
-        selectedEvents[selectedDay]?.add(
-          Event(
-              title: _eventController.text,
-              time: _timeEventController.text,
-              date: convertDatetimeToDate(selectedDay)),
-        );
+        selectedEvents[selectedDay]?.add(event1);
       } else {
-        selectedEvents[selectedDay] = [
-          Event(
-              title: _eventController.text,
-              time: _timeEventController.text,
-              date: convertDatetimeToDate(selectedDay))
-        ];
+        selectedEvents[selectedDay] = [event1];
       }
     }
     Navigator.pop(context);
@@ -180,13 +175,26 @@ class _CalendarScreenState extends State<CalendarScreen> {
 
     // add firestore
     FirebaseFirestore firestore = FirebaseFirestore.instance;
-    final event = <String, dynamic>{
-      "time": _timeEventController.text,
-      "event": _eventController.text,
-      "date": convertDatetimeToDate(selectedDay),
-    };
+
     var user = Constants.user;
-    firestore.collection("events").doc(user.account + user.password).set(event);
+
+    DocumentSnapshot documentSnapshot = await firestore
+        .collection("events")
+        .doc(user.account + user.password)
+        .get();
+    final doc = documentSnapshot.get('doc') as List<dynamic>;
+    final _doc = doc.cast<Map<String, String>>().toList();
+    Map<String, String> event = {
+      "title": event1.title,
+      "date": event1.date,
+      "time": event1.time,
+    };
+    _doc.add(event);
+    await firestore
+        .collection("events")
+        .doc(user.account + user.password)
+        .set({"doc": _doc});
+
     _eventController.clear();
     _timeEventController.clear();
   }
