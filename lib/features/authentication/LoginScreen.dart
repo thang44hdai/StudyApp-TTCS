@@ -8,8 +8,7 @@ import 'package:study/features/main_screen.dart';
 
 import '../../common/color_resource.dart';
 
-double heightScreen = 0;
-double widthScreen = 0;
+
 TextEditingController _tk_loginController = TextEditingController();
 TextEditingController _mk_loginController = TextEditingController();
 
@@ -70,8 +69,9 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    heightScreen = MediaQuery.of(context).size.height;
-    widthScreen = MediaQuery.of(context).size.width;
+
+    _tk_loginController.text = "hi@gmail.com";
+    _mk_loginController.text = "123456";
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
@@ -98,7 +98,7 @@ class LoginScreen extends StatelessWidget {
                   child: Container(
                     color: ColorResources.mainBackGround(),
                     height: Constants.screenHeight * 8 / 9,
-                    width: widthScreen,
+                    width: Constants.screenWidth,
                     child: Padding(
                       padding: EdgeInsets.all(32),
                       child: ListView(
