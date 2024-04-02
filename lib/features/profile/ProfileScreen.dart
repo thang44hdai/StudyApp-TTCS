@@ -27,23 +27,14 @@ class _ProfileScreen extends State<ProfileScreen> {
           if (snap.hasError) {
             return Text("Error");
           } else {
-            return Scaffold(
-              body: Column(
+            return Container(
+              height: Constants.screenHeight,
+              child: Stack(
                 children: [
-                  Container(
-                    height: 340,
-                    child: Stack(
-                      clipBehavior: Clip.none,
-                      children: [
-                        Background(),
-                        Ava(snap.data!.name, snap.data!.email),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    height: 300,
-                    child: profile(),
-                  ),
+                  Background(),
+                  Ava(),
+                  Profile(snap.data!.name, snap.data!.email),
+                  History(),
                 ],
               ),
             );
@@ -52,22 +43,17 @@ class _ProfileScreen extends State<ProfileScreen> {
   }
 
   Widget Background() {
-    return const SizedBox(
-      child: ClipRRect(
-        borderRadius: BorderRadius.only(
-          bottomRight: Radius.circular(30),
-          bottomLeft: Radius.circular(30),
-        ),
-        child: Image(
-          image: AssetImage("assets/counter.png"),
-        ),
+    return Container(
+      height: Constants.screenHeight / 3,
+      decoration: BoxDecoration(
+        color: Colors.red,
       ),
     );
   }
 
-  Widget Ava(String name, String email) {
+  Widget Ava() {
     return Positioned(
-      top: 160,
+      top: Constants.screenHeight / 3 - Constants.screenWidth / 6,
       left: Constants.screenWidth / 3,
       child: Column(
         children: [
@@ -82,19 +68,36 @@ class _ProfileScreen extends State<ProfileScreen> {
           const SizedBox(
             height: 10,
           ),
-          Text(
-            "${name} - ${email}",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
-            ),
-          ),
         ],
       ),
     );
   }
 }
 
-Widget profile() {
-  return Text("Page 1");
+Widget Profile(String name, String email) {
+  return Positioned(
+    top: Constants.screenHeight / 3 + Constants.screenWidth / 6 + 10,
+    child: Container(
+      width: Constants.screenWidth,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            "${name} - ${email}",
+            style: TextStyle(fontWeight: FontWeight.bold),
+          )
+        ],
+      ),
+    ),
+  );
+}
+
+Widget History() {
+  return Positioned(
+    top: Constants.screenHeight / 3 + Constants.screenWidth / 6 + 50,
+    child: Container(
+      height: Constants.screenHeight,
+      decoration: BoxDecoration(color: Colors.red),
+    ),
+  );
 }
