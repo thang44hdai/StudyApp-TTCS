@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:study/common/color_resource.dart';
 import 'package:study/common/constant.dart';
 import 'package:study/features/calendar/CalendarProvider.dart';
 import 'package:study/features/calendar/event.dart';
@@ -54,90 +56,101 @@ class _CalendarScreenState extends State<CalendarScreen> {
               ),
               backgroundColor: Colors.red,
             ),
-            body: Column(
-              children: [
-                TableCalendar(
-                  focusedDay: selectedDay,
-                  firstDay: DateTime(2023),
-                  lastDay: DateTime(2025),
-                  startingDayOfWeek: StartingDayOfWeek.monday,
-                  daysOfWeekVisible: true,
+            body: Container(
+              color: ColorResources.mainBackGround(),
+              child:  Column(
+                children: [
+                  TableCalendar(
+                    focusedDay: selectedDay,
+                    firstDay: DateTime(2023),
+                    lastDay: DateTime(2025),
+                    startingDayOfWeek: StartingDayOfWeek.monday,
+                    daysOfWeekVisible: true,
 
-                  //Day Changed
-                  onDaySelected: (DateTime selectDay, DateTime focusDay) {
-                    setState(() {
-                      selectedDay = selectDay;
-                      focusedDay = focusDay;
-                    });
-                  },
-                  selectedDayPredicate: (DateTime date) {
-                    return isSameDay(selectedDay, date);
-                  },
+                    //Day Changed
+                    onDaySelected: (DateTime selectDay, DateTime focusDay) {
+                      setState(() {
+                        selectedDay = selectDay;
+                        focusedDay = focusDay;
+                      });
+                    },
+                    selectedDayPredicate: (DateTime date) {
+                      return isSameDay(selectedDay, date);
+                    },
 
-                  eventLoader: _getEventsfromDay,
+                    eventLoader: _getEventsfromDay,
 
-                  calendarStyle: CalendarStyle(
-                    isTodayHighlighted: true,
-                    selectedDecoration: BoxDecoration(
-                      color: Colors.red,
-                      shape: BoxShape.circle,
-                    ),
-                    selectedTextStyle: TextStyle(color: Colors.white),
-                    todayDecoration: BoxDecoration(
-                      color: Colors.red[200],
-                      shape: BoxShape.circle,
-                    ),
-                    defaultDecoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                    ),
-                    weekendTextStyle: TextStyle(color: Colors.green),
-                  ),
-                  headerStyle: const HeaderStyle(
-                      formatButtonVisible: false,
-                      titleCentered: true,
-                      formatButtonShowsNext: true,
-                      leftChevronIcon: Icon(
-                        Icons.navigate_before,
+                    calendarStyle: CalendarStyle(
+                      isTodayHighlighted: true,
+                      selectedDecoration: BoxDecoration(
                         color: Colors.red,
+                        shape: BoxShape.circle,
                       ),
-                      rightChevronIcon: Icon(
-                        Icons.navigate_next,
-                        color: Colors.red,
-                      )),
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 40),
-                    child: ListView.builder(
-                      itemCount: _getEventsfromDay(selectedDay).length,
-                      itemBuilder: (context, index) {
-                        Event event = _getEventsfromDay(selectedDay)[index];
-                        return Padding(
-                          padding: EdgeInsets.only(bottom: 10),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: Colors.red,
-                            ),
-                            child: ListTile(
-                              title: Text(
-                                event.title,
-                                style: TextStyle(color: Colors.white),
-                              ),
-                              leading: event.time != ""
-                                  ? Text(
-                                      event.time,
-                                      style: TextStyle(color: Colors.white),
-                                    )
-                                  : null,
-                            ),
-                          ),
-                        );
-                      },
+                      selectedTextStyle: TextStyle(color: Colors.white),
+                      todayDecoration: BoxDecoration(
+                        color: Colors.red[200],
+                        shape: BoxShape.circle,
+                      ),
+                      defaultDecoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                      ),
+                      weekendTextStyle: TextStyle(color: Colors.green),
+                    ),
+                    headerStyle: const HeaderStyle(
+                        formatButtonVisible: false,
+                        titleCentered: true,
+                        formatButtonShowsNext: true,
+                        leftChevronIcon: Icon(
+                          Icons.navigate_before,
+                          color: Colors.red,
+                        ),
+                        rightChevronIcon: Icon(
+                          Icons.navigate_next,
+                          color: Colors.red,
+                        )),
+                  ),
+                  Padding(
+                    padding:
+                    EdgeInsets.only(top: 5, bottom: 15, left: 20, right: 20),
+                    child: Container(
+                      height: 1,
+                      color: Colors.grey,
                     ),
                   ),
-                ),
-              ],
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 40),
+                      child: ListView.builder(
+                        itemCount: _getEventsfromDay(selectedDay).length,
+                        itemBuilder: (context, index) {
+                          Event event = _getEventsfromDay(selectedDay)[index];
+                          return Padding(
+                            padding: EdgeInsets.only(bottom: 10),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                color: Colors.red,
+                              ),
+                              child: ListTile(
+                                title: Text(
+                                  event.title,
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                leading: event.time != ""
+                                    ? Text(
+                                  event.time,
+                                  style: TextStyle(color: Colors.white),
+                                )
+                                    : null,
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
             floatingActionButton: FloatingActionButton.extended(
               onPressed: () => showDialog(
