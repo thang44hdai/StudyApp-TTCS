@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:study/common/constant.dart';
 import 'package:study/core/response/QuestionIntro.dart';
 import 'package:study/core/service/apiService.dart';
+import 'package:study/features/notification/NotificationScreen.dart';
 import 'package:study/features/profile/ProfileScreen.dart';
 import 'package:study/features/tutorial/TutorialScreen.dart';
 import 'QuizItem.dart';
@@ -69,7 +70,7 @@ class _HomeScreen extends State<HomeScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => ProfileScreen(),
+                          builder: (context) => NotificationScreen(),
                         ),
                       );
                     },
