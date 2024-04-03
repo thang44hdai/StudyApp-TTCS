@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
+import 'package:study/common/color_resource.dart';
 import 'package:study/features/authentication/LoginScreen.dart';
 import 'package:study/features/profile/ProfileProvider.dart';
 import 'package:study/features/tutorial/TutorialScreen.dart';
@@ -32,10 +34,12 @@ class _ProfileScreen extends State<ProfileScreen> {
               child: Stack(
                 children: [
                   Background(),
+                  Frame(),
                   Ava(),
                   Profile(snap.data!.name, snap.data!.email),
                   History(),
                   ItemHistory(snap.data!.history),
+                  BtnLogout(),
                 ],
               ),
             );
@@ -47,29 +51,28 @@ class _ProfileScreen extends State<ProfileScreen> {
 
   Widget Background() {
     return Container(
-      height: Constants.screenHeight / 3,
+      height: Constants.screenHeight / 3 + 50,
       decoration: BoxDecoration(
         color: Colors.red,
       ),
-      // child: Positioned(
-      //   top: 0,
-      //   right: 0,
-      //   child: IconButton(
-      //     onPressed: () {
-      //       Navigator.pushAndRemoveUntil(
-      //         context,
-      //         MaterialPageRoute(
-      //           builder: (context) => LoginScreen(),
-      //         ),
-      //         (route) => false,
-      //       );
-      //     },
-      //     icon: Icon(
-      //       Icons.logout,
-      //       color: Colors.white,
-      //     ),
-      //   ),
-      // ),
+    );
+  }
+
+  Widget Frame() {
+    return Positioned(
+      top: Constants.screenHeight / 3,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(10),
+            topRight: Radius.circular(10),
+          ),
+          color: ColorResources.mainBackGround(),
+        ),
+      ),
     );
   }
 
@@ -158,6 +161,38 @@ class _ProfileScreen extends State<ProfileScreen> {
             ),
           );
         },
+      ),
+    );
+  }
+
+  Widget BtnLogout() {
+    return Positioned(
+      top: 0,
+      right: 0,
+      child: Padding(
+        padding: const EdgeInsets.only(top: 25, right: 15),
+        child: GestureDetector(
+          onTap: () {
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => LoginScreen()),
+              (route) => false,
+            );
+          },
+          child: Row(
+            children: [
+              Icon(
+                Icons.logout,
+                color: Colors.white,
+              ),
+              SizedBox(width: 5),
+              Text(
+                "Đăng xuất",
+                style: TextStyle(color: Colors.white),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
