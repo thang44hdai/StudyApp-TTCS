@@ -26,8 +26,9 @@ class _ProfileScreen extends State<ProfileScreen> {
         builder: (context, snap) {
           if (snap.hasError) {
             return Text("Error");
-          } else {
+          } else if (snap.hasData) {
             return Container(
+              width: Constants.screenWidth,
               height: Constants.screenHeight,
               child: Stack(
                 children: [
@@ -35,9 +36,12 @@ class _ProfileScreen extends State<ProfileScreen> {
                   Ava(),
                   Profile(snap.data!.name, snap.data!.email),
                   History(),
+                  ItemHistory(),
                 ],
               ),
             );
+          } else {
+            return Text("Xin chờ trong giây lát");
           }
         });
   }
@@ -95,9 +99,40 @@ Widget Profile(String name, String email) {
 Widget History() {
   return Positioned(
     top: Constants.screenHeight / 3 + Constants.screenWidth / 6 + 50,
-    child: Container(
-      height: Constants.screenHeight,
-      decoration: BoxDecoration(color: Colors.red),
+    child: Column(
+      children: [
+        Text("Lịch sử làm bài:"),
+        SizedBox(height: 20),
+      ],
+    ),
+  );
+}
+
+Widget ItemHistory() {
+  return Positioned(
+    top: Constants.screenHeight / 3 + Constants.screenWidth / 6 + 80,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    child: ListView.builder(
+      itemCount: 10,
+      itemBuilder: (context, index) {
+        return Padding(
+          padding: EdgeInsets.only(bottom: 8, left: 40, right: 40),
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.red,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: ListTile(
+              title: Text(
+                (index + 1).toString(),
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          ),
+        );
+      },
     ),
   );
 }
