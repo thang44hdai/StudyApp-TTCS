@@ -1,10 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:provider/provider.dart';
+import 'package:study/features/authentication/LoginScreen.dart';
 import 'package:study/features/profile/ProfileProvider.dart';
-
+import 'package:study/features/tutorial/TutorialScreen.dart';
 import '../../common/constant.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -36,7 +35,7 @@ class _ProfileScreen extends State<ProfileScreen> {
                   Ava(),
                   Profile(snap.data!.name, snap.data!.email),
                   History(),
-                  ItemHistory(),
+                  ItemHistory(snap.data!.history),
                 ],
               ),
             );
@@ -52,6 +51,25 @@ class _ProfileScreen extends State<ProfileScreen> {
       decoration: BoxDecoration(
         color: Colors.red,
       ),
+      // child: Positioned(
+      //   top: 0,
+      //   right: 0,
+      //   child: IconButton(
+      //     onPressed: () {
+      //       Navigator.pushAndRemoveUntil(
+      //         context,
+      //         MaterialPageRoute(
+      //           builder: (context) => LoginScreen(),
+      //         ),
+      //         (route) => false,
+      //       );
+      //     },
+      //     icon: Icon(
+      //       Icons.logout,
+      //       color: Colors.white,
+      //     ),
+      //   ),
+      // ),
     );
   }
 
@@ -76,63 +94,71 @@ class _ProfileScreen extends State<ProfileScreen> {
       ),
     );
   }
-}
 
-Widget Profile(String name, String email) {
-  return Positioned(
-    top: Constants.screenHeight / 3 + Constants.screenWidth / 6 + 10,
-    child: Container(
-      width: Constants.screenWidth,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+  Widget Profile(String name, String email) {
+    return Positioned(
+      top: Constants.screenHeight / 3 + Constants.screenWidth / 6 + 10,
+      child: Container(
+        width: Constants.screenWidth,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "${name} - ${email}",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget History() {
+    return Positioned(
+      top: Constants.screenHeight / 3 + Constants.screenWidth / 6 + 50,
+      child: Column(
         children: [
-          Text(
-            "${name} - ${email}",
-            style: TextStyle(fontWeight: FontWeight.bold),
-          )
+          Text("Lịch sử làm bài:"),
+          SizedBox(height: 20),
         ],
       ),
-    ),
-  );
-}
+    );
+  }
 
-Widget History() {
-  return Positioned(
-    top: Constants.screenHeight / 3 + Constants.screenWidth / 6 + 50,
-    child: Column(
-      children: [
-        Text("Lịch sử làm bài:"),
-        SizedBox(height: 20),
-      ],
-    ),
-  );
-}
-
-Widget ItemHistory() {
-  return Positioned(
-    top: Constants.screenHeight / 3 + Constants.screenWidth / 6 + 80,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    child: ListView.builder(
-      itemCount: 10,
-      itemBuilder: (context, index) {
-        return Padding(
-          padding: EdgeInsets.only(bottom: 8, left: 40, right: 40),
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.red,
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: ListTile(
-              title: Text(
-                (index + 1).toString(),
-                style: TextStyle(color: Colors.white),
+  Widget ItemHistory(List<String> history) {
+    return Positioned(
+      top: Constants.screenHeight / 3 + Constants.screenWidth / 6 + 80,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      child: ListView.builder(
+        itemCount: history.length,
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: EdgeInsets.only(bottom: 8, left: 40, right: 40),
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.red,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: ListTile(
+                onTap: () => {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => TutorialScreen()))
+                },
+                leading: Text(
+                  (index + 1).toString(),
+                  style: TextStyle(color: Colors.white),
+                ),
+                title: Text(
+                  history[index],
+                  style: TextStyle(color: Colors.white),
+                ),
               ),
             ),
-          ),
-        );
-      },
-    ),
-  );
+          );
+        },
+      ),
+    );
+  }
 }
