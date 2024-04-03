@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:study/common/color_resource.dart';
 import 'package:study/common/constant.dart';
 import 'package:study/core/response/QuestionIntro.dart';
 import 'package:study/core/service/apiService.dart';
@@ -27,8 +28,42 @@ class _HomeScreen extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
+      appBar: AppBar(
+        iconTheme: IconThemeData(color: Colors.white),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => NotificationScreen(),
+                ),
+              );
+            },
+            icon: Icon(Icons.notifications_active),
+            color: Colors.white,
+          ),
+        ],
+        backgroundColor: Colors.red,
+      ),
+      drawer: Drawer(
+        backgroundColor: ColorResources.mainBackGround(),
+        child: Column(
+          children: [
+            Text(
+              "Setting",
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 20,
+              ),
+            ),
+            ListTile(
+              leading: Text("Mode:"),
+            ),
+          ],
+        ),
+      ),
       body: Container(
         height: Constants.screenHeight,
         child: Stack(
@@ -55,31 +90,6 @@ class _HomeScreen extends State<HomeScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Padding(
-              padding: EdgeInsets.only(top: 15),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  IconButton(
-                    onPressed: () {},
-                    icon: Image.asset("assets/btn_expand.png"),
-                    color: Colors.white,
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => NotificationScreen(),
-                        ),
-                      );
-                    },
-                    icon: Icon(Icons.notifications_active),
-                    color: Colors.white,
-                  ),
-                ],
-              ),
-            ),
             Padding(
               padding: EdgeInsets.only(left: 15),
               child: Text(
@@ -176,12 +186,11 @@ class _HomeScreen extends State<HomeScreen> {
                   var item = ListQuestionIntro[index];
                   return ItemQuiz(
                     item: QuestionIntro(
-                      id: item.id,
-                      time: item.time,
-                      title: item.title,
-                      description: item.description,
-                      question: item.question
-                    ),
+                        id: item.id,
+                        time: item.time,
+                        title: item.title,
+                        description: item.description,
+                        question: item.question),
                   );
                 },
               );
