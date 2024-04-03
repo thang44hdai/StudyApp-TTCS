@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:study/common/constant.dart';
 import 'package:study/features/calendar/CalendarScreen.dart';
+import 'package:study/features/create_test/CreateQuizScreen.dart';
 import 'package:study/features/home/HomeScreen.dart';
 import 'package:study/features/profile/ProfileScreen.dart';
 import 'package:study/features/quiz_test/provider/QuizProvider.dart';
@@ -72,7 +73,7 @@ class NavigationController extends GetxController {
   final Screen = [
     HomeScreen(),
     CalendarScreen(),
-    Container(color: Colors.red),
+    CreateQuizScreen(),
     ProfileScreen(),
   ];
 }
