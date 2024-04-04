@@ -3,6 +3,7 @@ import 'package:study/common/color_resource.dart';
 import 'package:study/common/constant.dart';
 
 TextEditingController _titleEdtController = TextEditingController();
+TextEditingController _timeEdtController = TextEditingController();
 
 class CreateQuizScreen extends StatefulWidget {
   const CreateQuizScreen({super.key});
@@ -89,7 +90,7 @@ class _CreateQuizScreenState extends State<CreateQuizScreen> {
                 padding: EdgeInsets.symmetric(
                     horizontal: Constants.screenWidth / 10),
                 child: TextField(
-                  controller: _titleEdtController,
+                  controller: _timeEdtController,
                   style: TextStyle(color: Colors.black),
                   decoration:
                       InputDecoration(hintText: "Vui lòng nhập giới hạn thời gian:"),
