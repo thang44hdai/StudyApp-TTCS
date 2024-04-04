@@ -10,6 +10,7 @@ import 'WidgetAddQuestion.dart';
 TextEditingController _titleEdtController = TextEditingController();
 TextEditingController _timeEdtController = TextEditingController();
 TextEditingController _descriptionEdtController = TextEditingController();
+TextEditingController _numberOfQuestionEdtController = TextEditingController();
 
 class CreateQuizScreen extends StatefulWidget {
   const CreateQuizScreen({super.key});
@@ -19,6 +20,20 @@ class CreateQuizScreen extends StatefulWidget {
 }
 
 class _CreateQuizScreenState extends State<CreateQuizScreen> {
+  @override
+  void initState() {
+    super.initState();
+    _numberOfQuestionEdtController.text = "0";
+  }
+
+  int itemCount = 0;
+
+  void _handleNumberOfQuestionsChanged(String value) {
+    setState(() {
+      itemCount = int.tryParse(value) ?? 0;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -132,10 +147,11 @@ class _CreateQuizScreenState extends State<CreateQuizScreen> {
                     Padding(
                       padding: EdgeInsets.only(left: 10, right: 10, bottom: 10),
                       child: TextField(
-                        controller: _descriptionEdtController,
+                        controller: _numberOfQuestionEdtController,
                         style: TextStyle(color: Colors.black),
                         decoration: InputDecoration(
                             hintText: "Vui lòng số lượng câu trong đề:"),
+                        onChanged: _handleNumberOfQuestionsChanged,
                       ),
                     ),
                     Padding(
@@ -165,14 +181,14 @@ class _CreateQuizScreenState extends State<CreateQuizScreen> {
               height: 50,
             ),
             CarouselSlider.builder(
-              itemCount: 10,
+              itemCount: itemCount,
               itemBuilder: (context, index, pageIndex) {
                 return FormQuestion(
                   index: index + 1,
                 );
               },
               options: CarouselOptions(
-                aspectRatio: 16/10,
+                aspectRatio: 16 / 10,
                 autoPlay: false,
                 autoPlayInterval: Duration(milliseconds: 3000),
                 viewportFraction: 0.8,
