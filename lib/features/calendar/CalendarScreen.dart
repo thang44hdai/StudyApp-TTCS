@@ -57,98 +57,128 @@ class _CalendarScreenState extends State<CalendarScreen> {
               backgroundColor: Colors.red,
             ),
             body: Container(
-              color: ColorResources.mainBackGround(),
-              child:  Column(
+              height: Constants.screenHeight,
+              child: Stack(
                 children: [
-                  TableCalendar(
-                    focusedDay: selectedDay,
-                    firstDay: DateTime(2023),
-                    lastDay: DateTime(2025),
-                    startingDayOfWeek: StartingDayOfWeek.monday,
-                    daysOfWeekVisible: true,
-
-                    //Day Changed
-                    onDaySelected: (DateTime selectDay, DateTime focusDay) {
-                      setState(() {
-                        selectedDay = selectDay;
-                        focusedDay = focusDay;
-                      });
-                    },
-                    selectedDayPredicate: (DateTime date) {
-                      return isSameDay(selectedDay, date);
-                    },
-
-                    eventLoader: _getEventsfromDay,
-
-                    calendarStyle: CalendarStyle(
-                      isTodayHighlighted: true,
-                      selectedDecoration: BoxDecoration(
-                        color: Colors.red,
-                        shape: BoxShape.circle,
-                      ),
-                      selectedTextStyle: TextStyle(color: Colors.white),
-                      todayDecoration: BoxDecoration(
-                        color: Colors.red[200],
-                        shape: BoxShape.circle,
-                      ),
-                      defaultDecoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                      ),
-                      weekendTextStyle: TextStyle(color: Colors.green),
-                    ),
-                    headerStyle: const HeaderStyle(
-                        formatButtonVisible: false,
-                        titleCentered: true,
-                        formatButtonShowsNext: true,
-                        leftChevronIcon: Icon(
-                          Icons.navigate_before,
-                          color: Colors.red,
+                  Container(
+                    height: Constants.screenHeight / 20,
+                    decoration: BoxDecoration(color: Colors.red),
+                  ),
+                  Positioned(
+                      top: Constants.screenHeight / 20 - 10,
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: ColorResources.mainBackGround(),
+                          borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(12),
+                            topLeft: Radius.circular(12),
+                          ),
                         ),
-                        rightChevronIcon: Icon(
-                          Icons.navigate_next,
-                          color: Colors.red,
-                        )),
-                  ),
-                  Padding(
-                    padding:
-                    EdgeInsets.only(top: 5, bottom: 15, left: 20, right: 20),
-                    child: Container(
-                      height: 1,
-                      color: Colors.grey,
-                    ),
-                  ),
-                  Expanded(
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 40),
-                      child: ListView.builder(
-                        itemCount: _getEventsfromDay(selectedDay).length,
-                        itemBuilder: (context, index) {
-                          Event event = _getEventsfromDay(selectedDay)[index];
-                          return Padding(
-                            padding: EdgeInsets.only(bottom: 10),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                                color: Colors.red,
-                              ),
-                              child: ListTile(
-                                title: Text(
-                                  event.title,
-                                  style: TextStyle(color: Colors.white),
+                        child: Column(
+                          children: [
+                            TableCalendar(
+                              focusedDay: selectedDay,
+                              firstDay: DateTime(2023),
+                              lastDay: DateTime(2025),
+                              startingDayOfWeek: StartingDayOfWeek.monday,
+                              daysOfWeekVisible: true,
+
+                              //Day Changed
+                              onDaySelected:
+                                  (DateTime selectDay, DateTime focusDay) {
+                                setState(() {
+                                  selectedDay = selectDay;
+                                  focusedDay = focusDay;
+                                });
+                              },
+                              selectedDayPredicate: (DateTime date) {
+                                return isSameDay(selectedDay, date);
+                              },
+
+                              eventLoader: _getEventsfromDay,
+
+                              calendarStyle: CalendarStyle(
+                                isTodayHighlighted: true,
+                                selectedDecoration: BoxDecoration(
+                                  color: Colors.red,
+                                  shape: BoxShape.circle,
                                 ),
-                                leading: event.time != ""
-                                    ? Text(
-                                  event.time,
-                                  style: TextStyle(color: Colors.white),
-                                )
-                                    : null,
+                                selectedTextStyle:
+                                    TextStyle(color: Colors.white),
+                                todayDecoration: BoxDecoration(
+                                  color: Colors.red[200],
+                                  shape: BoxShape.circle,
+                                ),
+                                defaultDecoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                ),
+                                weekendTextStyle:
+                                    TextStyle(color: Colors.green),
+                              ),
+                              headerStyle: const HeaderStyle(
+                                  formatButtonVisible: false,
+                                  titleCentered: true,
+                                  formatButtonShowsNext: true,
+                                  leftChevronIcon: Icon(
+                                    Icons.navigate_before,
+                                    color: Colors.red,
+                                  ),
+                                  rightChevronIcon: Icon(
+                                    Icons.navigate_next,
+                                    color: Colors.red,
+                                  )),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  top: 5, bottom: 15, left: 20, right: 20),
+                              child: Container(
+                                height: 1,
+                                color: Colors.grey,
                               ),
                             ),
-                          );
-                        },
-                      ),
-                    ),
-                  ),
+                            Expanded(
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 40),
+                                child: ListView.builder(
+                                  itemCount:
+                                      _getEventsfromDay(selectedDay).length,
+                                  itemBuilder: (context, index) {
+                                    Event event =
+                                        _getEventsfromDay(selectedDay)[index];
+                                    return Padding(
+                                      padding: EdgeInsets.only(bottom: 10),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          color: Colors.red,
+                                        ),
+                                        child: ListTile(
+                                          title: Text(
+                                            event.title,
+                                            style:
+                                                TextStyle(color: Colors.white),
+                                          ),
+                                          leading: event.time != ""
+                                              ? Text(
+                                                  event.time,
+                                                  style: TextStyle(
+                                                      color: Colors.white),
+                                                )
+                                              : null,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ))
                 ],
               ),
             ),

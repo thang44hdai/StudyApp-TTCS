@@ -33,6 +33,15 @@ class _CreateQuizScreenState extends State<CreateQuizScreen> {
           "Create",
           style: TextStyle(color: Colors.white),
         ),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: Icon(
+              Icons.upload_file_sharp,
+              color: Colors.white,
+            ),
+          )
+        ],
       ),
       body: SingleChildScrollView(
         child: Container(
