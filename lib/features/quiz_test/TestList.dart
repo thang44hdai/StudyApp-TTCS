@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:provider/provider.dart';
 import '../../common/constant.dart';
-import '../../core/model/QuestionTotal.dart';
+import '../../core/response/QuestionTotal.dart';
 import 'provider/QuizProvider.dart';
 
 class TestScreen extends StatefulWidget {

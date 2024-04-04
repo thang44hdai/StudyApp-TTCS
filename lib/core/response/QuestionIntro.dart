@@ -1,6 +1,6 @@
 import 'package:study/core/response/Question.dart';
 
-import '../model/QuestionTotal.dart';
+import 'QuestionTotal.dart';
 
 class QuestionIntro {
   int id;

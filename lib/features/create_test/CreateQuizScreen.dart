@@ -1,9 +1,11 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:study/common/color_resource.dart';
 import 'package:study/common/constant.dart';
 
 TextEditingController _titleEdtController = TextEditingController();
 TextEditingController _timeEdtController = TextEditingController();
+TextEditingController _descriptionEdtController = TextEditingController();
 
 class CreateQuizScreen extends StatefulWidget {
   const CreateQuizScreen({super.key});
@@ -92,19 +94,50 @@ class _CreateQuizScreenState extends State<CreateQuizScreen> {
                 child: TextField(
                   controller: _timeEdtController,
                   style: TextStyle(color: Colors.black),
-                  decoration:
-                      InputDecoration(hintText: "Vui lòng nhập giới hạn thời gian:"),
+                  decoration: InputDecoration(
+                      hintText: "Vui lòng nhập giới hạn thời gian:"),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(
+                  top: 10,
+                  left: Constants.screenWidth / 10,
+                ),
+                child: Text(
+                  "Mô tả đề:",
+                  style: TextStyle(fontSize: 20),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal: Constants.screenWidth / 10),
+                child: TextField(
+                  controller: _descriptionEdtController,
+                  style: TextStyle(color: Colors.black),
+                  decoration: InputDecoration(hintText: "Vui lòng nhập mô tả:"),
                 ),
               ),
               SizedBox(
                 height: 50,
               ),
-
-              Container(
-                height: 50,
-                width: 50,
-                color: Colors.red,
-              )
+              CarouselSlider.builder(
+                itemCount: 10,
+                itemBuilder: (context, index, pageIndex) {
+                  return GestureDetector(
+                    child: Container(
+                      height: 50,
+                      width: 50,
+                      color: Colors.red,
+                    ),
+                  );
+                },
+                options: CarouselOptions(
+                  autoPlay: true,
+                  autoPlayInterval: Duration(milliseconds: 3000),
+                  viewportFraction: 0.5,
+                  enlargeCenterPage: true, // cho layout chinh giữa to nhất
+                ),
+              ),
             ],
           ),
         ),
