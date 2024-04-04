@@ -14,6 +14,7 @@ class TutorialScreen extends StatefulWidget {
 
 class _TutorialScreenState extends State<TutorialScreen> {
   late QuestionProvider viewmodel;
+
   @override
   Widget build(BuildContext context) {
     viewmodel = Provider.of<QuestionProvider>(context);
@@ -33,22 +34,6 @@ class _TutorialScreenState extends State<TutorialScreen> {
           "Tutorial",
           style: TextStyle(color: Colors.white),
         ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ProfileScreen(),
-                ),
-              );
-            },
-            icon: Icon(
-              Icons.account_circle,
-              color: Colors.white,
-            ),
-          )
-        ],
       ),
       body: Container(
         height: Constants.screenHeight,

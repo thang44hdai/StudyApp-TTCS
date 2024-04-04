@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/response/QuestionTotal.dart';
+import '../../../core/model/QuestionTotal.dart';
 
 class QuestionProvider extends ChangeNotifier {
   List<QuestionTotal> questions = [];
