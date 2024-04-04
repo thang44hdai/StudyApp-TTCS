@@ -5,16 +5,12 @@ import 'package:flutter/widgets.dart';
 import 'package:study/common/color_resource.dart';
 import 'package:study/common/constant.dart';
 
+import 'WidgetAddQuestion.dart';
+
 TextEditingController _titleEdtController = TextEditingController();
 TextEditingController _timeEdtController = TextEditingController();
 TextEditingController _descriptionEdtController = TextEditingController();
-TextEditingController _questionEdtController = TextEditingController();
-TextEditingController _option1EdtController = TextEditingController();
-TextEditingController _option2EdtController = TextEditingController();
-TextEditingController _option3EdtController = TextEditingController();
-TextEditingController _option4EdtController = TextEditingController();
-TextEditingController _trueAnswerEdtController = TextEditingController();
-TextEditingController _imageEdtController = TextEditingController();
+
 
 class CreateQuizScreen extends StatefulWidget {
   const CreateQuizScreen({super.key});
@@ -151,9 +147,9 @@ class _CreateQuizScreenState extends State<CreateQuizScreen> {
               height: 50,
             ),
             CarouselSlider.builder(
-              itemCount: 0,
+              itemCount: 10,
               itemBuilder: (context, index, pageIndex) {
-                return FormQuestion(index + 1);
+                return FormQuestion(index: index + 1,);
               },
               options: CarouselOptions(
                 autoPlay: false,
@@ -167,82 +163,6 @@ class _CreateQuizScreenState extends State<CreateQuizScreen> {
     );
   }
 
-  Widget FormQuestion(int index) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 10),
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-          child: Column(
-            children: [
-              TextField(
-                controller: _questionEdtController,
-                style: TextStyle(color: Colors.black),
-                decoration: InputDecoration(
-                    label: Text("Câu $index:"), hintText: "Nhập câu hỏi:"),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Container(
-                    width: Constants.screenWidth / 2 - 20,
-                    child: TextField(
-                      controller: _option1EdtController,
-                      style: TextStyle(color: Colors.black),
-                      decoration: InputDecoration(hintText: "Đáp án 1:"),
-                    ),
-                  ),
-                  Container(
-                    width: Constants.screenWidth / 2 - 20,
-                    child: TextField(
-                      controller: _option2EdtController,
-                      style: TextStyle(color: Colors.black),
-                      decoration: InputDecoration(hintText: "Đáp án 2:"),
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  Container(
-                    width: Constants.screenWidth / 2 - 20,
-                    child: TextField(
-                      controller: _option3EdtController,
-                      style: TextStyle(color: Colors.black),
-                      decoration: InputDecoration(hintText: "Đáp án 3:"),
-                    ),
-                  ),
-                  Container(
-                    width: Constants.screenWidth / 2 - 20,
-                    child: TextField(
-                      controller: _option4EdtController,
-                      style: TextStyle(color: Colors.black),
-                      decoration: InputDecoration(hintText: "Đáp án 4:"),
-                    ),
-                  ),
-                ],
-              ),
-              TextField(
-                controller: _trueAnswerEdtController,
-                style: TextStyle(color: Colors.black),
-                decoration: InputDecoration(label: Text("Đáp án đúng")),
-              ),
-              Expanded(
-                child: TextField(
-                  controller: _imageEdtController,
-                  style: TextStyle(color: Colors.black),
-                  decoration:
-                      InputDecoration(label: Text("Hình ảnh mô tả (Nếu có)")),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
 }
+
+
