@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:study/common/constant.dart';
 
 TextEditingController _questionEdtController = TextEditingController();
@@ -42,16 +44,14 @@ class _FormQuestionState extends State<FormQuestion> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Container(
-                    width: Constants.screenWidth / 2 - 20,
+                  Expanded(
                     child: TextField(
                       controller: _option1EdtController,
                       style: TextStyle(color: Colors.black),
                       decoration: InputDecoration(hintText: "Đáp án 1:"),
                     ),
                   ),
-                  Container(
-                    width: Constants.screenWidth / 2 - 20,
+                  Expanded(
                     child: TextField(
                       controller: _option2EdtController,
                       style: TextStyle(color: Colors.black),
@@ -62,16 +62,14 @@ class _FormQuestionState extends State<FormQuestion> {
               ),
               Row(
                 children: [
-                  Container(
-                    width: Constants.screenWidth / 2 - 20,
+                  Expanded(
                     child: TextField(
                       controller: _option3EdtController,
                       style: TextStyle(color: Colors.black),
                       decoration: InputDecoration(hintText: "Đáp án 3:"),
                     ),
                   ),
-                  Container(
-                    width: Constants.screenWidth / 2 - 20,
+                  Expanded(
                     child: TextField(
                       controller: _option4EdtController,
                       style: TextStyle(color: Colors.black),
