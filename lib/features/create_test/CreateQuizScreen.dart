@@ -72,7 +72,6 @@ class _CreateQuizScreenState extends State<CreateQuizScreen> {
               padding: EdgeInsets.only(left: 12, right: 12, top: 20),
               child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.white,
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Column(
