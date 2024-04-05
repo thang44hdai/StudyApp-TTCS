@@ -5,7 +5,4 @@ class CreateQuizProvider extends ChangeNotifier {
   int itemCount = 1;
   List<Question> listQuestion = List.generate(100, (index) => Question.empty());
 
-  void updateUI() {
-    notifyListeners();
-  }
 }

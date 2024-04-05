@@ -59,8 +59,6 @@ class _FormQuestionState extends State<FormQuestion> {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 10),
       child: Container(
-        width: Constants.screenWidth,
-        height: 300,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(12),
@@ -85,7 +83,6 @@ class _FormQuestionState extends State<FormQuestion> {
                       icon: Icon(Icons.save),
                       onPressed: () {
                         handleWhenSwipeItem();
-                        viewmodel.updateUI();
                       },
                     ),
                   ),
