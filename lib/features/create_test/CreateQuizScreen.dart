@@ -30,11 +30,9 @@ class _CreateQuizScreenState extends State<CreateQuizScreen> {
     _numberOfQuestionEdtController.text = "1";
   }
 
-  int itemCount = 1;
-
   void _handleNumberOfQuestionsChanged(String value) {
     setState(() {
-      itemCount = int.tryParse(value) ?? 1;
+      viewmodel.itemCount = int.tryParse(value) ?? 1;
     });
   }
 
@@ -187,7 +185,7 @@ class _CreateQuizScreenState extends State<CreateQuizScreen> {
               height: 50,
             ),
             CarouselSlider.builder(
-              itemCount: itemCount,
+              itemCount: viewmodel.itemCount,
               itemBuilder: (context, index, pageIndex) {
                 return FormQuestion(
                   index: index + 1,
