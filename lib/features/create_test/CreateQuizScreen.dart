@@ -2,8 +2,10 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 import 'package:study/common/color_resource.dart';
 import 'package:study/common/constant.dart';
+import 'package:study/features/create_test/CreateQuizProvider.dart';
 
 import 'WidgetAddQuestion.dart';
 
@@ -20,22 +22,26 @@ class CreateQuizScreen extends StatefulWidget {
 }
 
 class _CreateQuizScreenState extends State<CreateQuizScreen> {
+  late CreateQuizProvider viewmodel;
+
   @override
   void initState() {
     super.initState();
-    _numberOfQuestionEdtController.text = "0";
+    _numberOfQuestionEdtController.text = "1";
   }
 
-  int itemCount = 0;
+  int itemCount = 1;
 
   void _handleNumberOfQuestionsChanged(String value) {
     setState(() {
-      itemCount = int.tryParse(value) ?? 0;
+      itemCount = int.tryParse(value) ?? 1;
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    viewmodel = Provider.of<CreateQuizProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.red,
@@ -170,7 +176,7 @@ class _CreateQuizScreenState extends State<CreateQuizScreen> {
                         controller: _descriptionEdtController,
                         style: TextStyle(color: Colors.black),
                         decoration:
-                            InputDecoration(hintText: "Vui lòng nhập mô tả:"),
+                        InputDecoration(hintText: "Vui lòng nhập mô tả:"),
                       ),
                     ),
                   ],
@@ -185,6 +191,7 @@ class _CreateQuizScreenState extends State<CreateQuizScreen> {
               itemBuilder: (context, index, pageIndex) {
                 return FormQuestion(
                   index: index + 1,
+                  question: viewmodel.listQuestion[index],
                 );
               },
               options: CarouselOptions(

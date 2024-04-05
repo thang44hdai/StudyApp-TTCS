@@ -6,7 +6,7 @@ class Question {
   String cau_c;
   String cau_d;
   int true_answer;
-  String is_image="";
+  String is_image = "";
 
   Question(
       {required this.question,
@@ -18,4 +18,14 @@ class Question {
       required this.is_image}) {
     option.addAll([cau_a, cau_b, cau_c, cau_d]);
   }
+
+  Question.empty()
+      : question = "",
+        option = [],
+        cau_a = "",
+        cau_b = "",
+        cau_c = "",
+        cau_d = "",
+        true_answer = -1,
+        is_image = "";
 }

@@ -11,12 +11,19 @@ class QuestionIntro {
 
   // Constructor
   QuestionIntro({
-    required this.id,
+    int id = 0,
     required this.time,
     required this.title,
     required this.description,
     required this.question,
-  });
+  }) : this.id = id;
+
+  QuestionIntro.empty()
+      : id = 0,
+        title = "",
+        time = 0,
+        description = "",
+        question = [];
 
   factory QuestionIntro.fromJson(Map<dynamic, dynamic> json) {
     return QuestionIntro(
