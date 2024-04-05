@@ -176,7 +176,7 @@ class _CreateQuizScreenState extends State<CreateQuizScreen> {
                         controller: _descriptionEdtController,
                         style: TextStyle(color: Colors.black),
                         decoration:
-                        InputDecoration(hintText: "Vui lòng nhập mô tả:"),
+                            InputDecoration(hintText: "Vui lòng nhập mô tả:"),
                       ),
                     ),
                   ],
@@ -195,11 +195,13 @@ class _CreateQuizScreenState extends State<CreateQuizScreen> {
                 );
               },
               options: CarouselOptions(
-                aspectRatio: 16 / 10,
-                autoPlay: false,
-                autoPlayInterval: Duration(milliseconds: 3000),
-                viewportFraction: 0.8,
-              ),
+                  aspectRatio: 16 / 10,
+                  autoPlay: false,
+                  autoPlayInterval: Duration(milliseconds: 3000),
+                  viewportFraction: 0.9,
+                  onPageChanged: (index, result) {
+                    setState(() {});
+                  }),
             ),
           ],
         ),
