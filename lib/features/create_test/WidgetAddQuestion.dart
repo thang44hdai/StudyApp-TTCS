@@ -76,12 +76,7 @@ class _FormQuestionState extends State<FormQuestion> {
                       decoration: InputDecoration(
                           label: Text("Câu $index:"),
                           hintText: "Nhập câu hỏi:"),
-                    ),
-                  ),
-                  Expanded(
-                    child: IconButton(
-                      icon: Icon(Icons.save),
-                      onPressed: () {
+                      onChanged: (value) {
                         handleWhenSwipeItem();
                       },
                     ),
@@ -96,6 +91,9 @@ class _FormQuestionState extends State<FormQuestion> {
                       controller: _option1EdtController,
                       style: TextStyle(color: Colors.black),
                       decoration: InputDecoration(hintText: "Đáp án 1:"),
+                      onChanged: (value) {
+                        handleWhenSwipeItem();
+                      },
                     ),
                   ),
                   Expanded(
@@ -103,6 +101,9 @@ class _FormQuestionState extends State<FormQuestion> {
                       controller: _option2EdtController,
                       style: TextStyle(color: Colors.black),
                       decoration: InputDecoration(hintText: "Đáp án 2:"),
+                      onChanged: (value) {
+                        handleWhenSwipeItem();
+                      },
                     ),
                   ),
                 ],
@@ -114,6 +115,9 @@ class _FormQuestionState extends State<FormQuestion> {
                       controller: _option3EdtController,
                       style: TextStyle(color: Colors.black),
                       decoration: InputDecoration(hintText: "Đáp án 3:"),
+                      onChanged: (value) {
+                        handleWhenSwipeItem();
+                      },
                     ),
                   ),
                   Expanded(
@@ -121,6 +125,9 @@ class _FormQuestionState extends State<FormQuestion> {
                       controller: _option4EdtController,
                       style: TextStyle(color: Colors.black),
                       decoration: InputDecoration(hintText: "Đáp án 4:"),
+                      onChanged: (value) {
+                        handleWhenSwipeItem();
+                      },
                     ),
                   ),
                 ],
@@ -129,6 +136,9 @@ class _FormQuestionState extends State<FormQuestion> {
                 controller: _trueAnswerEdtController,
                 style: TextStyle(color: Colors.black),
                 decoration: InputDecoration(label: Text("Đáp án đúng")),
+                onChanged: (value) {
+                  handleWhenSwipeItem();
+                },
               ),
               Expanded(
                 child: TextField(
@@ -136,6 +146,9 @@ class _FormQuestionState extends State<FormQuestion> {
                   style: TextStyle(color: Colors.black),
                   decoration:
                       InputDecoration(label: Text("Hình ảnh mô tả (Nếu có)")),
+                  onChanged: (value) {
+                    handleWhenSwipeItem();
+                  },
                 ),
               ),
             ],
