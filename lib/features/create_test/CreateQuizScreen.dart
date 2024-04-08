@@ -49,7 +49,9 @@ class _CreateQuizScreenState extends State<CreateQuizScreen> {
         ),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              viewmodel.updateData();
+            },
             icon: Icon(
               Icons.upload_file_sharp,
               color: Colors.white,
