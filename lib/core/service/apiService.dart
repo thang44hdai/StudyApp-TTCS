@@ -20,20 +20,19 @@ class ApiService {
   }
 
   Future<Question> postQuestion(Question question) async {
-    var url = Uri.parse('http://192.168.58.1/backend_php/api_add_question.php');
-    var headers = {'Content-Type': 'application/json'};
-    var data = {
+    Map<String, dynamic> request = {
       "title": question.question,
       "cau_a": question.cau_a,
       "cau_b": question.cau_b,
       "cau_c": question.cau_c,
       "cau_d": question.cau_d,
-      "true_answer": question.true_answer,
+      "true_answer": question.true_answer.toString(),
       "is_image": question.is_image
     };
-
-    final response =
-        await http.post(url, headers: headers, body: jsonEncode(data));
+    final response = await http.post(
+      Uri.parse("http://192.168.58.1/backend_php/api_add_question.php"),
+      body: request,
+    );
     if (response.statusCode == 200) {
       return Question(
           question: "question",
