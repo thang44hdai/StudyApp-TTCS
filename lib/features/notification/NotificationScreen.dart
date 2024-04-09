@@ -76,8 +76,12 @@ class _NotificationScreenState extends State<NotificationScreen> {
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                  "Hôm nay là ngày ${convertDatetimeToDate(selectedDay)}"),
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 10),
+                                child: Text(
+                                    "Hôm nay là ngày ${convertDatetimeToDate(selectedDay)}"),
+                              ),
                               Expanded(
                                   child: ListView.builder(
                                 itemCount:
