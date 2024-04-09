@@ -32,6 +32,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(Icons.arrow_back_rounded),
+
           color: Colors.white,
           onPressed: () {
             Navigator.pop(context);
