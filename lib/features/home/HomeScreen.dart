@@ -121,10 +121,10 @@ class _HomeScreen extends State<HomeScreen> {
               child: Container(
                 decoration: BoxDecoration(
                   border: Border.all(
-                    color: Colors.white,
+                    color: ColorResources.mainBackGround(),
                     width: 2,
                   ),
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: BorderRadius.circular(12),
                 ),
                 child: Row(
                   children: [
@@ -165,10 +165,10 @@ class _HomeScreen extends State<HomeScreen> {
       bottom: 0,
       child: Container(
         decoration: const BoxDecoration(
-          color: Colors.white,
+          color: Color(0xFFECF1EF),
           borderRadius: BorderRadius.only(
-            topRight: Radius.circular(35),
-            topLeft: Radius.circular(35),
+            topRight: Radius.circular(12),
+            topLeft: Radius.circular(12),
           ),
         ),
         child: FutureBuilder(
