@@ -32,15 +32,7 @@ class SignUpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage('assets/bg_login.png'),
-          fit: BoxFit.fill,
-          colorFilter: ColorFilter.mode(
-              Color.fromRGBO(1, 81, 152, 1).withOpacity(0.5),
-              BlendMode.dstATop),
-        ),
-      ),
+      decoration: BoxDecoration(color: Colors.red),
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: GestureDetector(
@@ -65,22 +57,23 @@ class SignUpScreen extends StatelessWidget {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Center(
-                                child: Container(
-                                  margin: EdgeInsets.only(bottom: 20),
-                                  child: Image.asset('assets/welcome.png'),
-                                  height: 100,
-                                ),
-                              ),
+                              // Center(
+                              //   child: Container(
+                              //     margin: EdgeInsets.only(bottom: 20),
+                              //     child: Image.asset('assets/welcome.png'),
+                              //     height: 100,
+                              //   ),
+                              // ),
                               Text(
                                 "Welcome",
                                 style: TextStyle(
-                                    color: Color.fromRGBO(1, 81, 152, 1),
+                                    color: Colors.red,
                                     fontWeight: FontWeight.bold,
                                     fontSize: 32),
                               ),
                               Text(
                                 "Please fill in your information",
+                                style: TextStyle(color: Colors.red),
                               ),
                               SizedBox(
                                 height: 20,
@@ -197,10 +190,9 @@ class SignUpScreen extends StatelessWidget {
                                 },
                                 style: ElevatedButton.styleFrom(
                                   shape: StadiumBorder(),
-                                  backgroundColor:
-                                      Color.fromRGBO(1, 81, 152, 1),
+                                  backgroundColor: Colors.red,
                                   elevation: 20,
-                                  shadowColor: Color.fromRGBO(1, 81, 152, 1),
+                                  shadowColor: Colors.red,
                                   minimumSize: Size.fromHeight(60),
                                 ),
                                 child: Text(
