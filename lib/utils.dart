@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
+
+import 'common/constant.dart';
 
 class Utils {
   static void DialogBase(String title, BuildContext context) {
@@ -24,6 +27,14 @@ class Utils {
           ],
         );
       },
+    );
+  }
+
+  static Widget NotConnectServer() {
+    return Container(
+      height: Constants.screenWidth,
+      width: Constants.screenWidth,
+      child: Lottie.asset('assets/404.json'),
     );
   }
 }

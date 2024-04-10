@@ -6,6 +6,7 @@ import 'package:study/core/service/apiService.dart';
 import 'package:study/features/notification/NotificationScreen.dart';
 import 'package:study/features/profile/ProfileScreen.dart';
 import 'package:study/features/tutorial/TutorialScreen.dart';
+import 'package:study/utils.dart';
 import 'QuizItem.dart';
 
 TextEditingController searchController = TextEditingController();
@@ -193,7 +194,7 @@ class _HomeScreen extends State<HomeScreen> {
                 },
               );
             } else {
-              return Text("${snapshot.error}");
+              return Utils.NotConnectServer();
             }
           },
         ),
