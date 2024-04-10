@@ -1,6 +1,9 @@
+import 'dart:typed_data';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:study/common/color_resource.dart';
 import 'package:study/features/authentication/LoginScreen.dart';
@@ -17,6 +20,7 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreen extends State<ProfileScreen> {
   late ProfileProvider viewmodel = ProfileProvider();
+  Uint8List? _image;
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +44,7 @@ class _ProfileScreen extends State<ProfileScreen> {
                   History(),
                   ItemHistory(snap.data!.history),
                   BtnLogout(),
+                  BtnChangeAva(),
                 ],
               ),
             );
@@ -85,7 +90,12 @@ class _ProfileScreen extends State<ProfileScreen> {
           Container(
             width: Constants.screenWidth / 3,
             height: Constants.screenWidth / 3,
-            child: CircleAvatar(
+            child: _image != null
+                ? CircleAvatar(
+              radius: Constants.screenWidth / 6,
+              backgroundImage: MemoryImage(_image!),
+            )
+                : CircleAvatar(
               radius: Constants.screenWidth / 6,
               backgroundImage: AssetImage('assets/ava.jpg'),
             ),
@@ -145,7 +155,8 @@ class _ProfileScreen extends State<ProfileScreen> {
                 borderRadius: BorderRadius.circular(12),
               ),
               child: ListTile(
-                onTap: () => {
+                onTap: () =>
+                {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => TutorialScreen()))
                 },
@@ -176,7 +187,7 @@ class _ProfileScreen extends State<ProfileScreen> {
             Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(builder: (context) => LoginScreen()),
-              (route) => false,
+                  (route) => false,
             );
           },
           child: Row(
@@ -196,4 +207,30 @@ class _ProfileScreen extends State<ProfileScreen> {
       ),
     );
   }
+
+  Widget BtnChangeAva() {
+    return Positioned(
+      top: Constants.screenHeight / 3 + 22,
+      left: Constants.screenWidth * 2 / 3 - 40,
+      child: IconButton(
+        onPressed: () {
+          selectImage();
+        },
+        icon: Icon(Icons.camera_alt),
+      ),
+    );
+  }
+
+  void selectImage() async {
+    Uint8List img = await pickImage(ImageSource.gallery);
+    setState(() {
+      _image = img;
+    });
+  }
+}
+
+pickImage(ImageSource source) async {
+  final ImagePicker _imagePicker = ImagePicker();
+  XFile? file = await _imagePicker.pickImage(source: source);
+  if (file != null) return await file.readAsBytes();
 }
