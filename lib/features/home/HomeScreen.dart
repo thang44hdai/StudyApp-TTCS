@@ -174,9 +174,7 @@ class _HomeScreen extends State<HomeScreen> {
         child: FutureBuilder(
           future: ListQuestionIntroFuture,
           builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-            if (snapshot.hasError) {
-              return Text("${snapshot.error}");
-            } else if (snapshot.hasData) {
+            if (snapshot.hasData) {
               List<QuestionIntro> ListQuestionIntro = snapshot.data;
               return GridView.builder(
                 itemCount: ListQuestionIntro.length,
@@ -195,11 +193,7 @@ class _HomeScreen extends State<HomeScreen> {
                 },
               );
             } else {
-              return Center(
-                child: Container(
-                  color: Colors.amber,
-                ),
-              );
+              return Text("${snapshot.error}");
             }
           },
         ),
