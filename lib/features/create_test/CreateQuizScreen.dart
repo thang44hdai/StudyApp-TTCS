@@ -50,7 +50,10 @@ class _CreateQuizScreenState extends State<CreateQuizScreen> {
         actions: [
           IconButton(
             onPressed: () {
-              viewmodel.updateData();
+              viewmodel.updateData(
+                  _titleEdtController.text,
+                  int.parse(_timeEdtController.text),
+                  _descriptionEdtController.text);
             },
             icon: Icon(
               Icons.upload_file_sharp,

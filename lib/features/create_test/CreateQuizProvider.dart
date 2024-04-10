@@ -6,11 +6,11 @@ class CreateQuizProvider extends ChangeNotifier {
   int itemCount = 1;
   List<Question> listQuestion = List.generate(100, (index) => Question.empty());
 
-  void updateData() {
+  void updateData(String title, int time, String description) {
     for (int i = 0; i < itemCount; i++) {
       Question element = listQuestion[i];
       ApiService().postQuestion(element);
-      print("test" + element.question);
     }
+    ApiService().postListQuestion(title, time, description);
   }
 }

@@ -46,4 +46,21 @@ class ApiService {
       throw Exception("Failed to load post");
     }
   }
+
+  Future<void> postListQuestion(
+      String title, int time, String description) async {
+    Map<String, dynamic> request = {
+      "title": title,
+      "time": time.toString(),
+      "description": description
+    };
+    final response = await http.post(
+      Uri.parse("http://192.168.58.1/backend_php/api_add_listquestion.php"),
+      body: request,
+    );
+    if (response.statusCode == 200) {
+    } else {
+      throw Exception("Failed to load post");
+    }
+  }
 }
