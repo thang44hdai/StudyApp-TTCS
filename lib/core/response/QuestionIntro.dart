@@ -27,7 +27,7 @@ class QuestionIntro {
 
   factory QuestionIntro.fromJson(Map<dynamic, dynamic> json) {
     return QuestionIntro(
-      id: json['id'],
+      id: int.parse(json['id']),
       title: json['title'],
       time: json['time'],
       description: json['description'],
