@@ -19,7 +19,7 @@ class ApiService {
     }
   }
 
-  Future<Question> postQuestion(Question question) async {
+  Future<Question> postQuestion(Question question, int list_question_id) async {
     Map<String, dynamic> request = {
       "title": question.question,
       "cau_a": question.cau_a,
@@ -27,7 +27,8 @@ class ApiService {
       "cau_c": question.cau_c,
       "cau_d": question.cau_d,
       "true_answer": question.true_answer.toString(),
-      "is_image": question.is_image
+      "is_image": question.is_image,
+      "list_question_id": list_question_id.toString()
     };
     final response = await http.post(
       Uri.parse("http://192.168.58.1/backend_php/api_add_question.php"),

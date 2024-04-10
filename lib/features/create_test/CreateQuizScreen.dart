@@ -5,6 +5,8 @@ import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:study/common/color_resource.dart';
 import 'package:study/common/constant.dart';
+import 'package:study/core/response/QuestionIntro.dart';
+import 'package:study/core/service/apiService.dart';
 import 'package:study/features/create_test/CreateQuizProvider.dart';
 
 import 'WidgetAddQuestion.dart';
@@ -39,6 +41,8 @@ class _CreateQuizScreenState extends State<CreateQuizScreen> {
   @override
   Widget build(BuildContext context) {
     viewmodel = Provider.of<CreateQuizProvider>(context);
+    Future<List<QuestionIntro>> ListQuestionIntroFuture =
+        ApiService().getQuestionIntro();
 
     return Scaffold(
       appBar: AppBar(
@@ -71,7 +75,19 @@ class _CreateQuizScreenState extends State<CreateQuizScreen> {
                 height: Constants.screenHeight / 20,
                 decoration: BoxDecoration(color: Colors.red),
               ),
-              Body(),
+              FutureBuilder(
+                  future: ListQuestionIntroFuture,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      List<QuestionIntro>? ListQuestionIntro = snapshot.data;
+                      viewmodel.list_question_id =
+                          ListQuestionIntro![ListQuestionIntro.length - 1].id +
+                              1;
+                      return Body();
+                    } else {
+                      return Text("Wait me!");
+                    }
+                  })
             ],
           ),
         ),
