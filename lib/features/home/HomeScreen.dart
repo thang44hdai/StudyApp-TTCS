@@ -72,7 +72,6 @@ class _HomeScreen extends State<HomeScreen> {
           children: [
             Header(),
             Body(),
-            Fab(),
           ],
         ),
       ),

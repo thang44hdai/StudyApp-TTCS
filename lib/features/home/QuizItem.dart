@@ -58,8 +58,8 @@ class ItemQuiz extends StatelessWidget {
         },
         child: Container(
           decoration: BoxDecoration(
-            color: Colors.black,
-            borderRadius: BorderRadius.circular(35),
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(12),
           ),
           height: Constants.screenWidth / 2.5,
           width: Constants.screenWidth / 2.5,
@@ -71,13 +71,13 @@ class ItemQuiz extends StatelessWidget {
                 children: [
                   Icon(
                     Icons.text_fields,
-                    color: Colors.white,
+                    color: Colors.black,
                   ),
                   SizedBox(width: 10),
                   Expanded(
                     child: Text(
                       "${item.title}",
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(color: Colors.black),
                     ),
                   )
                 ],
@@ -86,13 +86,13 @@ class ItemQuiz extends StatelessWidget {
                 children: [
                   Icon(
                     Icons.add_alarm_rounded,
-                    color: Colors.white,
+                    color: Colors.black,
                   ),
                   SizedBox(width: 10),
                   Expanded(
                     child: Text(
                       "${item.time}",
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(color: Colors.black),
                     ),
                   ),
                 ],
@@ -101,13 +101,13 @@ class ItemQuiz extends StatelessWidget {
                 children: [
                   Icon(
                     Icons.description,
-                    color: Colors.white,
+                    color: Colors.black,
                   ),
                   SizedBox(width: 10),
                   Expanded(
                     child: Text(
                       "${item.description}",
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(color: Colors.black),
                     ),
                   ),
                 ],
