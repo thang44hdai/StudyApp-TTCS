@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:study/common/constant.dart';
@@ -71,7 +73,15 @@ class LoginScreen extends StatelessWidget {
     _tk_loginController.text = "hi@gmail.com";
     _mk_loginController.text = "123456";
     return Container(
-      decoration: BoxDecoration(color: Colors.red),
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage('assets/bg_login.png'),
+          fit: BoxFit.fill,
+          colorFilter: ColorFilter.mode(
+              Colors.red.withOpacity(0.5),
+              BlendMode.dstATop),
+        ),
+      ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: GestureDetector(
@@ -87,7 +97,7 @@ class LoginScreen extends StatelessWidget {
                       bottomLeft: Radius.circular(20)),
                   child: Container(
                     color: ColorResources.mainBackGround(),
-                    height: Constants.screenHeight * 8 / 9,
+                    height: Constants.screenHeight * 2 / 3,
                     width: Constants.screenWidth,
                     child: Padding(
                       padding: EdgeInsets.all(32),

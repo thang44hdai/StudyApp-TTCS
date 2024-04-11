@@ -92,13 +92,13 @@ class _ProfileScreen extends State<ProfileScreen> {
             height: Constants.screenWidth / 3,
             child: _image != null
                 ? CircleAvatar(
-              radius: Constants.screenWidth / 6,
-              backgroundImage: MemoryImage(_image!),
-            )
+                    radius: Constants.screenWidth / 6,
+                    backgroundImage: MemoryImage(_image!),
+                  )
                 : CircleAvatar(
-              radius: Constants.screenWidth / 6,
-              backgroundImage: AssetImage('assets/ava.jpg'),
-            ),
+                    radius: Constants.screenWidth / 6,
+                    backgroundImage: AssetImage('assets/ava.jpg'),
+                  ),
           ),
           const SizedBox(
             height: 10,
@@ -131,7 +131,13 @@ class _ProfileScreen extends State<ProfileScreen> {
       top: Constants.screenHeight / 3 + Constants.screenWidth / 6 + 50,
       child: Column(
         children: [
-          Text("Lịch sử làm bài:"),
+          Padding(
+            padding: EdgeInsets.only(left: 20),
+            child: Text(
+              "Lịch sử làm bài:",
+              style: TextStyle(fontSize: 15),
+            ),
+          ),
           SizedBox(height: 20),
         ],
       ),
@@ -155,8 +161,7 @@ class _ProfileScreen extends State<ProfileScreen> {
                 borderRadius: BorderRadius.circular(12),
               ),
               child: ListTile(
-                onTap: () =>
-                {
+                onTap: () => {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => TutorialScreen()))
                 },
@@ -181,13 +186,13 @@ class _ProfileScreen extends State<ProfileScreen> {
       top: 0,
       right: 0,
       child: Padding(
-        padding: const EdgeInsets.only(top: 25, right: 15),
+        padding: const EdgeInsets.only(top: 40, right: 15),
         child: GestureDetector(
           onTap: () {
             Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(builder: (context) => LoginScreen()),
-                  (route) => false,
+              (route) => false,
             );
           },
           child: Row(
@@ -217,6 +222,9 @@ class _ProfileScreen extends State<ProfileScreen> {
           selectImage();
         },
         icon: Icon(Icons.camera_alt),
+        style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.all(Colors.white),
+        ),
       ),
     );
   }

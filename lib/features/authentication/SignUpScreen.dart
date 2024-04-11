@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:study/common/color_resource.dart';
 import 'package:study/common/constant.dart';
 import 'package:study/features/calendar/event.dart';
 
@@ -32,7 +33,15 @@ class SignUpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(color: Colors.red),
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage('assets/bg_login.png'),
+          fit: BoxFit.fill,
+          colorFilter: ColorFilter.mode(
+              Color.fromRGBO(1, 81, 152, 1).withOpacity(0.5),
+              BlendMode.dstATop),
+        ),
+      ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: GestureDetector(
@@ -47,8 +56,8 @@ class SignUpScreen extends StatelessWidget {
                       bottomRight: Radius.circular(20),
                       bottomLeft: Radius.circular(20)),
                   child: Container(
-                    color: Colors.white,
-                    height: Constants.screenHeight * 9 / 10,
+                    color: ColorResources.mainBackGround(),
+                    height: Constants.screenHeight * 2 / 3,
                     width: Constants.screenWidth,
                     child: Padding(
                       padding: EdgeInsets.only(left: 32, right: 32),
@@ -57,13 +66,7 @@ class SignUpScreen extends StatelessWidget {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              // Center(
-                              //   child: Container(
-                              //     margin: EdgeInsets.only(bottom: 20),
-                              //     child: Image.asset('assets/welcome.png'),
-                              //     height: 100,
-                              //   ),
-                              // ),
+                              SizedBox(height: 50),
                               Text(
                                 "Welcome",
                                 style: TextStyle(
