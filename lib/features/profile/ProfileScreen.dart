@@ -166,11 +166,11 @@ class _ProfileScreen extends State<ProfileScreen> {
                       MaterialPageRoute(builder: (context) => TutorialScreen()))
                 },
                 leading: Text(
-                  (index + 1).toString(),
+                  history[index].substring(0, 19),
                   style: TextStyle(color: Colors.white),
                 ),
                 title: Text(
-                  history[index],
+                  "Kết quả: ${history[index].substring(19)}",
                   style: TextStyle(color: Colors.white),
                 ),
               ),

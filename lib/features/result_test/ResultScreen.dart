@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:study/common/color_resource.dart';
@@ -101,6 +102,7 @@ class _ResultScreen extends State<ResultScreen> {
         children: [
           ElevatedButton(
             onPressed: () {
+              uploadHistory();
               Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(
@@ -156,5 +158,32 @@ class _ResultScreen extends State<ResultScreen> {
       if (element.selected_index == element.question.true_answer) count++;
     });
     return "${count}/${questions.length}";
+  }
+
+  void uploadHistory() async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    final user = Constants.user;
+    DocumentSnapshot documentSnapshot = await firestore
+        .collection("users")
+        .doc(user.account + user.password)
+        .get();
+    final account = documentSnapshot['account'];
+    final name = documentSnapshot['name'];
+    final password = documentSnapshot['password'];
+    final history = documentSnapshot['history'] as List<dynamic>;
+    final _history = history.cast<String>().toList();
+    final date = DateTime.now();
+    _history.add(date.toString().substring(0, 19) + result());
+
+    final data = {
+      "account": account,
+      "name": name,
+      "password": password,
+      "history": _history,
+    };
+    await firestore
+        .collection("users")
+        .doc(user.account + user.password)
+        .set(data);
   }
 }
