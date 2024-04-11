@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:provider/provider.dart';
+import 'package:study/common/color_resource.dart';
 import '../../common/constant.dart';
 import '../../core/response/QuestionTotal.dart';
 import 'provider/QuizProvider.dart';
@@ -18,6 +19,7 @@ class _TestScreen extends State<TestScreen> {
     List<QuestionTotal> questions = viewmodel.questions;
     int selectedQuestionIndex = viewmodel.selectedQuestionIndex;
     return Scaffold(
+      backgroundColor: ColorResources.mainBackGround(),
       body: Padding(
         padding: EdgeInsets.only(left: 10, right: 10),
         child: Row(

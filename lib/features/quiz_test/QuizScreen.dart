@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:study/common/color_resource.dart';
 import 'package:study/common/constant.dart';
 import 'package:study/features/quiz_test/CountdownTimber.dart';
 import 'package:study/features/quiz_test/TestList.dart';
@@ -31,6 +32,7 @@ class _QuizScreenState extends State<QuizScreen> {
     int len = viewmodel.questions.length;
 
     return Scaffold(
+      backgroundColor: ColorResources.mainBackGround(),
       appBar: AppBar(
         backgroundColor: Colors.red,
         leading: IconButton(
@@ -153,7 +155,7 @@ class _QuizScreenState extends State<QuizScreen> {
       left: 0,
       child: Container(
         decoration: const BoxDecoration(
-          color: Colors.white,
+          color: Color(0xFFECF1EF),
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(35),
             topRight: Radius.circular(35),

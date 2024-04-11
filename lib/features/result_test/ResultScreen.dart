@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:study/common/color_resource.dart';
 import 'package:study/common/constant.dart';
+import 'package:study/core/response/QuestionTotal.dart';
 import 'package:study/features/main.dart';
 import 'package:study/features/main_screen.dart';
 import 'package:study/features/profile/ProfileScreen.dart';
@@ -19,8 +21,11 @@ class ResultScreen extends StatefulWidget {
 }
 
 class _ResultScreen extends State<ResultScreen> {
+  late QuestionProvider viewmodel;
+
   @override
   Widget build(BuildContext context) {
+    viewmodel = Provider.of<QuestionProvider>(context);
     return Scaffold(
       body: Container(
         height: Constants.screenHeight,
@@ -44,6 +49,15 @@ class _ResultScreen extends State<ResultScreen> {
     return Container(
       decoration: BoxDecoration(color: Colors.red),
       height: Constants.screenHeight / 2,
+      child: Row(
+        children: [
+          SizedBox(width: 15),
+          Text(
+            "Bạn đã hoàn thành bài thi\nKết quả là: ${result()}",
+            style: TextStyle(color: Colors.white, fontSize: 18),
+          ),
+        ],
+      ),
     );
   }
 
@@ -55,10 +69,10 @@ class _ResultScreen extends State<ResultScreen> {
       left: 0,
       child: Container(
         decoration: const BoxDecoration(
-          color: Colors.white,
+          color: Color(0xFFECF1EF),
           borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(35),
-            topRight: Radius.circular(35),
+            topLeft: Radius.circular(12),
+            topRight: Radius.circular(12),
           ),
         ),
         child: Column(
@@ -133,5 +147,14 @@ class _ResultScreen extends State<ResultScreen> {
         },
       ),
     );
+  }
+
+  String result() {
+    List<QuestionTotal> questions = viewmodel.questions;
+    int count = 0;
+    questions.forEach((element) {
+      if (element.selected_index == element.question.true_answer) count++;
+    });
+    return "${count}/${questions.length}";
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:provider/provider.dart';
+import 'package:study/common/color_resource.dart';
 import '../../common/constant.dart';
 import '../../core/response/QuestionTotal.dart';
 import '../quiz_test/provider/QuizProvider.dart';
@@ -14,6 +15,7 @@ class ListResult extends StatefulWidget {
 class _ListResult extends State<ListResult> {
   late int selectedQuestionIndex;
   late QuestionProvider viewmodel;
+
   @override
   void initState() {
     super.initState();
@@ -21,6 +23,7 @@ class _ListResult extends State<ListResult> {
     viewmodel = Provider.of<QuestionProvider>(context, listen: false);
     viewmodel.selectedQuestionIndex = 0;
   }
+
   @override
   Widget build(BuildContext context) {
     viewmodel = Provider.of<QuestionProvider>(context);
@@ -28,12 +31,14 @@ class _ListResult extends State<ListResult> {
     selectedQuestionIndex = viewmodel.selectedQuestionIndex;
 
     return Scaffold(
+      backgroundColor: ColorResources.mainBackGround(),
       body: Padding(
         padding: EdgeInsets.only(left: 10, right: 10),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
+              color: ColorResources.mainBackGround(),
               width: Constants.screenWidth - 100,
               height: double.infinity,
               child: SingleChildScrollView(
@@ -122,6 +127,7 @@ class _ListResult extends State<ListResult> {
             // Icon Question
             Container(
               width: 70,
+              color: ColorResources.mainBackGround(),
               child: GridView.builder(
                 itemCount: questions.length,
                 itemBuilder: (context, index) {
