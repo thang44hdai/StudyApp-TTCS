@@ -25,6 +25,7 @@ class _FormQuestionState extends State<FormQuestion> {
   TextEditingController _option4EdtController = TextEditingController();
   TextEditingController _trueAnswerEdtController = TextEditingController();
   TextEditingController _imageEdtController = TextEditingController();
+  int Value = 0;
 
   @override
   void initState() {
@@ -51,7 +52,7 @@ class _FormQuestionState extends State<FormQuestion> {
       question.cau_b = _option2EdtController.text;
       question.cau_c = _option3EdtController.text;
       question.cau_d = _option4EdtController.text;
-      question.true_answer = int.parse(_trueAnswerEdtController.text);
+      question.true_answer = Value;
       question.is_image = _imageEdtController.text;
       viewmodel.listQuestion[index - 1] = question;
     }
@@ -66,6 +67,7 @@ class _FormQuestionState extends State<FormQuestion> {
         child: Padding(
           padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Row(
                 children: [
@@ -90,17 +92,18 @@ class _FormQuestionState extends State<FormQuestion> {
                     child: TextField(
                       controller: _option1EdtController,
                       style: TextStyle(color: Colors.black),
-                      decoration: InputDecoration(hintText: "Đáp án 1:"),
+                      decoration: InputDecoration(hintText: "Đáp án A:"),
                       onChanged: (value) {
                         handleWhenSwipeItem();
                       },
                     ),
                   ),
+                  SizedBox(width: 10),
                   Expanded(
                     child: TextField(
                       controller: _option2EdtController,
                       style: TextStyle(color: Colors.black),
-                      decoration: InputDecoration(hintText: "Đáp án 2:"),
+                      decoration: InputDecoration(hintText: "Đáp án B:"),
                       onChanged: (value) {
                         handleWhenSwipeItem();
                       },
@@ -114,17 +117,18 @@ class _FormQuestionState extends State<FormQuestion> {
                     child: TextField(
                       controller: _option3EdtController,
                       style: TextStyle(color: Colors.black),
-                      decoration: InputDecoration(hintText: "Đáp án 3:"),
+                      decoration: InputDecoration(hintText: "Đáp án C:"),
                       onChanged: (value) {
                         handleWhenSwipeItem();
                       },
                     ),
                   ),
+                  SizedBox(width: 10),
                   Expanded(
                     child: TextField(
                       controller: _option4EdtController,
                       style: TextStyle(color: Colors.black),
-                      decoration: InputDecoration(hintText: "Đáp án 4:"),
+                      decoration: InputDecoration(hintText: "Đáp án D:"),
                       onChanged: (value) {
                         handleWhenSwipeItem();
                       },
@@ -132,13 +136,38 @@ class _FormQuestionState extends State<FormQuestion> {
                   ),
                 ],
               ),
-              TextField(
-                controller: _trueAnswerEdtController,
-                style: TextStyle(color: Colors.black),
-                decoration: InputDecoration(label: Text("Đáp án đúng")),
-                onChanged: (value) {
-                  handleWhenSwipeItem();
-                },
+              Row(
+                children: [
+                  Text("Đáp án đúng: "),
+                  SizedBox(width: 10),
+                  DropdownButton<int>(
+                    value: Value,
+                    items: [
+                      DropdownMenuItem<int>(
+                        value: 0,
+                        child: Text('A'),
+                      ),
+                      DropdownMenuItem<int>(
+                        value: 1,
+                        child: Text('B'),
+                      ),
+                      DropdownMenuItem<int>(
+                        value: 2,
+                        child: Text('C'),
+                      ),
+                      DropdownMenuItem<int>(
+                        value: 3,
+                        child: Text('D'),
+                      ),
+                    ],
+                    onChanged: (int? value) {
+                      setState(() {
+                        Value = value!;
+                        handleWhenSwipeItem();
+                      });
+                    },
+                  )
+                ],
               ),
               Expanded(
                 child: TextField(
