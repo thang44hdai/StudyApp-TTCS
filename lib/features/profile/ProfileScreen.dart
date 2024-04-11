@@ -26,32 +26,34 @@ class _ProfileScreen extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     viewmodel = Provider.of<ProfileProvider>(context);
 
-    return StreamBuilder(
-        stream: viewmodel.getInformation(),
-        builder: (context, snap) {
-          if (snap.hasError) {
-            return Text("Error");
-          } else if (snap.hasData) {
-            return Container(
-              width: Constants.screenWidth,
-              height: Constants.screenHeight,
-              child: Stack(
-                children: [
-                  Background(),
-                  Frame(),
-                  Ava(),
-                  Profile(snap.data!.name, snap.data!.email),
-                  History(),
-                  ItemHistory(snap.data!.history),
-                  BtnLogout(),
-                  BtnChangeAva(),
-                ],
-              ),
-            );
-          } else {
-            return Text("Xin chờ trong giây lát");
-          }
-        });
+    return Material(
+      child: StreamBuilder(
+          stream: viewmodel.getInformation(),
+          builder: (context, snap) {
+            if (snap.hasError) {
+              return Text("Error");
+            } else if (snap.hasData) {
+              return Container(
+                width: Constants.screenWidth,
+                height: Constants.screenHeight,
+                child: Stack(
+                  children: [
+                    Background(),
+                    Frame(),
+                    Ava(),
+                    Profile(snap.data!.name, snap.data!.email),
+                    History(),
+                    ItemHistory(snap.data!.history),
+                    BtnLogout(),
+                    BtnChangeAva(),
+                  ],
+                ),
+              );
+            } else {
+              return Text("Xin chờ trong giây lát");
+            }
+          }),
+    );
   }
 
   Widget Background() {
