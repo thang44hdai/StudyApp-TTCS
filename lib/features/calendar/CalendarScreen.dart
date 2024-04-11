@@ -116,7 +116,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                                   shape: BoxShape.circle,
                                 ),
                                 weekendTextStyle:
-                                    TextStyle(color: Colors.green),
+                                    TextStyle(color: Colors.red),
                               ),
                               headerStyle: const HeaderStyle(
                                   formatButtonVisible: false,
@@ -186,24 +186,44 @@ class _CalendarScreenState extends State<CalendarScreen> {
               onPressed: () => showDialog(
                 context: context,
                 builder: (context) => AlertDialog(
-                  title: Text("Add Event"),
+                  title: Text(
+                    "Thêm sự kiện",
+                    style: TextStyle(color: Colors.red),
+                  ),
                   content: Column(
                     children: [
                       TextFormField(
                         controller: _eventController,
+                        decoration: const InputDecoration(
+                          hintText: 'Tên sự kiện',
+                          border: OutlineInputBorder(),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
                       ),
                       TextFormField(
                         controller: _timeEventController,
+                        decoration: const InputDecoration(
+                          hintText: 'Thời gian',
+                          border: OutlineInputBorder(),
+                        ),
                       ),
                     ],
                   ),
                   actions: [
                     TextButton(
-                      child: Text("Cancel"),
+                      child: Text(
+                        "Hủy bỏ",
+                        style: TextStyle(color: Colors.black),
+                      ),
                       onPressed: () => Navigator.pop(context),
                     ),
                     TextButton(
-                      child: Text("Ok"),
+                      child: Text(
+                        "Xác nhận",
+                        style: TextStyle(color: Colors.black),
+                      ),
                       onPressed: () {
                         addEvent();
                         return;
@@ -212,8 +232,15 @@ class _CalendarScreenState extends State<CalendarScreen> {
                   ],
                 ),
               ),
-              label: Text("Add Event"),
-              icon: Icon(Icons.add),
+              backgroundColor: Colors.red,
+              label: Text(
+                "Thêm sự kiện",
+                style: TextStyle(color: Colors.white),
+              ),
+              icon: Icon(
+                Icons.add,
+                color: Colors.white,
+              ),
             ),
           );
         }

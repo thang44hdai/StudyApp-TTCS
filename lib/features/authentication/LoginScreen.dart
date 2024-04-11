@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:study/common/constant.dart';
@@ -7,7 +9,6 @@ import 'package:study/features/home/HomeScreen.dart';
 import 'package:study/features/main_screen.dart';
 
 import '../../common/color_resource.dart';
-
 
 TextEditingController _tk_loginController = TextEditingController();
 TextEditingController _mk_loginController = TextEditingController();
@@ -69,7 +70,6 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     _tk_loginController.text = "hi@gmail.com";
     _mk_loginController.text = "123456";
     return Container(
@@ -78,7 +78,7 @@ class LoginScreen extends StatelessWidget {
           image: AssetImage('assets/bg_login.png'),
           fit: BoxFit.fill,
           colorFilter: ColorFilter.mode(
-              Color.fromRGBO(1, 81, 152, 1).withOpacity(0.5),
+              Colors.red.withOpacity(0.5),
               BlendMode.dstATop),
         ),
       ),
@@ -97,7 +97,7 @@ class LoginScreen extends StatelessWidget {
                       bottomLeft: Radius.circular(20)),
                   child: Container(
                     color: ColorResources.mainBackGround(),
-                    height: Constants.screenHeight * 8 / 9,
+                    height: Constants.screenHeight * 2 / 3,
                     width: Constants.screenWidth,
                     child: Padding(
                       padding: EdgeInsets.all(32),
@@ -106,22 +106,23 @@ class LoginScreen extends StatelessWidget {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Center(
-                                child: Container(
-                                  margin: EdgeInsets.only(bottom: 20),
-                                  child: Image.asset('assets/welcome.png'),
-                                  height: 100,
-                                ),
-                              ),
+                              // Center(
+                              //   child: Container(
+                              //     margin: EdgeInsets.only(bottom: 20),
+                              //     child: Image.asset('assets/welcome.png'),
+                              //     height: 100,
+                              //   ),
+                              // ),
                               Text(
                                 "Welcome",
                                 style: TextStyle(
-                                    color: Color.fromRGBO(1, 81, 152, 1),
+                                    color: Colors.red,
                                     fontWeight: FontWeight.bold,
                                     fontSize: 32),
                               ),
                               Text(
                                 "Please log in your information",
+                                style: TextStyle(color: Colors.red),
                               ),
                               SizedBox(
                                 height: 15,
@@ -176,10 +177,9 @@ class LoginScreen extends StatelessWidget {
                                 },
                                 style: ElevatedButton.styleFrom(
                                   shape: StadiumBorder(),
-                                  backgroundColor:
-                                      Color.fromRGBO(1, 81, 152, 1),
+                                  backgroundColor: Colors.red,
                                   elevation: 20,
-                                  shadowColor: Color.fromRGBO(1, 81, 152, 1),
+                                  shadowColor: Colors.red,
                                   minimumSize: Size.fromHeight(60),
                                 ),
                                 child: Text(
@@ -212,18 +212,6 @@ class LoginScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                  ),
-                ),
-              ),
-              Positioned(
-                top: 20,
-                child: IconButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  icon: Icon(
-                    Icons.arrow_back_rounded,
-                    color: Colors.black,
                   ),
                 ),
               ),

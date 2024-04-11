@@ -1,6 +1,9 @@
+import 'dart:typed_data';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:study/common/color_resource.dart';
 import 'package:study/features/authentication/LoginScreen.dart';
@@ -17,6 +20,7 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreen extends State<ProfileScreen> {
   late ProfileProvider viewmodel = ProfileProvider();
+  Uint8List? _image;
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +44,7 @@ class _ProfileScreen extends State<ProfileScreen> {
                   History(),
                   ItemHistory(snap.data!.history),
                   BtnLogout(),
+                  BtnChangeAva(),
                 ],
               ),
             );
@@ -85,10 +90,15 @@ class _ProfileScreen extends State<ProfileScreen> {
           Container(
             width: Constants.screenWidth / 3,
             height: Constants.screenWidth / 3,
-            child: CircleAvatar(
-              radius: Constants.screenWidth / 6,
-              backgroundImage: AssetImage('assets/ava.jpg'),
-            ),
+            child: _image != null
+                ? CircleAvatar(
+                    radius: Constants.screenWidth / 6,
+                    backgroundImage: MemoryImage(_image!),
+                  )
+                : CircleAvatar(
+                    radius: Constants.screenWidth / 6,
+                    backgroundImage: AssetImage('assets/ava.jpg'),
+                  ),
           ),
           const SizedBox(
             height: 10,
@@ -121,7 +131,13 @@ class _ProfileScreen extends State<ProfileScreen> {
       top: Constants.screenHeight / 3 + Constants.screenWidth / 6 + 50,
       child: Column(
         children: [
-          Text("Lịch sử làm bài:"),
+          Padding(
+            padding: EdgeInsets.only(left: 20),
+            child: Text(
+              "Lịch sử làm bài:",
+              style: TextStyle(fontSize: 15),
+            ),
+          ),
           SizedBox(height: 20),
         ],
       ),
@@ -170,7 +186,7 @@ class _ProfileScreen extends State<ProfileScreen> {
       top: 0,
       right: 0,
       child: Padding(
-        padding: const EdgeInsets.only(top: 25, right: 15),
+        padding: const EdgeInsets.only(top: 40, right: 15),
         child: GestureDetector(
           onTap: () {
             Navigator.pushAndRemoveUntil(
@@ -196,4 +212,33 @@ class _ProfileScreen extends State<ProfileScreen> {
       ),
     );
   }
+
+  Widget BtnChangeAva() {
+    return Positioned(
+      top: Constants.screenHeight / 3 + 22,
+      left: Constants.screenWidth * 2 / 3 - 40,
+      child: IconButton(
+        onPressed: () {
+          selectImage();
+        },
+        icon: Icon(Icons.camera_alt),
+        style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.all(Colors.white),
+        ),
+      ),
+    );
+  }
+
+  void selectImage() async {
+    Uint8List img = await pickImage(ImageSource.gallery);
+    setState(() {
+      _image = img;
+    });
+  }
+}
+
+pickImage(ImageSource source) async {
+  final ImagePicker _imagePicker = ImagePicker();
+  XFile? file = await _imagePicker.pickImage(source: source);
+  if (file != null) return await file.readAsBytes();
 }

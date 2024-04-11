@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:study/common/color_resource.dart';
 import 'package:study/common/constant.dart';
 import 'package:study/features/calendar/event.dart';
 
@@ -55,8 +56,8 @@ class SignUpScreen extends StatelessWidget {
                       bottomRight: Radius.circular(20),
                       bottomLeft: Radius.circular(20)),
                   child: Container(
-                    color: Colors.white,
-                    height: Constants.screenHeight * 9 / 10,
+                    color: ColorResources.mainBackGround(),
+                    height: Constants.screenHeight * 2 / 3,
                     width: Constants.screenWidth,
                     child: Padding(
                       padding: EdgeInsets.only(left: 32, right: 32),
@@ -65,22 +66,17 @@ class SignUpScreen extends StatelessWidget {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Center(
-                                child: Container(
-                                  margin: EdgeInsets.only(bottom: 20),
-                                  child: Image.asset('assets/welcome.png'),
-                                  height: 100,
-                                ),
-                              ),
+                              SizedBox(height: 50),
                               Text(
                                 "Welcome",
                                 style: TextStyle(
-                                    color: Color.fromRGBO(1, 81, 152, 1),
+                                    color: Colors.red,
                                     fontWeight: FontWeight.bold,
                                     fontSize: 32),
                               ),
                               Text(
                                 "Please fill in your information",
+                                style: TextStyle(color: Colors.red),
                               ),
                               SizedBox(
                                 height: 20,
@@ -197,10 +193,9 @@ class SignUpScreen extends StatelessWidget {
                                 },
                                 style: ElevatedButton.styleFrom(
                                   shape: StadiumBorder(),
-                                  backgroundColor:
-                                      Color.fromRGBO(1, 81, 152, 1),
+                                  backgroundColor: Colors.red,
                                   elevation: 20,
-                                  shadowColor: Color.fromRGBO(1, 81, 152, 1),
+                                  shadowColor: Colors.red,
                                   minimumSize: Size.fromHeight(60),
                                 ),
                                 child: Text(

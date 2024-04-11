@@ -2,12 +2,14 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:study/common/color_resource.dart';
 import 'package:study/common/constant.dart';
 import 'package:study/core/response/QuestionIntro.dart';
 import 'package:study/core/service/apiService.dart';
 import 'package:study/features/create_test/CreateQuizProvider.dart';
+import 'package:study/utils.dart';
 
 import 'WidgetAddQuestion.dart';
 
@@ -85,7 +87,22 @@ class _CreateQuizScreenState extends State<CreateQuizScreen> {
                               1;
                       return Body();
                     } else {
-                      return Text("Wait me!");
+                      return Positioned(
+                        top: Constants.screenHeight / 20 - 10,
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: ColorResources.mainBackGround(),
+                            borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(12),
+                              topLeft: Radius.circular(12),
+                            ),
+                          ),
+                          child: Utils.NotConnectServer()
+                        ),
+                      );
                     }
                   })
             ],
