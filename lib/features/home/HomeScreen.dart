@@ -4,7 +4,6 @@ import 'package:study/common/constant.dart';
 import 'package:study/core/response/QuestionIntro.dart';
 import 'package:study/core/service/apiService.dart';
 import 'package:study/features/notification/NotificationScreen.dart';
-import 'package:study/features/profile/ProfileScreen.dart';
 import 'package:study/features/tutorial/TutorialScreen.dart';
 import 'package:study/utils.dart';
 import 'QuizItem.dart';
@@ -20,11 +19,14 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreen extends State<HomeScreen> {
   late Future<List<QuestionIntro>> ListQuestionIntroFuture;
+  List<QuestionIntro> ListQuestionIntro = [];
+  List<QuestionIntro> filterList = [];
 
   @override
-  void initState() {
+  void initState() async {
     super.initState();
     ListQuestionIntroFuture = ApiService().getQuestionIntro();
+    ListQuestionIntro = await ListQuestionIntroFuture;
   }
 
   @override
@@ -49,18 +51,78 @@ class _HomeScreen extends State<HomeScreen> {
         backgroundColor: Colors.red,
       ),
       drawer: Drawer(
-        backgroundColor: ColorResources.mainBackGround(),
+        backgroundColor: Colors.red,
         child: Column(
           children: [
             Text(
               "Setting",
               style: TextStyle(
-                color: Colors.black,
+                color: Colors.white,
                 fontSize: 20,
               ),
             ),
             ListTile(
-              leading: Text("Mode:"),
+              onTap: () {},
+              leading: Icon(
+                Icons.bookmark_added,
+                color: Colors.white,
+              ),
+              title: Text(
+                "Điều khoản",
+                style: TextStyle(color: Colors.white),
+              ),
+              trailing: Icon(
+                Icons.keyboard_arrow_right_sharp,
+                color: Colors.white,
+              ),
+            ),
+            SizedBox(height: 5),
+            ListTile(
+              onTap: () {},
+              leading: Icon(
+                Icons.library_add_check,
+                color: Colors.white,
+              ),
+              title: Text(
+                "Thư viện",
+                style: TextStyle(color: Colors.white),
+              ),
+              trailing: Icon(
+                Icons.keyboard_arrow_right_sharp,
+                color: Colors.white,
+              ),
+            ),
+            SizedBox(height: 5),
+            ListTile(
+              onTap: () {},
+              leading: Icon(
+                Icons.verified_user_rounded,
+                color: Colors.white,
+              ),
+              title: Text(
+                "Version: 1.0.0",
+                style: TextStyle(color: Colors.white),
+              ),
+              trailing: Icon(
+                Icons.keyboard_arrow_right_sharp,
+                color: Colors.white,
+              ),
+            ),
+            SizedBox(height: 5),
+            ListTile(
+              onTap: () {},
+              leading: Icon(
+                Icons.bookmark_added,
+                color: Colors.white,
+              ),
+              title: Text(
+                "Điều khoản",
+                style: TextStyle(color: Colors.white),
+              ),
+              trailing: Icon(
+                Icons.keyboard_arrow_right_sharp,
+                color: Colors.white,
+              ),
             ),
           ],
         ),
@@ -72,6 +134,7 @@ class _HomeScreen extends State<HomeScreen> {
           children: [
             Header(),
             Body(),
+            // Fab(),
           ],
         ),
       ),
@@ -145,6 +208,7 @@ class _HomeScreen extends State<HomeScreen> {
                             color: Colors.white,
                           ),
                         ),
+                        onChanged: (value) => _runFilter(value),
                       ),
                     ),
                   ],
@@ -175,7 +239,7 @@ class _HomeScreen extends State<HomeScreen> {
           future: ListQuestionIntroFuture,
           builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
             if (snapshot.hasData) {
-              List<QuestionIntro> ListQuestionIntro = snapshot.data;
+              ListQuestionIntro = snapshot.data;
               return GridView.builder(
                 itemCount: ListQuestionIntro.length,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -201,32 +265,49 @@ class _HomeScreen extends State<HomeScreen> {
     );
   }
 
-  Widget Fab() {
-    return Positioned(
-      bottom: 10,
-      child: ElevatedButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => TutorialScreen(),
+  void _runFilter(String enteredKeyword) {
+    List<QuestionIntro> results = [];
+    if (enteredKeyword.isEmpty) {
+      results = ListQuestionIntro;
+    } else {
+      results = ListQuestionIntro.where((user) =>
+          (user.title.toLowerCase().contains(enteredKeyword.toLowerCase()) ||
+              user.description
+                  .toLowerCase()
+                  .contains(enteredKeyword.toLowerCase()))).toList();
+
+      setState(() {
+        filterList = results;
+      });
+    }
+
+    Widget Fab() {
+      return Positioned(
+        bottom: 10,
+        child: ElevatedButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => TutorialScreen(),
+              ),
+            );
+          },
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(Colors.red),
+          ),
+          child: const Padding(
+            padding: EdgeInsets.only(
+              left: 80,
+              right: 80,
             ),
-          );
-        },
-        style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all(Colors.red),
-        ),
-        child: const Padding(
-          padding: EdgeInsets.only(
-            left: 80,
-            right: 80,
-          ),
-          child: Text(
-            "Start Quiz",
-            style: TextStyle(color: Colors.white),
+            child: Text(
+              "Start Quiz",
+              style: TextStyle(color: Colors.white),
+            ),
           ),
         ),
-      ),
-    );
+      );
+    }
   }
 }

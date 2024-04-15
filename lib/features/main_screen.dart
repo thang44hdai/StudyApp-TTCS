@@ -1,15 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:provider/provider.dart';
-import 'package:study/common/constant.dart';
 import 'package:study/features/calendar/CalendarScreen.dart';
 import 'package:study/features/create_test/CreateQuizScreen.dart';
 import 'package:study/features/home/HomeScreen.dart';
 import 'package:study/features/profile/ProfileScreen.dart';
-import 'package:study/features/quiz_test/provider/QuizProvider.dart';
-import 'package:study/features/quiz_test/QuizScreen.dart';
-import 'package:study/features/quiz_test/provider/TimberProvider.dart';
-import 'package:study/features/result_test/ResultScreen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -44,19 +39,31 @@ class _MainScreenState extends State<MainScreen> {
               unselectedItemColor: Colors.black,
               items: const [
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.home_filled),
+                  icon: Icon(
+                    Icons.home_filled,
+                    color: CupertinoColors.systemGrey,
+                  ),
                   label: "Home",
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.calendar_today_sharp),
+                  icon: Icon(
+                    Icons.calendar_today_sharp,
+                    color: CupertinoColors.systemGrey,
+                  ),
                   label: "Calendar",
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.add_to_drive_outlined),
+                  icon: Icon(
+                    Icons.add_to_drive_outlined,
+                    color: CupertinoColors.systemGrey,
+                  ),
                   label: "Create",
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.person),
+                  icon: Icon(
+                    Icons.person,
+                    color: CupertinoColors.systemGrey,
+                  ),
                   label: "Profile",
                 ),
               ],
@@ -66,8 +73,8 @@ class _MainScreenState extends State<MainScreen> {
       ),
     );
   }
-
 }
+
 class NavigationController extends GetxController {
   final Rx<int> selectedIndex = 0.obs;
   final Screen = [
