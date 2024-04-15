@@ -20,125 +20,134 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreen extends State<HomeScreen> {
   late Future<List<QuestionIntro>> ListQuestionIntroFuture;
   List<QuestionIntro> ListQuestionIntro = [];
-  List<QuestionIntro> filterList = [];
+  String enteredKeyword = "";
 
   @override
-  void initState() async {
+  void initState() {
     super.initState();
     ListQuestionIntroFuture = ApiService().getQuestionIntro();
-    ListQuestionIntro = await ListQuestionIntroFuture;
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.white),
-        actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => NotificationScreen(),
+    return FutureBuilder(
+        future: ListQuestionIntroFuture,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            ListQuestionIntro = snapshot.data!;
+            ListQuestionIntro = _runFilter(enteredKeyword);
+            return Scaffold(
+              appBar: AppBar(
+                iconTheme: IconThemeData(color: Colors.white),
+                actions: [
+                  IconButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => NotificationScreen(),
+                        ),
+                      );
+                    },
+                    icon: Icon(Icons.notifications_active),
+                    color: Colors.white,
+                  ),
+                ],
+                backgroundColor: Colors.red,
+              ),
+              drawer: Drawer(
+                backgroundColor: Colors.red,
+                child: Column(
+                  children: [
+                    Text(
+                      "Setting",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                      ),
+                    ),
+                    ListTile(
+                      onTap: () {},
+                      leading: Icon(
+                        Icons.bookmark_added,
+                        color: Colors.white,
+                      ),
+                      title: Text(
+                        "Điều khoản",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      trailing: Icon(
+                        Icons.keyboard_arrow_right_sharp,
+                        color: Colors.white,
+                      ),
+                    ),
+                    SizedBox(height: 5),
+                    ListTile(
+                      onTap: () {},
+                      leading: Icon(
+                        Icons.library_add_check,
+                        color: Colors.white,
+                      ),
+                      title: Text(
+                        "Thư viện",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      trailing: Icon(
+                        Icons.keyboard_arrow_right_sharp,
+                        color: Colors.white,
+                      ),
+                    ),
+                    SizedBox(height: 5),
+                    ListTile(
+                      onTap: () {},
+                      leading: Icon(
+                        Icons.verified_user_rounded,
+                        color: Colors.white,
+                      ),
+                      title: Text(
+                        "Version: 1.0.0",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      trailing: Icon(
+                        Icons.keyboard_arrow_right_sharp,
+                        color: Colors.white,
+                      ),
+                    ),
+                    SizedBox(height: 5),
+                    ListTile(
+                      onTap: () {},
+                      leading: Icon(
+                        Icons.bookmark_added,
+                        color: Colors.white,
+                      ),
+                      title: Text(
+                        "Điều khoản",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      trailing: Icon(
+                        Icons.keyboard_arrow_right_sharp,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
                 ),
-              );
-            },
-            icon: Icon(Icons.notifications_active),
-            color: Colors.white,
-          ),
-        ],
-        backgroundColor: Colors.red,
-      ),
-      drawer: Drawer(
-        backgroundColor: Colors.red,
-        child: Column(
-          children: [
-            Text(
-              "Setting",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 20,
               ),
-            ),
-            ListTile(
-              onTap: () {},
-              leading: Icon(
-                Icons.bookmark_added,
-                color: Colors.white,
+              body: Container(
+                height: Constants.screenHeight,
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Header(),
+                    Body(),
+                    // Fab(),
+                  ],
+                ),
               ),
-              title: Text(
-                "Điều khoản",
-                style: TextStyle(color: Colors.white),
-              ),
-              trailing: Icon(
-                Icons.keyboard_arrow_right_sharp,
-                color: Colors.white,
-              ),
-            ),
-            SizedBox(height: 5),
-            ListTile(
-              onTap: () {},
-              leading: Icon(
-                Icons.library_add_check,
-                color: Colors.white,
-              ),
-              title: Text(
-                "Thư viện",
-                style: TextStyle(color: Colors.white),
-              ),
-              trailing: Icon(
-                Icons.keyboard_arrow_right_sharp,
-                color: Colors.white,
-              ),
-            ),
-            SizedBox(height: 5),
-            ListTile(
-              onTap: () {},
-              leading: Icon(
-                Icons.verified_user_rounded,
-                color: Colors.white,
-              ),
-              title: Text(
-                "Version: 1.0.0",
-                style: TextStyle(color: Colors.white),
-              ),
-              trailing: Icon(
-                Icons.keyboard_arrow_right_sharp,
-                color: Colors.white,
-              ),
-            ),
-            SizedBox(height: 5),
-            ListTile(
-              onTap: () {},
-              leading: Icon(
-                Icons.bookmark_added,
-                color: Colors.white,
-              ),
-              title: Text(
-                "Điều khoản",
-                style: TextStyle(color: Colors.white),
-              ),
-              trailing: Icon(
-                Icons.keyboard_arrow_right_sharp,
-                color: Colors.white,
-              ),
-            ),
-          ],
-        ),
-      ),
-      body: Container(
-        height: Constants.screenHeight,
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            Header(),
-            Body(),
-            // Fab(),
-          ],
-        ),
-      ),
-    );
+            );
+          } else {
+            return Utils.NotConnectServer();
+          }
+        });
   }
 
   Widget Header() {
@@ -208,7 +217,9 @@ class _HomeScreen extends State<HomeScreen> {
                             color: Colors.white,
                           ),
                         ),
-                        onChanged: (value) => _runFilter(value),
+                        onChanged: (value) => setState(() {
+                          enteredKeyword = value;
+                        }),
                       ),
                     ),
                   ],
@@ -235,37 +246,27 @@ class _HomeScreen extends State<HomeScreen> {
             topLeft: Radius.circular(12),
           ),
         ),
-        child: FutureBuilder(
-          future: ListQuestionIntroFuture,
-          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-            if (snapshot.hasData) {
-              ListQuestionIntro = snapshot.data;
-              return GridView.builder(
-                itemCount: ListQuestionIntro.length,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2),
-                itemBuilder: (context1, index) {
-                  var item = ListQuestionIntro[index];
-                  return ItemQuiz(
-                    item: QuestionIntro(
-                        id: item.id,
-                        time: item.time,
-                        title: item.title,
-                        description: item.description,
-                        question: item.question),
-                  );
-                },
-              );
-            } else {
-              return Utils.NotConnectServer();
-            }
+        child: GridView.builder(
+          itemCount: ListQuestionIntro.length,
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2),
+          itemBuilder: (context1, index) {
+            var item = ListQuestionIntro[index];
+            return ItemQuiz(
+              item: QuestionIntro(
+                  id: item.id,
+                  time: item.time,
+                  title: item.title,
+                  description: item.description,
+                  question: item.question),
+            );
           },
         ),
       ),
     );
   }
 
-  void _runFilter(String enteredKeyword) {
+  List<QuestionIntro> _runFilter(String enteredKeyword) {
     List<QuestionIntro> results = [];
     if (enteredKeyword.isEmpty) {
       results = ListQuestionIntro;
@@ -275,39 +276,36 @@ class _HomeScreen extends State<HomeScreen> {
               user.description
                   .toLowerCase()
                   .contains(enteredKeyword.toLowerCase()))).toList();
-
-      setState(() {
-        filterList = results;
-      });
     }
+    return results;
+  }
 
-    Widget Fab() {
-      return Positioned(
-        bottom: 10,
-        child: ElevatedButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => TutorialScreen(),
-              ),
-            );
-          },
-          style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(Colors.red),
+  Widget Fab() {
+    return Positioned(
+      bottom: 10,
+      child: ElevatedButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => TutorialScreen(),
+            ),
+          );
+        },
+        style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.all(Colors.red),
+        ),
+        child: const Padding(
+          padding: EdgeInsets.only(
+            left: 80,
+            right: 80,
           ),
-          child: const Padding(
-            padding: EdgeInsets.only(
-              left: 80,
-              right: 80,
-            ),
-            child: Text(
-              "Start Quiz",
-              style: TextStyle(color: Colors.white),
-            ),
+          child: Text(
+            "Start Quiz",
+            style: TextStyle(color: Colors.white),
           ),
         ),
-      );
-    }
+      ),
+    );
   }
 }
