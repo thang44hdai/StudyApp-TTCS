@@ -120,7 +120,7 @@ class _ResultScreen extends State<ResultScreen> {
                 right: 80,
               ),
               child: Text(
-                "Return the Home Screen",
+                "Quay trở lại màn hình chính",
                 style: TextStyle(color: Colors.white),
               ),
             ),
@@ -173,7 +173,8 @@ class _ResultScreen extends State<ResultScreen> {
     final history = documentSnapshot['history'] as List<dynamic>;
     final _history = history.cast<String>().toList();
     final date = DateTime.now();
-    _history.add(date.toString().substring(0, 19) + result());
+    _history.add(
+        date.toString().substring(0, 19) + "/${viewmodel.title}/" + result());
 
     final data = {
       "account": account,

@@ -21,19 +21,20 @@ class ItemQuiz extends StatelessWidget {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text("Are You Sure"),
-            content: Text("U want join now?"),
+            title: Text("Bạn có muốn làm bài ${item.title} không?"),
+            content: Text("Xác nhận?"),
             actions: <Widget>[
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: Text('No'),
+                child: Text('Không'),
               ),
               TextButton(
                 onPressed: () {
                   time_viewmodel.setTime(item.time);
                   viewmodel.setQuiz(item.question);
+                  viewmodel.setTitle(item.title);
                   Navigator.of(context).pop();
                   Navigator.push(
                     context,
@@ -42,7 +43,7 @@ class ItemQuiz extends StatelessWidget {
                     ),
                   );
                 },
-                child: Text('Yes'),
+                child: Text('Có'),
               ),
             ],
           );

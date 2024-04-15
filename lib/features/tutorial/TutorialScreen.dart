@@ -31,7 +31,7 @@ class _TutorialScreenState extends State<TutorialScreen> {
           ),
         ),
         title: const Text(
-          "Tutorial",
+          "Hướng dẫn",
           style: TextStyle(color: Colors.white),
         ),
       ),
@@ -61,8 +61,8 @@ class _TutorialScreenState extends State<TutorialScreen> {
         decoration: const BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(35),
-            topRight: Radius.circular(35),
+            topLeft: Radius.circular(12),
+            topRight: Radius.circular(12),
           ),
         ),
         child: Column(
@@ -82,7 +82,7 @@ class _TutorialScreenState extends State<TutorialScreen> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
-                    "Brief explanation about this quiz",
+                    "Quy tắc trong bài thi",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
@@ -92,54 +92,60 @@ class _TutorialScreenState extends State<TutorialScreen> {
               ),
             ),
             ListTile(
-              leading: Image.asset("assets/question.png"),
+              leading: Icon(
+                Icons.circle,
+                color: Colors.blue,
+              ),
               title: const Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "10 Question",
+                    "Câu đã được chọn đáp án",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  Text("10 point for a correct answer"),
                 ],
               ),
             ),
             ListTile(
-              leading: Image.asset("assets/time.png"),
+              leading: Icon(
+                Icons.circle,
+                color: Colors.red,
+              ),
               title: const Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "1 hour 15 min",
+                    "Câu hỏi được đánh dấu",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  Text("Total duration of the quiz"),
                 ],
               ),
             ),
             ListTile(
-              leading: Image.asset("assets/star.png"),
+              leading: Icon(
+                Icons.flag,
+                color: Colors.red,
+              ),
               title: const Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Win 10 star",
+                    "Đánh dấu câu hỏi",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  Text("Answer all questions correctly"),
                 ],
               ),
             ),
             const Padding(
-              padding: EdgeInsets.only(left: 20, top: 40, bottom: 10),
+              padding: EdgeInsets.only(left: 20, top: 10, bottom: 10),
               child: Text(
-                "Please read the text below carefully so you can understand it",
+                "Các quy tắc trong phòng thi cần lưu ý:",
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
               ),
             ),
@@ -149,12 +155,17 @@ class _TutorialScreenState extends State<TutorialScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                      "• 10 point awarded for a correct answer and no marks for a incorrect answer"),
-                  Text("• Tap on options to select the correct answer"),
+                      "• Điều hành im lặng: Giữ im lặng hoàn toàn trong phòng thi để không làm phiền các thí sinh khác."),
                   Text(
-                      "• Tap on the bookmark icon to save interesting questions"),
+                      "• Không gian cá nhân: Đừng nhìn vào bài làm của người khác hoặc nói chuyện với họ trong suốt thời gian làm bài."),
                   Text(
-                      "• Click submit if you are sure you want to complete all the quizzes"),
+                      "• Chấp nhận quy định của phòng thi: Tuân thủ mọi quy định và chỉ dẫn từ người giám thị."),
+                  Text(
+                      "• Không mang vật liệu cấm vào phòng thi: Đảm bảo rằng bạn không mang bất kỳ tài liệu, thiết bị điện tử (như điện thoại di động), hay bất kỳ vật phẩm nào khác vào phòng thi ngoài những gì được phép."),
+                  Text(
+                      "• Quản lí thời gian: Chú ý đồng hồ và phân bố thời gian hợp lý cho từng phần của bài thi."),
+                  Text(
+                      "• Kiểm tra lại câu trả lời: Nếu có thời gian dư sau khi hoàn thành bài thi, hãy kiểm tra lại các câu trả lời của mình để đảm bảo tính chính xác và đầy đủ."),
                 ],
               ),
             ),
@@ -190,7 +201,7 @@ class _TutorialScreenState extends State<TutorialScreen> {
                 right: 80,
               ),
               child: Text(
-                "Start Quiz",
+                "Bắt đầu làm bài",
                 style: TextStyle(color: Colors.white),
               ),
             ),

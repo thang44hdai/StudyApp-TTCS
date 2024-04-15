@@ -155,6 +155,7 @@ class _ProfileScreen extends State<ProfileScreen> {
       child: ListView.builder(
         itemCount: history.length,
         itemBuilder: (context, index) {
+          List<String> his = history[index].split("/");
           return Padding(
             padding: EdgeInsets.only(bottom: 8, left: 40, right: 40),
             child: Container(
@@ -163,16 +164,20 @@ class _ProfileScreen extends State<ProfileScreen> {
                 borderRadius: BorderRadius.circular(12),
               ),
               child: ListTile(
-                onTap: () => {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => TutorialScreen()))
-                },
+                // onTap: () => {
+                //   Navigator.push(context,
+                //       MaterialPageRoute(builder: (context) => TutorialScreen()))
+                // },
                 leading: Text(
-                  history[index].substring(0, 19),
+                  his[0],
                   style: TextStyle(color: Colors.white),
                 ),
                 title: Text(
-                  "Kết quả: ${history[index].substring(19)}",
+                  "${his[1]}",
+                  style: TextStyle(color: Colors.white),
+                ),
+                trailing: Text(
+                  "${his[2]}/${his[3]}",
                   style: TextStyle(color: Colors.white),
                 ),
               ),

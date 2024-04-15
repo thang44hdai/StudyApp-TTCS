@@ -45,7 +45,7 @@ class _QuizScreenState extends State<QuizScreen> {
           ),
         ),
         title: Text(
-          "Detail Quiz",
+          "Bài làm",
           style: TextStyle(color: Colors.white),
         ),
         actions: [
@@ -183,14 +183,14 @@ class _QuizScreenState extends State<QuizScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("Are You Sure"),
+          title: Text("Bạn có muốn nộp bài ngay bây giờ"),
           content: Text(question),
           actions: <Widget>[
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('Cancel'),
+              child: Text('Hủy'),
             ),
             TextButton(
               onPressed: () {
@@ -206,7 +206,7 @@ class _QuizScreenState extends State<QuizScreen> {
                   active_clock = 0;
                 });
               },
-              child: Text('Submit'),
+              child: Text('Nộp bài'),
             ),
           ],
         );
