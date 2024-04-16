@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 class ApiService {
   Future<List<QuestionIntro>> getQuestionIntro() async {
     final response = await http.get(
-        Uri.parse("http://192.168.58.1/backend_php/api_list_question.php"));
+        Uri.parse("https://ttcsapp.000webhostapp.com/api_list_question.php"));
     if (response.statusCode == 200) {
       final List<dynamic> decodeData =
           json.decode(response.body)['list_question'];
@@ -31,7 +31,7 @@ class ApiService {
       "list_question_id": list_question_id.toString()
     };
     final response = await http.post(
-      Uri.parse("http://192.168.58.1/backend_php/api_add_question.php"),
+      Uri.parse("https://ttcsapp.000webhostapp.com/api_add_question.php"),
       body: request,
     );
     if (response.statusCode == 200) {
@@ -56,7 +56,7 @@ class ApiService {
       "description": description
     };
     final response = await http.post(
-      Uri.parse("http://192.168.58.1/backend_php/api_add_listquestion.php"),
+      Uri.parse("https://ttcsapp.000webhostapp.com/api_add_listquestion.php"),
       body: request,
     );
     if (response.statusCode == 200) {

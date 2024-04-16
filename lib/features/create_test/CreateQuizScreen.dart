@@ -46,70 +46,54 @@ class _CreateQuizScreenState extends State<CreateQuizScreen> {
     Future<List<QuestionIntro>> ListQuestionIntroFuture =
         ApiService().getQuestionIntro();
 
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.red,
-        title: Text(
-          "Create",
-          style: TextStyle(color: Colors.white),
-        ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              viewmodel.updateData(
-                  _titleEdtController.text,
-                  int.parse(_timeEdtController.text),
-                  _descriptionEdtController.text);
-            },
-            icon: Icon(
-              Icons.upload_file_sharp,
-              color: Colors.white,
-            ),
-          )
-        ],
-      ),
-      body: SingleChildScrollView(
-        child: Container(
-          height: Constants.screenHeight,
-          child: Stack(
-            children: [
-              Container(
-                height: Constants.screenHeight / 20,
-                decoration: BoxDecoration(color: Colors.red),
+    return FutureBuilder(
+        future: ListQuestionIntroFuture,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            List<QuestionIntro>? ListQuestionIntro = snapshot.data;
+            viewmodel.list_question_id =
+                ListQuestionIntro![ListQuestionIntro.length - 1].id + 1;
+            return Scaffold(
+              appBar: AppBar(
+                backgroundColor: Colors.red,
+                title: Text(
+                  "Create",
+                  style: TextStyle(color: Colors.white),
+                ),
+                actions: [
+                  IconButton(
+                    onPressed: () {
+                      viewmodel.updateData(
+                          _titleEdtController.text,
+                          int.parse(_timeEdtController.text),
+                          _descriptionEdtController.text);
+                    },
+                    icon: Icon(
+                      Icons.upload_file_sharp,
+                      color: Colors.white,
+                    ),
+                  )
+                ],
               ),
-              FutureBuilder(
-                  future: ListQuestionIntroFuture,
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      List<QuestionIntro>? ListQuestionIntro = snapshot.data;
-                      viewmodel.list_question_id =
-                          ListQuestionIntro![ListQuestionIntro.length - 1].id +
-                              1;
-                      return Body();
-                    } else {
-                      return Positioned(
-                        top: Constants.screenHeight / 20 - 10,
-                        left: 0,
-                        right: 0,
-                        bottom: 0,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: ColorResources.mainBackGround(),
-                            borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(12),
-                              topLeft: Radius.circular(12),
-                            ),
-                          ),
-                          child: Utils.NotConnectServer()
-                        ),
-                      );
-                    }
-                  })
-            ],
-          ),
-        ),
-      ),
-    );
+              body: SingleChildScrollView(
+                child: Container(
+                  height: Constants.screenHeight,
+                  child: Stack(
+                    children: [
+                      Container(
+                        height: Constants.screenHeight / 20,
+                        decoration: BoxDecoration(color: Colors.red),
+                      ),
+                      Body(),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          } else {
+            return Utils.NotConnectServer();
+          }
+        });
   }
 
   Widget Body() {
