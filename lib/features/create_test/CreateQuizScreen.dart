@@ -217,6 +217,7 @@ class _CreateQuizScreenState extends State<CreateQuizScreen> {
               options: CarouselOptions(
                 aspectRatio: 16 / 10,
                 autoPlay: false,
+                enableInfiniteScroll: false,
                 autoPlayInterval: Duration(milliseconds: 3000),
                 viewportFraction: 0.9,
                 onPageChanged: (index, result) {
