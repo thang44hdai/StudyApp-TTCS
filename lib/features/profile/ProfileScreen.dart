@@ -9,6 +9,7 @@ import 'package:study/common/color_resource.dart';
 import 'package:study/features/authentication/LoginScreen.dart';
 import 'package:study/features/profile/ProfileProvider.dart';
 import 'package:study/features/tutorial/TutorialScreen.dart';
+import 'package:study/utils.dart';
 import '../../common/constant.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -30,9 +31,7 @@ class _ProfileScreen extends State<ProfileScreen> {
       child: StreamBuilder(
           stream: viewmodel.getInformation(),
           builder: (context, snap) {
-            if (snap.hasError) {
-              return Text("Error");
-            } else if (snap.hasData) {
+            if (snap.hasData) {
               return Container(
                 width: Constants.screenWidth,
                 height: Constants.screenHeight,
@@ -50,7 +49,7 @@ class _ProfileScreen extends State<ProfileScreen> {
                 ),
               );
             } else {
-              return Text("Xin chờ trong giây lát");
+              return Utils.NotConnectServer();
             }
           }),
     );
@@ -99,7 +98,7 @@ class _ProfileScreen extends State<ProfileScreen> {
                   )
                 : CircleAvatar(
                     radius: Constants.screenWidth / 6,
-                    backgroundImage: AssetImage('assets/ava.jpg'),
+                    backgroundImage: AssetImage('assets/avatar.png'),
                   ),
           ),
           const SizedBox(

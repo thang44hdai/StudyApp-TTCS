@@ -6,6 +6,7 @@ import 'package:study/common/color_resource.dart';
 import 'package:study/common/constant.dart';
 import 'package:study/features/calendar/CalendarProvider.dart';
 import 'package:study/features/calendar/event.dart';
+import 'package:study/utils.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class CalendarScreen extends StatefulWidget {
@@ -45,7 +46,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
       stream: viewmodel.getEvent(),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
-          return Text("Error");
+          return Utils.NotConnectServer();
         } else {
           selectedEvents = snapshot.data ?? {};
           return Scaffold(
@@ -115,8 +116,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                                 defaultDecoration: BoxDecoration(
                                   shape: BoxShape.circle,
                                 ),
-                                weekendTextStyle:
-                                    TextStyle(color: Colors.red),
+                                weekendTextStyle: TextStyle(color: Colors.red),
                               ),
                               headerStyle: const HeaderStyle(
                                   formatButtonVisible: false,

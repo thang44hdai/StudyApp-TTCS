@@ -32,7 +32,10 @@ class ApiService {
     };
     final response = await http.post(
       Uri.parse("https://ttcsapp.000webhostapp.com/api_add_question.php"),
-      body: request,
+      headers: {
+        'Content-Type': 'application/json', // Đặt kiểu dữ liệu là JSON
+      },
+      body: jsonEncode(request),
     );
     if (response.statusCode == 200) {
       return Question(
@@ -57,7 +60,10 @@ class ApiService {
     };
     final response = await http.post(
       Uri.parse("https://ttcsapp.000webhostapp.com/api_add_listquestion.php"),
-      body: request,
+      headers: {
+        'Content-Type': 'application/json', // Đặt kiểu dữ liệu là JSON
+      },
+      body: jsonEncode(request),
     );
     if (response.statusCode == 200) {
     } else {
