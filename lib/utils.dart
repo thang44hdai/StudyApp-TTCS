@@ -37,4 +37,18 @@ class Utils {
       child: Lottie.asset('assets/404.json'),
     );
   }
+
+  static Widget Loading() {
+    return Center(
+      child: Container(
+        height: 40,
+        width: 40,
+        child: Lottie.asset('assets/loading.json'),
+      ),
+    );
+  }
+
+  static void HideKeyBoard() {
+    FocusManager.instance.primaryFocus?.unfocus();
+  }
 }

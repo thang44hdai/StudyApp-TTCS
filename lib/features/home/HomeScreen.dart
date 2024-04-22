@@ -30,109 +30,111 @@ class _HomeScreen extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: ListQuestionIntroFuture,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            ListQuestionIntro = snapshot.data!;
-            ListQuestionIntro = _runFilter(enteredKeyword);
-            return Scaffold(
-              appBar: AppBar(
-                iconTheme: IconThemeData(color: Colors.white),
-                actions: [
-                  IconButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => NotificationScreen(),
-                        ),
-                      );
-                    },
-                    icon: Icon(Icons.notifications_active),
-                    color: Colors.white,
+    return GestureDetector(
+      onTap: () {
+        Utils.HideKeyBoard();
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          iconTheme: IconThemeData(color: Colors.white),
+          actions: [
+            IconButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => NotificationScreen(),
                   ),
-                ],
-                backgroundColor: Colors.red,
+                );
+              },
+              icon: Icon(Icons.notifications_active),
+              color: Colors.white,
+            ),
+          ],
+          backgroundColor: Colors.red,
+        ),
+        drawer: Drawer(
+          backgroundColor: Color(0xFFFF3131),
+          child: Column(
+            children: [
+              Container(
+                height: Constants.screenHeight / 4,
+                width: Constants.screenHeight / 4,
+                child: Image.asset("assets/iconapp2.png"),
               ),
-              drawer: Drawer(
-                backgroundColor: Colors.red,
-                child: Column(
-                  children: [
-                    Text(
-                      "Setting",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                      ),
-                    ),
-                    ListTile(
-                      onTap: () {},
-                      leading: Icon(
-                        Icons.bookmark_added,
-                        color: Colors.white,
-                      ),
-                      title: Text(
-                        "Điều khoản",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      trailing: Icon(
-                        Icons.keyboard_arrow_right_sharp,
-                        color: Colors.white,
-                      ),
-                    ),
-                    SizedBox(height: 5),
-                    ListTile(
-                      onTap: () {},
-                      leading: Icon(
-                        Icons.library_add_check,
-                        color: Colors.white,
-                      ),
-                      title: Text(
-                        "Thư viện",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      trailing: Icon(
-                        Icons.keyboard_arrow_right_sharp,
-                        color: Colors.white,
-                      ),
-                    ),
-                    SizedBox(height: 5),
-                    ListTile(
-                      onTap: () {},
-                      leading: Icon(
-                        Icons.verified_user_rounded,
-                        color: Colors.white,
-                      ),
-                      title: Text(
-                        "Version: 1.0.0",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      trailing: Icon(
-                        Icons.keyboard_arrow_right_sharp,
-                        color: Colors.white,
-                      ),
-                    ),
-                    SizedBox(height: 5),
-                    ListTile(
-                      onTap: () {},
-                      leading: Icon(
-                        Icons.bookmark_added,
-                        color: Colors.white,
-                      ),
-                      title: Text(
-                        "Điều khoản",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      trailing: Icon(
-                        Icons.keyboard_arrow_right_sharp,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ],
+              ListTile(
+                onTap: () {},
+                leading: Icon(
+                  Icons.bookmark_added,
+                  color: Colors.white,
+                ),
+                title: Text(
+                  "Điều khoản",
+                  style: TextStyle(color: Colors.white),
+                ),
+                trailing: Icon(
+                  Icons.keyboard_arrow_right_sharp,
+                  color: Colors.white,
                 ),
               ),
-              body: Container(
+              SizedBox(height: 5),
+              ListTile(
+                onTap: () {},
+                leading: Icon(
+                  Icons.library_add_check,
+                  color: Colors.white,
+                ),
+                title: Text(
+                  "Thư viện",
+                  style: TextStyle(color: Colors.white),
+                ),
+                trailing: Icon(
+                  Icons.keyboard_arrow_right_sharp,
+                  color: Colors.white,
+                ),
+              ),
+              SizedBox(height: 5),
+              ListTile(
+                onTap: () {},
+                leading: Icon(
+                  Icons.verified_user_rounded,
+                  color: Colors.white,
+                ),
+                title: Text(
+                  "Version: 1.0.0",
+                  style: TextStyle(color: Colors.white),
+                ),
+                trailing: Icon(
+                  Icons.keyboard_arrow_right_sharp,
+                  color: Colors.white,
+                ),
+              ),
+              SizedBox(height: 5),
+              ListTile(
+                onTap: () {},
+                leading: Icon(
+                  Icons.bookmark_added,
+                  color: Colors.white,
+                ),
+                title: Text(
+                  "Điều khoản",
+                  style: TextStyle(color: Colors.white),
+                ),
+                trailing: Icon(
+                  Icons.keyboard_arrow_right_sharp,
+                  color: Colors.white,
+                ),
+              ),
+            ],
+          ),
+        ),
+        body: FutureBuilder(
+          future: ListQuestionIntroFuture,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              ListQuestionIntro = snapshot.data!;
+              ListQuestionIntro = _runFilter(enteredKeyword);
+              return Container(
                 height: Constants.screenHeight,
                 child: Stack(
                   alignment: Alignment.center,
@@ -142,12 +144,14 @@ class _HomeScreen extends State<HomeScreen> {
                     // Fab(),
                   ],
                 ),
-              ),
-            );
-          } else {
-            return Utils.NotConnectServer();
-          }
-        });
+              );
+            } else {
+              return Utils.Loading();
+            }
+          },
+        ),
+      ),
+    );
   }
 
   Widget Header() {

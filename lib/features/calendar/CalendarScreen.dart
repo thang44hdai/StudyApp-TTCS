@@ -46,11 +46,12 @@ class _CalendarScreenState extends State<CalendarScreen> {
       stream: viewmodel.getEvent(),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
-          return Utils.NotConnectServer();
+          return Utils.Loading();
         } else {
           selectedEvents = snapshot.data ?? {};
           return Scaffold(
             appBar: AppBar(
+              leading: Icon(Icons.calendar_today, color: Colors.white,),
               title: Text(
                 "Calendar",
                 style: TextStyle(color: Colors.white),
@@ -153,20 +154,22 @@ class _CalendarScreenState extends State<CalendarScreen> {
                                       child: Container(
                                         decoration: BoxDecoration(
                                           borderRadius:
-                                              BorderRadius.circular(20),
-                                          color: Colors.red,
+                                              BorderRadius.circular(12),
+                                          color: Colors.white,
                                         ),
                                         child: ListTile(
                                           title: Text(
                                             event.title,
-                                            style:
-                                                TextStyle(color: Colors.white),
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold,
+                                            ),
                                           ),
                                           leading: event.time != ""
                                               ? Text(
                                                   event.time,
                                                   style: TextStyle(
-                                                      color: Colors.white),
+                                                      color: Colors.black),
                                                 )
                                               : null,
                                         ),
@@ -185,51 +188,56 @@ class _CalendarScreenState extends State<CalendarScreen> {
             floatingActionButton: FloatingActionButton.extended(
               onPressed: () => showDialog(
                 context: context,
-                builder: (context) => AlertDialog(
-                  title: Text(
-                    "Thêm sự kiện",
-                    style: TextStyle(color: Colors.red),
-                  ),
-                  content: Column(
-                    children: [
-                      TextFormField(
-                        controller: _eventController,
-                        decoration: const InputDecoration(
-                          hintText: 'Tên sự kiện',
-                          border: OutlineInputBorder(),
+                builder: (context) => GestureDetector(
+                  onTap: () {
+                    Utils.HideKeyBoard();
+                  },
+                  child: AlertDialog(
+                    title: Text(
+                      "Thêm sự kiện",
+                      style: TextStyle(color: Colors.red),
+                    ),
+                    content: Column(
+                      children: [
+                        TextFormField(
+                          controller: _eventController,
+                          decoration: const InputDecoration(
+                            hintText: 'Tên sự kiện',
+                            border: OutlineInputBorder(),
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      TextFormField(
-                        controller: _timeEventController,
-                        decoration: const InputDecoration(
-                          hintText: 'Thời gian',
-                          border: OutlineInputBorder(),
+                        SizedBox(
+                          height: 10,
                         ),
+                        TextFormField(
+                          controller: _timeEventController,
+                          decoration: const InputDecoration(
+                            hintText: 'Thời gian',
+                            border: OutlineInputBorder(),
+                          ),
+                        ),
+                      ],
+                    ),
+                    actions: [
+                      TextButton(
+                        child: Text(
+                          "Hủy bỏ",
+                          style: TextStyle(color: Colors.black),
+                        ),
+                        onPressed: () => Navigator.pop(context),
+                      ),
+                      TextButton(
+                        child: Text(
+                          "Xác nhận",
+                          style: TextStyle(color: Colors.black),
+                        ),
+                        onPressed: () {
+                          addEvent();
+                          return;
+                        },
                       ),
                     ],
                   ),
-                  actions: [
-                    TextButton(
-                      child: Text(
-                        "Hủy bỏ",
-                        style: TextStyle(color: Colors.black),
-                      ),
-                      onPressed: () => Navigator.pop(context),
-                    ),
-                    TextButton(
-                      child: Text(
-                        "Xác nhận",
-                        style: TextStyle(color: Colors.black),
-                      ),
-                      onPressed: () {
-                        addEvent();
-                        return;
-                      },
-                    ),
-                  ],
                 ),
               ),
               backgroundColor: Colors.red,

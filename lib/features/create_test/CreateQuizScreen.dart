@@ -46,54 +46,60 @@ class _CreateQuizScreenState extends State<CreateQuizScreen> {
     Future<List<QuestionIntro>> ListQuestionIntroFuture =
         ApiService().getQuestionIntro();
 
-    return FutureBuilder(
-        future: ListQuestionIntroFuture,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            List<QuestionIntro>? ListQuestionIntro = snapshot.data;
-            viewmodel.list_question_id =
-                ListQuestionIntro![ListQuestionIntro.length - 1].id + 1;
-            return Scaffold(
-              appBar: AppBar(
-                backgroundColor: Colors.red,
-                title: Text(
-                  "Create",
-                  style: TextStyle(color: Colors.white),
-                ),
-                actions: [
-                  IconButton(
-                    onPressed: () {
-                      viewmodel.updateData(
-                          _titleEdtController.text,
-                          int.parse(_timeEdtController.text),
-                          _descriptionEdtController.text);
-                    },
-                    icon: Icon(
-                      Icons.upload_file_sharp,
-                      color: Colors.white,
+    return GestureDetector(
+      onTap: () {
+        Utils.HideKeyBoard();
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          leading: Icon(Icons.add_to_drive_outlined, color: Colors.white,),
+          backgroundColor: Colors.red,
+          title: Text(
+            "Create",
+            style: TextStyle(color: Colors.white),
+          ),
+          actions: [
+            IconButton(
+              onPressed: () {
+                viewmodel.updateData(
+                    _titleEdtController.text,
+                    int.parse(_timeEdtController.text),
+                    _descriptionEdtController.text);
+              },
+              icon: Icon(
+                Icons.upload_file_sharp,
+                color: Colors.white,
+              ),
+            )
+          ],
+        ),
+        body: FutureBuilder(
+            future: ListQuestionIntroFuture,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                List<QuestionIntro>? ListQuestionIntro = snapshot.data;
+                viewmodel.list_question_id =
+                    ListQuestionIntro![ListQuestionIntro.length - 1].id + 1;
+                return SingleChildScrollView(
+                  child: Container(
+                    height: Constants.screenHeight,
+                    child: Stack(
+                      children: [
+                        Container(
+                          height: Constants.screenHeight / 20,
+                          decoration: BoxDecoration(color: Colors.red),
+                        ),
+                        Body(),
+                      ],
                     ),
-                  )
-                ],
-              ),
-              body: SingleChildScrollView(
-                child: Container(
-                  height: Constants.screenHeight,
-                  child: Stack(
-                    children: [
-                      Container(
-                        height: Constants.screenHeight / 20,
-                        decoration: BoxDecoration(color: Colors.red),
-                      ),
-                      Body(),
-                    ],
                   ),
-                ),
-              ),
-            );
-          } else {
-            return Utils.NotConnectServer();
-          }
-        });
+                );
+              } else {
+                return Utils.Loading();
+              }
+            }),
+      ),
+    );
   }
 
   Widget Body() {

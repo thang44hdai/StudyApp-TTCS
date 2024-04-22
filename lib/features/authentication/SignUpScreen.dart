@@ -12,7 +12,8 @@ TextEditingController _mk_registerController = TextEditingController();
 TextEditingController _verifyPassWordController = TextEditingController();
 TextEditingController _nameUserController = TextEditingController();
 
-void addUser(String acc, String name, String pw, List<String> history) {
+void addUser(
+    String userID, String acc, String name, String pw, List<String> history) {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   final user = <String, dynamic>{
     "account": acc,
@@ -23,8 +24,8 @@ void addUser(String acc, String name, String pw, List<String> history) {
   final event = <String, List<Map<String, String>>>{
     "doc": [],
   };
-  firestore.collection("users").doc(acc + pw).set(user);
-  firestore.collection("events").doc(acc + pw).set(event);
+  firestore.collection("users").doc(userID).set(user);
+  firestore.collection("events").doc(userID).set(event);
 }
 
 class SignUpScreen extends StatelessWidget {
@@ -166,16 +167,25 @@ class SignUpScreen extends StatelessWidget {
                               ElevatedButton(
                                 onPressed: () {
                                   final auth = FirebaseAuth.instance;
-                                  auth.createUserWithEmailAndPassword(
-                                      email: _tk_registerController.text,
-                                      password: _mk_registerController.text);
-                                  Navigator.pop(context);
-                                  addUser(
+                                  auth
+                                      .createUserWithEmailAndPassword(
+                                          email: _tk_registerController.text,
+                                          password: _mk_registerController.text)
+                                      .then((userCredential) {
+                                    String userId = userCredential.user!.uid;
+                                    addUser(
+                                      userId,
                                       _tk_registerController.text,
                                       _nameUserController.text,
-                                      _mk_registerController.text, []);
-                                  _tk_registerController.text =
-                                      _mk_registerController.text = "";
+                                      _mk_registerController.text,
+                                      [],
+                                    );
+                                    _tk_registerController.text = "";
+                                    _mk_registerController.text = "";
+                                  }).catchError((error) {});
+                                  ;
+                                  Navigator.pop(context);
+
                                   // Hiển thị thông báo đăng kí thành công
                                   final snackBar = SnackBar(
                                     content: Text('Đăng kí thành công!'),

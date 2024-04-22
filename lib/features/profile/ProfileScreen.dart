@@ -49,7 +49,7 @@ class _ProfileScreen extends State<ProfileScreen> {
                 ),
               );
             } else {
-              return Utils.NotConnectServer();
+              return Utils.Loading();
             }
           }),
     );
