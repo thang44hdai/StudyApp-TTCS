@@ -279,12 +279,8 @@ class _CalendarScreenState extends State<CalendarScreen> {
     // add firestore
     FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-    var user = Constants.user;
-
-    DocumentSnapshot documentSnapshot = await firestore
-        .collection("events")
-        .doc(user.account + user.password)
-        .get();
+    DocumentSnapshot documentSnapshot =
+        await firestore.collection("events").doc(Constants.userId).get();
     final doc = documentSnapshot.get('doc') as List<dynamic>;
     final _doc = doc.cast<Map<String, dynamic>>().toList();
     Map<String, String> event = {
@@ -296,7 +292,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
 
     await firestore
         .collection("events")
-        .doc(user.account + user.password)
+        .doc(Constants.userId)
         .set({"doc": _doc});
 
     _eventController.clear();
@@ -304,12 +300,9 @@ class _CalendarScreenState extends State<CalendarScreen> {
   }
 
   Future<void> getEvent() async {
-    var user = Constants.user;
     FirebaseFirestore firestore = FirebaseFirestore.instance;
-    DocumentSnapshot documentSnapshot = await firestore
-        .collection("events")
-        .doc(user.account + user.password)
-        .get();
+    DocumentSnapshot documentSnapshot =
+        await firestore.collection("events").doc(Constants.userId).get();
     List<dynamic> eventsData = documentSnapshot.get("doc");
     List<Event> events = eventsData.map((eventData) {
       return Event(

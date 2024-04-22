@@ -5,11 +5,10 @@ import '../../common/constant.dart';
 
 class ProfileProvider extends ChangeNotifier {
   Stream<Information> getInformation() {
-    var user = Constants.user;
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     return firestore
         .collection("users")
-        .doc(user.account + user.password)
+        .doc(Constants.userId)
         .snapshots()
         .map((element) {
       String email = element.data()?["account"] ?? "";

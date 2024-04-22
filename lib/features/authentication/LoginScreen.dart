@@ -21,6 +21,7 @@ void signIn(BuildContext context, String tk, String mk) async {
       password: mk,
     );
     Constants.user = UserDoc(account: tk, password: mk);
+    Constants.userId = auth.currentUser!.uid;
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
         builder: (context) => MainScreen(),
@@ -77,9 +78,8 @@ class LoginScreen extends StatelessWidget {
         image: DecorationImage(
           image: AssetImage('assets/bg_login.png'),
           fit: BoxFit.fill,
-          colorFilter: ColorFilter.mode(
-              Colors.red.withOpacity(0.5),
-              BlendMode.dstATop),
+          colorFilter:
+              ColorFilter.mode(Colors.red.withOpacity(0.5), BlendMode.dstATop),
         ),
       ),
       child: Scaffold(

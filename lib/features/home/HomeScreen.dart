@@ -55,7 +55,7 @@ class _HomeScreen extends State<HomeScreen> {
           backgroundColor: Colors.red,
         ),
         drawer: Drawer(
-          backgroundColor: Color(0xFFFF3131),
+          backgroundColor: Colors.red,
           child: Column(
             children: [
               Container(

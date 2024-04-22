@@ -162,11 +162,8 @@ class _ResultScreen extends State<ResultScreen> {
 
   void uploadHistory() async {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
-    final user = Constants.user;
-    DocumentSnapshot documentSnapshot = await firestore
-        .collection("users")
-        .doc(user.account + user.password)
-        .get();
+    DocumentSnapshot documentSnapshot =
+        await firestore.collection("users").doc(Constants.userId).get();
     final account = documentSnapshot['account'];
     final name = documentSnapshot['name'];
     final password = documentSnapshot['password'];
@@ -182,9 +179,6 @@ class _ResultScreen extends State<ResultScreen> {
       "password": password,
       "history": _history,
     };
-    await firestore
-        .collection("users")
-        .doc(user.account + user.password)
-        .set(data);
+    await firestore.collection("users").doc(Constants.userId).set(data);
   }
 }

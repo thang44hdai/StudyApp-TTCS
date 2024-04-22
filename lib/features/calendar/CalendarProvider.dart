@@ -9,12 +9,11 @@ import '../../common/constant.dart';
 class CalendarProvider extends ChangeNotifier {
  // return firestore bởi vì streambuilder sẽ update theo data trả về nên neesu để data lấy về rồi set măcj định thì UI cũng khng được update
   Stream<Map<String, List<Event>>> getEvent() {
-    var user = Constants.user;
     FirebaseFirestore firestore = FirebaseFirestore.instance;
 
     return firestore
         .collection("events")
-        .doc(user.account + user.password)
+        .doc(Constants.userId)
         .snapshots()
         .map((snapshot) {
       List<dynamic> eventsData = snapshot.data()?['doc'] ?? [];
