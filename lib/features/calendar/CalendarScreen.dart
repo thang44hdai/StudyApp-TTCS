@@ -51,7 +51,10 @@ class _CalendarScreenState extends State<CalendarScreen> {
           selectedEvents = snapshot.data ?? {};
           return Scaffold(
             appBar: AppBar(
-              leading: Icon(Icons.calendar_today, color: Colors.white,),
+              leading: Icon(
+                Icons.calendar_today,
+                color: Colors.white,
+              ),
               title: Text(
                 "Calendar",
                 style: TextStyle(color: Colors.white),

@@ -5,6 +5,7 @@ import 'package:study/features/calendar/CalendarScreen.dart';
 import 'package:study/features/create_test/CreateQuizScreen.dart';
 import 'package:study/features/home/HomeScreen.dart';
 import 'package:study/features/profile/ProfileScreen.dart';
+import 'package:study/features/toeic/ToeicTestScreen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -47,17 +48,17 @@ class _MainScreenState extends State<MainScreen> {
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(
+                    Icons.create,
+                    color: CupertinoColors.systemGrey,
+                  ),
+                  label: "Toeic",
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(
                     Icons.calendar_today_sharp,
                     color: CupertinoColors.systemGrey,
                   ),
                   label: "Calendar",
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(
-                    Icons.add_to_drive_outlined,
-                    color: CupertinoColors.systemGrey,
-                  ),
-                  label: "Create",
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(
@@ -79,8 +80,8 @@ class NavigationController extends GetxController {
   final Rx<int> selectedIndex = 0.obs;
   final Screen = [
     HomeScreen(),
+    ToeicTestScreen(),
     CalendarScreen(),
-    CreateQuizScreen(),
     ProfileScreen(),
   ];
 }

@@ -14,6 +14,7 @@ import 'package:study/features/quiz_test/provider/QuizProvider.dart';
 import 'package:study/features/quiz_test/QuizScreen.dart';
 import 'package:study/features/quiz_test/provider/TimberProvider.dart';
 import 'package:study/features/result_test/ResultScreen.dart';
+import 'package:study/features/toeic/ToeicProvider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -40,6 +41,7 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(create: (context) => CalendarProvider()),
         ChangeNotifierProvider(create: (context) => ProfileProvider()),
         ChangeNotifierProvider(create: (context) => CreateQuizProvider()),
+        ChangeNotifierProvider(create: (context) => ToeicTestProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

@@ -3,6 +3,7 @@ import 'package:study/common/color_resource.dart';
 import 'package:study/common/constant.dart';
 import 'package:study/core/response/QuestionIntro.dart';
 import 'package:study/core/service/apiService.dart';
+import 'package:study/features/create_test/CreateQuizScreen.dart';
 import 'package:study/features/notification/NotificationScreen.dart';
 import 'package:study/features/tutorial/TutorialScreen.dart';
 import 'package:study/utils.dart';
@@ -63,6 +64,26 @@ class _HomeScreen extends State<HomeScreen> {
                 child: Image.asset("assets/iconapp2.png"),
               ),
               ListTile(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => CreateQuizScreen()));
+                },
+                leading: Icon(
+                  Icons.menu_book,
+                  color: Colors.white,
+                ),
+                title: Text(
+                  "Tạo đề thi",
+                  style: TextStyle(color: Colors.white),
+                ),
+                trailing: Icon(
+                  Icons.keyboard_arrow_right_sharp,
+                  color: Colors.white,
+                ),
+              ),
+              ListTile(
                 onTap: () {},
                 leading: Icon(
                   Icons.bookmark_added,
@@ -104,27 +125,8 @@ class _HomeScreen extends State<HomeScreen> {
                   "Version: 1.0.0",
                   style: TextStyle(color: Colors.white),
                 ),
-                trailing: Icon(
-                  Icons.keyboard_arrow_right_sharp,
-                  color: Colors.white,
-                ),
               ),
               SizedBox(height: 5),
-              ListTile(
-                onTap: () {},
-                leading: Icon(
-                  Icons.bookmark_added,
-                  color: Colors.white,
-                ),
-                title: Text(
-                  "Điều khoản",
-                  style: TextStyle(color: Colors.white),
-                ),
-                trailing: Icon(
-                  Icons.keyboard_arrow_right_sharp,
-                  color: Colors.white,
-                ),
-              ),
             ],
           ),
         ),

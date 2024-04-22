@@ -52,7 +52,13 @@ class _CreateQuizScreenState extends State<CreateQuizScreen> {
       },
       child: Scaffold(
         appBar: AppBar(
-          leading: Icon(Icons.add_to_drive_outlined, color: Colors.white,),
+          leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: Icon(Icons.arrow_back),
+            color: Colors.white,
+          ),
           backgroundColor: Colors.red,
           title: Text(
             "Create",
