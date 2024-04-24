@@ -155,6 +155,12 @@ class _ProfileScreen extends State<ProfileScreen> {
         itemCount: history.length,
         itemBuilder: (context, index) {
           List<String> his = history[index].split("/");
+          int n = his.length;
+          String title = "";
+          for (int i = 1; i < n - 2; i++)
+            title += "${his[i]}/";
+          title = title.substring(0, title.length - 1);
+
           return Padding(
             padding: EdgeInsets.only(bottom: 8, left: 40, right: 40),
             child: Container(
@@ -172,11 +178,11 @@ class _ProfileScreen extends State<ProfileScreen> {
                   style: TextStyle(color: Colors.white),
                 ),
                 title: Text(
-                  "${his[1]}",
+                  "$title",
                   style: TextStyle(color: Colors.white),
                 ),
                 trailing: Text(
-                  "${his[2]}/${his[3]}",
+                  "${his[n - 2]}/${his[n - 1]}",
                   style: TextStyle(color: Colors.white),
                 ),
               ),
