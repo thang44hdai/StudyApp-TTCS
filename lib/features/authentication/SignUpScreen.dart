@@ -58,7 +58,7 @@ class SignUpScreen extends StatelessWidget {
                       bottomLeft: Radius.circular(20)),
                   child: Container(
                     color: ColorResources.mainBackGround(),
-                    height: Constants.screenHeight * 2 / 3,
+                    height: Constants.screenHeight * 5 / 6,
                     width: Constants.screenWidth,
                     child: Padding(
                       padding: EdgeInsets.only(left: 32, right: 32),
