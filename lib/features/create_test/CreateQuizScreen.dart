@@ -1,7 +1,12 @@
+import 'dart:async';
+import 'dart:typed_data';
+import 'dart:ui' as ui;
+
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:study/common/color_resource.dart';
@@ -27,6 +32,7 @@ class _CreateQuizScreenState extends State<CreateQuizScreen> {
   TextEditingController _numberOfQuestionEdtController =
       TextEditingController();
   late CreateQuizProvider viewmodel;
+  GlobalKey _qrImageKey = GlobalKey();
 
   @override
   void initState() {
@@ -38,6 +44,50 @@ class _CreateQuizScreenState extends State<CreateQuizScreen> {
     setState(() {
       viewmodel.itemCount = int.tryParse(value) ?? 1;
     });
+  }
+
+  Future<void> _captureAndUploadQRImage() async {
+    try {
+      // Tạo đường dẫn lưu trữ trên Firebase Storage
+      String fileName = 'qr_image_${_titleEdtController.text}';
+      Reference storageReference =
+          FirebaseStorage.instance.ref().child('qr_codes/$fileName');
+
+      // Chụp hình ảnh từ RenderRepaintBoundary
+      RenderRepaintBoundary boundary = _qrImageKey.currentContext!
+          .findRenderObject() as RenderRepaintBoundary;
+      ui.Image image = await boundary.toImage(pixelRatio: 3.0);
+      ByteData? byteData =
+          await image.toByteData(format: ui.ImageByteFormat.png);
+      Uint8List imageBytes = byteData!.buffer.asUint8List();
+
+      // Upload hình ảnh lên Firebase Storage với định dạng image/png
+      UploadTask uploadTask = storageReference.putData(
+          imageBytes, SettableMetadata(contentType: 'image/png'));
+      await uploadTask;
+
+      // Lấy URL công khai của hình ảnh đã upload
+      String downloadUrl = await storageReference.getDownloadURL();
+      uploadFirebase(_titleEdtController.text, downloadUrl);
+
+      // In ra URL để sử dụng trong ứng dụng web
+      print('Download URL: $downloadUrl');
+    } catch (e) {
+      print('Error uploading QR image: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error uploading QR')),
+      );
+    }
+  }
+
+  void uploadFirebase(String title, String url) {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    final data = <String, dynamic>{
+      "title": title,
+      "image": url,
+    };
+
+    firestore.collection("qr_codes").add(data);
   }
 
   @override
@@ -244,12 +294,19 @@ class _CreateQuizScreenState extends State<CreateQuizScreen> {
             Container(
               width: Constants.screenWidth,
               child: Center(
-                child: QrImageView(
-                  data: _titleEdtController.text,
-                  version: QrVersions.auto,
-                  size: 200.0,
+                child: RepaintBoundary(
+                  key: _qrImageKey,
+                  child: QrImageView(
+                    data: _titleEdtController.text,
+                    version: QrVersions.auto,
+                    size: 200.0,
+                  ),
                 ),
               ),
+            ),
+            ElevatedButton(
+              onPressed: _captureAndUploadQRImage,
+              child: Text('Upload QR to Firebase'),
             ),
           ],
         ),

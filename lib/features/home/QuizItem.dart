@@ -9,8 +9,9 @@ import '../quiz_test/provider/TimberProvider.dart';
 
 class ItemQuiz extends StatelessWidget {
   final QuestionIntro item;
+  String image;
 
-  const ItemQuiz({required this.item, super.key});
+  ItemQuiz({required this.item, required this.image, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +23,7 @@ class ItemQuiz extends StatelessWidget {
         builder: (BuildContext context) {
           return AlertDialog(
             title: Text("Bạn có muốn làm bài ${item.title} không?"),
-            content: Text("Xác nhận?"),
+            content: Image.network(image),
             actions: <Widget>[
               TextButton(
                 onPressed: () {

@@ -6,6 +6,7 @@ import 'package:study/core/response/QuestionIntro.dart';
 import 'package:study/core/service/apiService.dart';
 import 'package:study/features/create_test/CreateQuizScreen.dart';
 import 'package:study/features/home/DescriptionScreen.dart';
+import 'package:study/features/home/HomeProvider.dart';
 import 'package:study/features/home/TermOfUseScreen.dart';
 import 'package:study/features/notification/NotificationScreen.dart';
 import 'package:study/features/tutorial/TutorialScreen.dart';
@@ -24,6 +25,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreen extends State<HomeScreen> {
   late Future<List<QuestionIntro>> ListQuestionIntroFuture;
+  late HomeProvider home_viewmodel;
   List<QuestionIntro> ListQuestionIntro = [];
   String enteredKeyword = "";
 
@@ -36,6 +38,7 @@ class _HomeScreen extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     CalendarProvider viewmodel = Provider.of<CalendarProvider>(context);
+    home_viewmodel = Provider.of<HomeProvider>(context);
     return GestureDetector(
       onTap: () {
         Utils.HideKeyBoard();
@@ -291,22 +294,35 @@ class _HomeScreen extends State<HomeScreen> {
             topLeft: Radius.circular(12),
           ),
         ),
-        child: GridView.builder(
-          itemCount: ListQuestionIntro.length,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2),
-          itemBuilder: (context1, index) {
-            var item = ListQuestionIntro[index];
-            return ItemQuiz(
-              item: QuestionIntro(
-                  id: item.id,
-                  time: item.time,
-                  title: item.title,
-                  description: item.description,
-                  question: item.question),
-            );
-          },
-        ),
+        child: StreamBuilder(
+            stream: home_viewmodel.getListQr(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                List<QrItem> listQR = snapshot.data ?? [];
+                return GridView.builder(
+                  itemCount: ListQuestionIntro.length,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2),
+                  itemBuilder: (context1, index) {
+                    var item = ListQuestionIntro[index];
+                    QrItem? qrItem = listQR.firstWhere(
+                        (qr) => qr.title == item.title,
+                        orElse: () => QrItem.empty());
+                    return ItemQuiz(
+                      item: QuestionIntro(
+                          id: item.id,
+                          time: item.time,
+                          title: item.title,
+                          description: item.description,
+                          question: item.question),
+                      image: qrItem.image,
+                    );
+                  },
+                );
+              } else {
+                return Utils.Loading();
+              }
+            }),
       ),
     );
   }

@@ -7,6 +7,7 @@ import 'package:study/features/authentication/LoginScreen.dart';
 import 'package:study/features/calendar/CalendarScreen.dart';
 import 'package:study/features/calendar/CalendarProvider.dart';
 import 'package:study/features/create_test/CreateQuizProvider.dart';
+import 'package:study/features/home/HomeProvider.dart';
 import 'package:study/features/home/HomeScreen.dart';
 import 'package:study/features/profile/ProfileProvider.dart';
 import 'package:study/features/profile/ProfileScreen.dart';
@@ -36,6 +37,7 @@ class _MyAppState extends State<MyApp> {
     Constants.screenWidth = MediaQuery.of(context).size.width;
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider(create: (context) => HomeProvider()),
         ChangeNotifierProvider(create: (context) => QuestionProvider()),
         ChangeNotifierProvider(create: (context) => TimberProvider()),
         ChangeNotifierProvider(create: (context) => CalendarProvider()),
