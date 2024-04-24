@@ -170,7 +170,7 @@ class _TestScreen extends State<TestScreen> {
                             color: questions[index].is_ticked ||
                                     questions[index].is_flag
                                 ? Colors.white
-                                : null),
+                                : Colors.black),
                       ),
                     ),
                   );

@@ -32,7 +32,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(Icons.arrow_back_rounded),
-
           color: Colors.white,
           onPressed: () {
             Navigator.pop(context);
@@ -71,8 +70,18 @@ class _NotificationScreenState extends State<NotificationScreen> {
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
                         selectedEvents = snapshot.data ?? {};
-                        if (selectedEvents.length == 0) {
-                          return Text("Hôm nay không có sự kiện gì");
+                        if (selectedEvents.length == 0 ||
+                            _getEventsfromDay(selectedDay).length == 0) {
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              "Hôm nay không có sự kiện gì",
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black),
+                            ),
+                          );
                         } else {
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,

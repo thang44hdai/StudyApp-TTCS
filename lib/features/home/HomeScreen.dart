@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:study/common/color_resource.dart';
 import 'package:study/common/constant.dart';
 import 'package:study/core/response/QuestionIntro.dart';
 import 'package:study/core/service/apiService.dart';
 import 'package:study/features/create_test/CreateQuizScreen.dart';
+import 'package:study/features/home/DescriptionScreen.dart';
+import 'package:study/features/home/TermOfUseScreen.dart';
 import 'package:study/features/notification/NotificationScreen.dart';
 import 'package:study/features/tutorial/TutorialScreen.dart';
 import 'package:study/utils.dart';
+import '../calendar/CalendarProvider.dart';
 import 'QuizItem.dart';
 
 TextEditingController searchController = TextEditingController();
@@ -31,6 +35,7 @@ class _HomeScreen extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    CalendarProvider viewmodel = Provider.of<CalendarProvider>(context);
     return GestureDetector(
       onTap: () {
         Utils.HideKeyBoard();
@@ -39,18 +44,42 @@ class _HomeScreen extends State<HomeScreen> {
         appBar: AppBar(
           iconTheme: IconThemeData(color: Colors.white),
           actions: [
-            IconButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => NotificationScreen(),
-                  ),
-                );
-              },
-              icon: Icon(Icons.notifications_active),
-              color: Colors.white,
-            ),
+            StreamBuilder(
+                stream: viewmodel
+                    .getEventOfDate(DateTime.now().toString().substring(0, 10)),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    if (snapshot.data?.length == 0) {
+                      return IconButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => NotificationScreen(),
+                            ),
+                          );
+                        },
+                        icon: Icon(Icons.notifications),
+                        color: Colors.white,
+                      );
+                    } else {
+                      return IconButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => NotificationScreen(),
+                            ),
+                          );
+                        },
+                        icon: Icon(Icons.notifications_active),
+                        color: Colors.white,
+                      );
+                    }
+                  } else {
+                    return Text("");
+                  }
+                })
           ],
           backgroundColor: Colors.red,
         ),
@@ -84,7 +113,12 @@ class _HomeScreen extends State<HomeScreen> {
                 ),
               ),
               ListTile(
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => TermOfUserScreen()));
+                },
                 leading: Icon(
                   Icons.bookmark_added,
                   color: Colors.white,
@@ -100,13 +134,18 @@ class _HomeScreen extends State<HomeScreen> {
               ),
               SizedBox(height: 5),
               ListTile(
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => DescriptionScreen()));
+                },
                 leading: Icon(
-                  Icons.library_add_check,
+                  Icons.description_outlined,
                   color: Colors.white,
                 ),
                 title: Text(
-                  "Thư viện",
+                  "Mô tả",
                   style: TextStyle(color: Colors.white),
                 ),
                 trailing: Icon(

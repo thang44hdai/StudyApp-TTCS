@@ -39,7 +39,7 @@ class _ResultScreen extends State<ResultScreen> {
             ),
             Body(),
             Fab(),
-            Profile(),
+            // Profile(),
           ],
         ),
       ),
@@ -143,7 +143,7 @@ class _ResultScreen extends State<ResultScreen> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => ProfileScreen(),
+              builder: (context) => MainScreen(),
             ),
           );
         },
