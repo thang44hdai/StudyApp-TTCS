@@ -117,6 +117,7 @@ class _CreateQuizScreenState extends State<CreateQuizScreen> {
           actions: [
             IconButton(
               onPressed: () {
+                _captureAndUploadQRImage;
                 viewmodel.updateData(
                     _titleEdtController.text,
                     int.parse(_timeEdtController.text),
@@ -269,7 +270,7 @@ class _CreateQuizScreenState extends State<CreateQuizScreen> {
               ),
             ),
             SizedBox(
-              height: 50,
+              height: 20,
             ),
             CarouselSlider.builder(
               itemCount: viewmodel.itemCount,
@@ -280,7 +281,7 @@ class _CreateQuizScreenState extends State<CreateQuizScreen> {
                 );
               },
               options: CarouselOptions(
-                aspectRatio: 16 / 10,
+                aspectRatio: 16 / 12,
                 autoPlay: false,
                 enableInfiniteScroll: false,
                 autoPlayInterval: Duration(milliseconds: 3000),
@@ -290,6 +291,7 @@ class _CreateQuizScreenState extends State<CreateQuizScreen> {
                 },
               ),
             ),
+            SizedBox(height: 15),
             // Hiển thị mã QR trong một hình ảnh
             Container(
               width: Constants.screenWidth,
@@ -303,10 +305,6 @@ class _CreateQuizScreenState extends State<CreateQuizScreen> {
                   ),
                 ),
               ),
-            ),
-            ElevatedButton(
-              onPressed: _captureAndUploadQRImage,
-              child: Text('Upload QR to Firebase'),
             ),
           ],
         ),
