@@ -25,7 +25,7 @@ class _FormQuestionState extends State<FormQuestion> {
   TextEditingController _option4EdtController = TextEditingController();
   TextEditingController _trueAnswerEdtController = TextEditingController();
   TextEditingController _imageEdtController = TextEditingController();
-  int Value = 0;
+  late int Value;
 
   @override
   void initState() {
@@ -38,6 +38,7 @@ class _FormQuestionState extends State<FormQuestion> {
     _option4EdtController.text = question.cau_d;
     _trueAnswerEdtController.text = question.true_answer.toString();
     _imageEdtController.text = question.is_image;
+    Value = question.true_answer;
   }
 
   @override
@@ -92,7 +93,7 @@ class _FormQuestionState extends State<FormQuestion> {
                     child: TextField(
                       controller: _option1EdtController,
                       style: TextStyle(color: Colors.black),
-                      decoration: InputDecoration(hintText: "Đáp án A:"),
+                      decoration: InputDecoration(labelText: "Đáp án A:"),
                       onChanged: (value) {
                         handleWhenSwipeItem();
                       },
@@ -103,7 +104,7 @@ class _FormQuestionState extends State<FormQuestion> {
                     child: TextField(
                       controller: _option2EdtController,
                       style: TextStyle(color: Colors.black),
-                      decoration: InputDecoration(hintText: "Đáp án B:"),
+                      decoration: InputDecoration(labelText: "Đáp án B:"),
                       onChanged: (value) {
                         handleWhenSwipeItem();
                       },
@@ -117,7 +118,7 @@ class _FormQuestionState extends State<FormQuestion> {
                     child: TextField(
                       controller: _option3EdtController,
                       style: TextStyle(color: Colors.black),
-                      decoration: InputDecoration(hintText: "Đáp án C:"),
+                      decoration: InputDecoration(labelText: "Đáp án C:"),
                       onChanged: (value) {
                         handleWhenSwipeItem();
                       },
@@ -128,7 +129,7 @@ class _FormQuestionState extends State<FormQuestion> {
                     child: TextField(
                       controller: _option4EdtController,
                       style: TextStyle(color: Colors.black),
-                      decoration: InputDecoration(hintText: "Đáp án D:"),
+                      decoration: InputDecoration(labelText: "Đáp án D:"),
                       onChanged: (value) {
                         handleWhenSwipeItem();
                       },

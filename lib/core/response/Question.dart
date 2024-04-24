@@ -26,6 +26,6 @@ class Question {
         cau_b = "",
         cau_c = "",
         cau_d = "",
-        true_answer = -1,
+        true_answer = 0,
         is_image = "";
 }

@@ -2,8 +2,8 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 import 'package:study/common/color_resource.dart';
 import 'package:study/common/constant.dart';
 import 'package:study/core/response/QuestionIntro.dart';
@@ -13,11 +13,6 @@ import 'package:study/utils.dart';
 
 import 'WidgetAddQuestion.dart';
 
-TextEditingController _titleEdtController = TextEditingController();
-TextEditingController _timeEdtController = TextEditingController();
-TextEditingController _descriptionEdtController = TextEditingController();
-TextEditingController _numberOfQuestionEdtController = TextEditingController();
-
 class CreateQuizScreen extends StatefulWidget {
   const CreateQuizScreen({super.key});
 
@@ -26,6 +21,11 @@ class CreateQuizScreen extends StatefulWidget {
 }
 
 class _CreateQuizScreenState extends State<CreateQuizScreen> {
+  TextEditingController _titleEdtController = TextEditingController();
+  TextEditingController _timeEdtController = TextEditingController();
+  TextEditingController _descriptionEdtController = TextEditingController();
+  TextEditingController _numberOfQuestionEdtController =
+      TextEditingController();
   late CreateQuizProvider viewmodel;
 
   @override
@@ -88,7 +88,7 @@ class _CreateQuizScreenState extends State<CreateQuizScreen> {
                     ListQuestionIntro![ListQuestionIntro.length - 1].id + 1;
                 return SingleChildScrollView(
                   child: Container(
-                    height: Constants.screenHeight,
+                    height: Constants.screenHeight * 2,
                     child: Stack(
                       children: [
                         Container(
@@ -151,6 +151,9 @@ class _CreateQuizScreenState extends State<CreateQuizScreen> {
                         style: TextStyle(color: Colors.black),
                         decoration: InputDecoration(
                             hintText: "Vui lòng nhập tên đề thi:"),
+                        onChanged: (text) {
+                          setState(() {});
+                        },
                       ),
                     ),
                     Padding(
@@ -235,6 +238,17 @@ class _CreateQuizScreenState extends State<CreateQuizScreen> {
                 onPageChanged: (index, result) {
                   setState(() {});
                 },
+              ),
+            ),
+            // Hiển thị mã QR trong một hình ảnh
+            Container(
+              width: Constants.screenWidth,
+              child: Center(
+                child: QrImageView(
+                  data: _titleEdtController.text,
+                  version: QrVersions.auto,
+                  size: 200.0,
+                ),
               ),
             ),
           ],
