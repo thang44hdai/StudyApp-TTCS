@@ -117,7 +117,7 @@ class _CreateQuizScreenState extends State<CreateQuizScreen> {
           actions: [
             IconButton(
               onPressed: () {
-                _captureAndUploadQRImage;
+                _captureAndUploadQRImage();
                 viewmodel.updateData(
                     _titleEdtController.text,
                     int.parse(_timeEdtController.text),

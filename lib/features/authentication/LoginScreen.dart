@@ -32,10 +32,11 @@ void signIn(BuildContext context, String tk, String mk) async {
     );
     Constants.user = UserDoc(account: tk, password: mk);
     Constants.userId = auth.currentUser!.uid;
-    Navigator.of(context).pushReplacement(
+    Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute(
         builder: (context) => MainScreen(),
       ),
+      (route) => false,
     );
 
   } catch (e) {
