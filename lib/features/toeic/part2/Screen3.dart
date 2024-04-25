@@ -58,11 +58,7 @@ class _Screen3State extends State<Screen3> {
               ),
             );
           } else {
-            return Container(
-              height: 50,
-              width: 50,
-              child: Utils.Loading(),
-            );
+            return Utils.Loading();
           }
         },
       ),

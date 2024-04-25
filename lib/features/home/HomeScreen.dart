@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:study/common/color_resource.dart';
 import 'package:study/common/constant.dart';
 import 'package:study/core/response/QuestionIntro.dart';
@@ -112,6 +113,32 @@ class _HomeScreen extends State<HomeScreen> {
                 ),
                 trailing: Icon(
                   Icons.keyboard_arrow_right_sharp,
+                  color: Colors.white,
+                ),
+              ),
+              ListTile(
+                onTap: () async {
+                  String? result = await showDialog<String>(
+                    context: context,
+                    builder: (BuildContext context) => QRScannerPopup(),
+                  );
+                  if (result != null) {
+                    setState(() {
+                      enteredKeyword = result;
+                      searchController.text = result;
+                    });
+                  }
+                },
+                leading: Icon(
+                  Icons.qr_code_outlined,
+                  color: Colors.white,
+                ),
+                title: Text(
+                  "QR đề thi",
+                  style: TextStyle(color: Colors.white),
+                ),
+                trailing: Icon(
+                  Icons.qr_code_scanner,
                   color: Colors.white,
                 ),
               ),
@@ -368,5 +395,51 @@ class _HomeScreen extends State<HomeScreen> {
         ),
       ),
     );
+  }
+}
+
+class QRScannerPopup extends StatefulWidget {
+  @override
+  _QRScannerPopupState createState() => _QRScannerPopupState();
+}
+
+class _QRScannerPopupState extends State<QRScannerPopup> {
+  late QRViewController controller;
+  final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text('Quét mã QR'),
+      content: Container(
+        width: MediaQuery.of(context).size.width * 0.8,
+        height: MediaQuery.of(context).size.width * 0.8,
+        child: QRView(
+          key: qrKey,
+          onQRViewCreated: _onQRViewCreated,
+        ),
+      ),
+      actions: <Widget>[
+        TextButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: Text('Đóng'),
+        ),
+      ],
+    );
+  }
+
+  void _onQRViewCreated(QRViewController controller) {
+    this.controller = controller;
+    controller.scannedDataStream.listen((scanData) {
+      Navigator.pop(context, scanData.code);
+    });
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
   }
 }

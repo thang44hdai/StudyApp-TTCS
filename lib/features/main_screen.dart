@@ -18,7 +18,6 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     Get.put(NavigationController());
-
     return Scaffold(
       body: GetX<NavigationController>(
         builder: (controller) {
@@ -29,8 +28,8 @@ class _MainScreenState extends State<MainScreen> {
         builder: (controller) {
           return ClipRRect(
             borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20.0),
-              topRight: Radius.circular(20.0),
+              topLeft: Radius.circular(12.0),
+              topRight: Radius.circular(12.0),
             ),
             child: BottomNavigationBar(
               backgroundColor: Colors.red,

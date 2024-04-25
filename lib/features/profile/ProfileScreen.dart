@@ -1,12 +1,16 @@
 import 'dart:typed_data';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:study/common/color_resource.dart';
 import 'package:study/features/authentication/LoginScreen.dart';
+import 'package:study/features/main_screen.dart';
 import 'package:study/features/profile/ProfileProvider.dart';
 import 'package:study/features/tutorial/TutorialScreen.dart';
 import 'package:study/utils.dart';
@@ -157,8 +161,7 @@ class _ProfileScreen extends State<ProfileScreen> {
           List<String> his = history[index].split("/");
           int n = his.length;
           String title = "";
-          for (int i = 1; i < n - 2; i++)
-            title += "${his[i]}/";
+          for (int i = 1; i < n - 2; i++) title += "${his[i]}/";
           title = title.substring(0, title.length - 1);
 
           return Padding(
@@ -201,6 +204,8 @@ class _ProfileScreen extends State<ProfileScreen> {
         padding: const EdgeInsets.only(top: 40, right: 15),
         child: GestureDetector(
           onTap: () {
+            Get.find<NavigationController>().selectedIndex.value = 0;
+            FirebaseAuth.instance.signOut();
             Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(builder: (context) => LoginScreen()),

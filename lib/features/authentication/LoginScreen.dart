@@ -2,11 +2,14 @@ import 'dart:ui';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:study/common/constant.dart';
 import 'package:study/core/model/User.dart';
 import 'package:study/features/authentication/SignUpScreen.dart';
 import 'package:study/features/home/HomeScreen.dart';
 import 'package:study/features/main_screen.dart';
+import 'package:study/utils.dart';
 
 import '../../common/color_resource.dart';
 
@@ -15,6 +18,13 @@ TextEditingController _mk_loginController = TextEditingController();
 
 void signIn(BuildContext context, String tk, String mk) async {
   try {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return Utils.Loading();
+      },
+    );
     final auth = FirebaseAuth.instance;
     UserCredential userCredential = await auth.signInWithEmailAndPassword(
       email: tk,
@@ -27,6 +37,7 @@ void signIn(BuildContext context, String tk, String mk) async {
         builder: (context) => MainScreen(),
       ),
     );
+
   } catch (e) {
     return showDialog(
       context: context,
