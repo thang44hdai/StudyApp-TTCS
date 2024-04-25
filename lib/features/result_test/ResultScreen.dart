@@ -1,18 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:study/common/color_resource.dart';
 import 'package:study/common/constant.dart';
 import 'package:study/core/response/QuestionTotal.dart';
-import 'package:study/features/main.dart';
-import 'package:study/features/main_screen.dart';
-import 'package:study/features/profile/ProfileScreen.dart';
-import 'package:study/features/quiz_test/QuizScreen.dart';
 import 'package:study/features/result_test/ListResult.dart';
-
-import '../home/HomeScreen.dart';
+import 'package:study/main_screen.dart';
 import '../quiz_test/provider/QuizProvider.dart';
-import '../quiz_test/TestList.dart';
 
 class ResultScreen extends StatefulWidget {
   const ResultScreen({super.key});

@@ -10,9 +10,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:study/common/color_resource.dart';
 import 'package:study/features/authentication/LoginScreen.dart';
-import 'package:study/features/main_screen.dart';
 import 'package:study/features/profile/ProfileProvider.dart';
-import 'package:study/features/tutorial/TutorialScreen.dart';
+import 'package:study/main_screen.dart';
 import 'package:study/utils.dart';
 import '../../common/constant.dart';
 

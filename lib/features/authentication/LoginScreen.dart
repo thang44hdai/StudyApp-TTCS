@@ -8,7 +8,7 @@ import 'package:study/common/constant.dart';
 import 'package:study/core/model/User.dart';
 import 'package:study/features/authentication/SignUpScreen.dart';
 import 'package:study/features/home/HomeScreen.dart';
-import 'package:study/features/main_screen.dart';
+import 'package:study/main_screen.dart';
 import 'package:study/utils.dart';
 
 import '../../common/color_resource.dart';
