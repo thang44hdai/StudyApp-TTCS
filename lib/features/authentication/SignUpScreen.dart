@@ -166,40 +166,76 @@ class SignUpScreen extends StatelessWidget {
                               ),
                               ElevatedButton(
                                 onPressed: () {
-                                  final auth = FirebaseAuth.instance;
-                                  auth
-                                      .createUserWithEmailAndPassword(
-                                          email: _tk_registerController.text,
-                                          password: _mk_registerController.text)
-                                      .then((userCredential) {
-                                    String userId = userCredential.user!.uid;
-                                    addUser(
-                                      userId,
-                                      _tk_registerController.text,
-                                      _nameUserController.text,
-                                      _mk_registerController.text,
-                                      [],
-                                    );
-                                    _tk_registerController.text = "";
+                                  if (_mk_registerController.text.length < 6) {
                                     _mk_registerController.text = "";
-                                  }).catchError((error) {});
-                                  ;
-                                  Navigator.pop(context);
+                                    _verifyPassWordController.text = "";
+                                    final snackBar = SnackBar(
+                                      content: Text(
+                                          'Đăng kí lỗi do mật khẩu nhỏ hơn 6 kí tự'),
+                                    );
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(snackBar);
+                                    // Đóng thông báo sau 2 giây
+                                    Timer(
+                                      Duration(seconds: 2),
+                                      () {
+                                        ScaffoldMessenger.of(context)
+                                            .hideCurrentSnackBar();
+                                      },
+                                    );
+                                  } else if (_mk_registerController.text !=
+                                      _verifyPassWordController.text) {
+                                    final snackBar = SnackBar(
+                                      content: Text(
+                                          'Đăng kí lỗi do xác nhận mật khẩu sai'),
+                                    );
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(snackBar);
+                                    // Đóng thông báo sau 2 giây
+                                    Timer(
+                                      Duration(seconds: 2),
+                                      () {
+                                        ScaffoldMessenger.of(context)
+                                            .hideCurrentSnackBar();
+                                      },
+                                    );
+                                  } else {
+                                    final auth = FirebaseAuth.instance;
+                                    auth
+                                        .createUserWithEmailAndPassword(
+                                            email: _tk_registerController.text,
+                                            password:
+                                                _mk_registerController.text)
+                                        .then((userCredential) {
+                                      String userId = userCredential.user!.uid;
+                                      addUser(
+                                        userId,
+                                        _tk_registerController.text,
+                                        _nameUserController.text,
+                                        _mk_registerController.text,
+                                        [],
+                                      );
+                                      _tk_registerController.text = "";
+                                      _mk_registerController.text = "";
+                                    }).catchError((error) {});
+                                    ;
+                                    Navigator.pop(context);
 
-                                  // Hiển thị thông báo đăng kí thành công
-                                  final snackBar = SnackBar(
-                                    content: Text('Đăng kí thành công!'),
-                                  );
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(snackBar);
-                                  // Đóng thông báo sau 2 giây
-                                  Timer(
-                                    Duration(seconds: 2),
-                                    () {
-                                      ScaffoldMessenger.of(context)
-                                          .hideCurrentSnackBar();
-                                    },
-                                  );
+                                    // Hiển thị thông báo đăng kí thành công
+                                    final snackBar = SnackBar(
+                                      content: Text('Đăng kí thành công!'),
+                                    );
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(snackBar);
+                                    // Đóng thông báo sau 2 giây
+                                    Timer(
+                                      Duration(seconds: 2),
+                                      () {
+                                        ScaffoldMessenger.of(context)
+                                            .hideCurrentSnackBar();
+                                      },
+                                    );
+                                  }
                                 },
                                 style: ElevatedButton.styleFrom(
                                   shape: StadiumBorder(),
