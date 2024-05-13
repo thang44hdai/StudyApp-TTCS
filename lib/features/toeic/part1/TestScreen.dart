@@ -1,28 +1,28 @@
 import 'package:audioplayers/audioplayers.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:study/common/constant.dart';
 import 'package:study/features/toeic/model/Question.dart';
 
 class TestScreen extends StatefulWidget {
+  String title;
   List<Question> questionList;
 
-  TestScreen({required this.questionList, super.key});
+  TestScreen({required this.title, required this.questionList, super.key});
 
   @override
   State<TestScreen> createState() => _TestScreenState();
 }
 
 class _TestScreenState extends State<TestScreen> {
-  AudioPlayer _audioPlayer = AudioPlayer();
-
-  void playSound(String soundUrl) async {
-    await _audioPlayer.play(UrlSource(soundUrl));
+  @override
+  void initState() {
+    super.initState();
   }
 
   @override
   void dispose() {
-    _audioPlayer.dispose();
     super.dispose();
   }
 
@@ -30,7 +30,9 @@ class _TestScreenState extends State<TestScreen> {
   Widget build(BuildContext context) {
     List<Question> questionList = widget.questionList;
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text(widget.title),
+      ),
       body: ListView.builder(
         itemCount: questionList.length,
         itemBuilder: (context, index) {
@@ -39,6 +41,21 @@ class _TestScreenState extends State<TestScreen> {
             padding: const EdgeInsets.only(bottom: 40),
             child: Column(
               children: [
+                Padding(
+                  padding:
+                  const EdgeInsets.symmetric(horizontal: 22, vertical: 8),
+                  child: Container(
+                    width: Constants.screenWidth,
+                    child: Row(
+                      children: [
+                        Text(
+                          "Câu ${index + 1}:",
+                          style: TextStyle(fontSize: 20),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
                 Container(
                   height: Constants.screenHeight / 3,
                   child: GestureDetector(
@@ -53,11 +70,7 @@ class _TestScreenState extends State<TestScreen> {
                     child: Image.network(item.image),
                   ),
                 ),
-                IconButton(
-                    onPressed: () {
-                      playSound(item.sound);
-                    },
-                    icon: Icon(Icons.volume_up)),
+                Audio(url: item.sound),
                 MyRadioListTileWidget(item: item),
               ],
             ),
@@ -88,73 +101,200 @@ class _MyRadioListTileWidgetState extends State<MyRadioListTileWidget> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         RadioListTile(
-          title: state_test == 0 ? Text('A') : Text(item.A),
+          title: state_test == 0
+              ? Text('A')
+              : Text(
+            item.A,
+            style: TextStyle(
+              color: item.true_answer == 0
+                  ? Colors.green
+                  : (_selectedValue == 0 ? Colors.red : Colors.black),
+            ),
+          ),
           value: 0,
           groupValue: _selectedValue,
-          onChanged: (value) {
+          onChanged: state_test == 0
+              ? (value) {
             setState(() {
               _selectedValue = value as int;
             });
-          },
+          }
+              : null,
         ),
         RadioListTile(
-          title: state_test == 0 ? Text('B') : Text(item.B),
+          title: state_test == 0
+              ? Text('B')
+              : Text(
+            item.B,
+            style: TextStyle(
+              color: item.true_answer == 1
+                  ? Colors.green
+                  : (_selectedValue == 1 ? Colors.red : Colors.black),
+            ),
+          ),
           value: 1,
           groupValue: _selectedValue,
-          onChanged: (value) {
+          onChanged: state_test == 0
+              ? (value) {
             setState(() {
               _selectedValue = value as int;
             });
-          },
+          }
+              : null,
         ),
         RadioListTile(
-          title: state_test == 0 ? Text('C') : Text(item.C),
+          title: state_test == 0
+              ? Text('C')
+              : Text(
+            item.C,
+            style: TextStyle(
+              color: item.true_answer == 2
+                  ? Colors.green
+                  : (_selectedValue == 2 ? Colors.red : Colors.black),
+            ),
+          ),
           value: 2,
           groupValue: _selectedValue,
-          onChanged: (value) {
+          onChanged: state_test == 0
+              ? (value) {
             setState(() {
               _selectedValue = value as int;
             });
-          },
+          }
+              : null,
         ),
         RadioListTile(
-          title: state_test == 0 ? Text('D') : Text(item.D),
+          title: state_test == 0
+              ? Text('D')
+              : Text(
+            item.D,
+            style: TextStyle(
+              color: item.true_answer == 3
+                  ? Colors.green
+                  : (_selectedValue == 3 ? Colors.red : Colors.black),
+            ),
+          ),
           value: 3,
           groupValue: _selectedValue,
-          onChanged: (value) {
+          onChanged: state_test == 0
+              ? (value) {
             setState(() {
               _selectedValue = value as int;
             });
-          },
+          }
+              : null,
         ),
         state_test == 0
             ? Padding(
-                padding: const EdgeInsets.only(left: 22),
-                child: ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      state_test = 1;
-                    });
-                  },
-                  child: Text("Kiểm tra đáp án"),
-                ),
-              )
-            : (_selectedValue == item.true_answer
-                ? Padding(
-                    padding: const EdgeInsets.only(left: 22),
-                    child: Text(
-                      "Bạn đã chọn đúng",
-                      style: TextStyle(fontSize: 25),
-                    ),
-                  )
-                : Padding(
-                    padding: const EdgeInsets.only(left: 22),
-                    child: Text(
-                      "Bạn đã chọn sai",
-                      style: TextStyle(fontSize: 25),
-                    ),
-                  )),
+          padding: const EdgeInsets.only(left: 22),
+          child: ElevatedButton(
+            onPressed: () {
+              setState(() {
+                state_test = 1;
+              });
+            },
+            child: Text("Kiểm tra đáp án"),
+          ),
+        )
+            : Text("")
       ],
+    );
+  }
+}
+
+class Audio extends StatefulWidget {
+  String url;
+
+  Audio({required this.url, super.key});
+
+  @override
+  State<Audio> createState() => _AudioState();
+}
+
+class _AudioState extends State<Audio> {
+  AudioPlayer _audioPlayer = AudioPlayer();
+  Duration duration = Duration.zero;
+  Duration position = Duration.zero;
+  bool isPlaying = false;
+
+  Future setAudio(String soundUrl) async {
+    _audioPlayer.setReleaseMode(ReleaseMode.loop);
+    _audioPlayer.setSourceUrl(soundUrl);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    setAudio(widget.url);
+
+    _audioPlayer.onPlayerStateChanged.listen((event) {
+      setState(() {
+        isPlaying = event == PlayerState.playing;
+      });
+    });
+
+    _audioPlayer.onDurationChanged.listen((event) {
+      setState(() {
+        duration = event;
+      });
+    });
+
+    _audioPlayer.onPositionChanged.listen((event) {
+      setState(() {
+        position = event;
+
+        if (position >= duration) {
+          _audioPlayer.pause();
+          isPlaying = false;
+        }
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _audioPlayer.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      child: Column(
+        children: [
+          Slider(
+            min: 0,
+            max: duration.inSeconds.toDouble(),
+            value: position.inSeconds.toDouble(),
+            onChanged: (value) async {
+              final position = Duration(seconds: value.toInt());
+              await _audioPlayer.seek(position);
+              await _audioPlayer.resume();
+            },
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Text(position.toString().substring(2, 7)),
+              isPlaying == true
+                  ? IconButton(
+                  onPressed: () async {
+                    isPlaying = false;
+                    await _audioPlayer.pause();
+                  },
+                  icon: Icon(Icons.pause))
+                  : IconButton(
+                  onPressed: () async {
+                    isPlaying = true;
+                    await _audioPlayer.resume();
+                  },
+                  icon: Icon(Icons.play_arrow)),
+              Text(duration.toString().substring(2, 7)),
+            ],
+          )
+        ],
+      ),
     );
   }
 }
