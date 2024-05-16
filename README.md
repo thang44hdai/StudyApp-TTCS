@@ -1,5 +1,5 @@
 # study: https://ttcsapp.000webhostapp.com/
-Release: https://drive.google.com/file/d/1oEYZzqbQzaaFxfMYRKJQyWl7-38TdtyA/view?usp=sharing
+Release: https://drive.google.com/file/d/1y6kjXceCNpod2lxRg07g4BlQx3iUpFZJ/view?usp=sharing
 
 A new Flutter project.
 
